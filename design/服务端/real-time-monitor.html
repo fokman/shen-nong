@@ -406,22 +406,8 @@
 </head>
 <body>
     <div class="layout">
-        <!-- 侧边栏 -->
-        <div class="sidebar">
-            <div class="logo">
-                <h1>神农开心农场</h1>
-            </div>
-            <ul class="menu">
-                <li class="menu-item active"><i>📊</i>实时监控</li>
-                <li class="menu-item"><i>🏠</i>农场管理</li>
-                <li class="menu-item"><i>📦</i>业务管理</li>
-                <li class="menu-item"><i>👥</i>用户管理</li>
-                <li class="menu-item"><i>⚙️</i>系统设置</li>
-            </ul>
-        </div>
-        
         <!-- 主内容区 -->
-        <div class="main-content">
+        <div class="main-content" style="margin-left: 0; width: 100%;">
             <div class="header">
                 <h1 class="page-title">实时监控系统</h1>
                 <div class="user-info">
@@ -539,54 +525,7 @@
                 </div>
             </div>
             
-            <!-- 农场状态 -->
-            <div class="farm-grid">
-                <div class="farm-card">
-                    <div class="farm-header">
-                        <span class="farm-name">1号农场 - 蔬菜种植区</span>
-                        <span class="farm-status normal">正常</span>
-                    </div>
-                    <div class="sensor-grid">
-                        <div class="sensor-card">
-                            <div class="sensor-header">
-                                <span class="sensor-name">温度</span>
-                                <span class="sensor-value">24.8°C</span>
-                            </div>
-                            <div class="sensor-status normal">正常</div>
-                        </div>
-                        <div class="sensor-card">
-                            <div class="sensor-header">
-                                <span class="sensor-name">湿度</span>
-                                <span class="sensor-value">68.5%</span>
-                            </div>
-                            <div class="sensor-status normal">正常</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="farm-card">
-                    <div class="farm-header">
-                        <span class="farm-name">2号农场 - 水果种植区</span>
-                        <span class="farm-status warning">警告</span>
-                    </div>
-                    <div class="sensor-grid">
-                        <div class="sensor-card">
-                            <div class="sensor-header">
-                                <span class="sensor-name">温度</span>
-                                <span class="sensor-value">28.3°C</span>
-                            </div>
-                            <div class="sensor-status warning">偏高</div>
-                        </div>
-                        <div class="sensor-card">
-                            <div class="sensor-header">
-                                <span class="sensor-name">湿度</span>
-                                <span class="sensor-value">45.2%</span>
-                            </div>
-                            <div class="sensor-status warning">偏低</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             
             <!-- 预警信息 -->
             <div class="alert-panel">
