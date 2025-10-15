@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市场交易 - 神农开心农场</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #2C3E50;
+            line-height: 1.6;
+            padding: 15px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #27AE60;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #27AE60;
+            color: white;
+            width: 100%;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #E9ECEF;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .category-tab {
+            white-space: nowrap;
+            padding: 8px 16px;
+            border: 1px solid #27AE60;
+            border-radius: 20px;
+            background: transparent;
+            color: #27AE60;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .category-tab.active {
+            background: #27AE60;
+            color: white;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 120px;
+            background: linear-gradient(135deg, #27AE60, #2ECC71);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .product-info {
+            padding: 10px;
+        }
+        
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .product-price {
+            color: #27AE60;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+            商品搜索
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="搜索商品...">
+            <button class="btn btn-primary">搜索</button>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+            </svg>
+            商品分类
+        </div>
+        <div class="category-tabs">
+            <button class="category-tab active">种子</button>
+            <button class="category-tab">幼崽</button>
+            <button class="category-tab">工具</button>
+            <button class="category-tab">收获品</button>
+            <button class="category-tab">肥料</button>
+            <button class="category-tab">饲料</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+            商品列表
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">西红柿种子</div>
+                <div class="product-info">
+                    <div class="product-name">优质西红柿种子</div>
+                    <div class="product-price">¥25.00</div>
+                    <div style="color: #666; font-size: 12px;">已售：128件</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">小鸡幼崽</div>
+                <div class="product-info">
+                    <div class="product-name">健康小鸡幼崽</div>
+                    <div class="product-price">¥45.00</div>
+                    <div style="color: #666; font-size: 12px;">已售：86件</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">有机肥料</div>
+                <div class="product-info">
+                    <div class="product-name">高效有机肥料</div>
+                    <div class="product-price">¥38.00</div>
+                    <div style="color: #666; font-size: 12px;">已售：203件</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">新鲜鸡蛋</div>
+                <div class="product-info">
+                    <div class="product-name">土鸡蛋（10个）</div>
+                    <div class="product-price">¥32.00</div>
+                    <div style="color: #666; font-size: 12px;">已售：156件</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">玉米种子</div>
+                <div class="product-info">
+                    <div class="product-name">高产玉米种子</div>
+                    <div class="product-price">¥28.00</div>
+                    <div style="color: #666; font-size: 12px;">已售：94件</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">小鸭幼崽</div>
+                <div class="product-info">
+                    <div class="product-name">活泼小鸭幼崽</div>
+                    <div class="product-price">¥52.00</div>
+                    <div style="color: #666; font-size: 12px;">已售：67件</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+            热门推荐
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">智能浇水器</div>
+                <div class="product-info">
+                    <div class="product-name">自动浇水设备</div>
+                    <div class="product-price">¥198.00</div>
+                    <div style="color: #666; font-size: 12px;">已售：42件</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">温度传感器</div>
+                <div class="product-info">
+                    <div class="product-name">环境监测设备</div>
+                    <div class="product-price">¥156.00</div>
+                    <div style="color: #666; font-size: 12px;">已售：38件</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

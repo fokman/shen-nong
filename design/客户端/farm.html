@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农场管理 - 神农开心农场</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #2C3E50;
+            line-height: 1.6;
+            padding: 15px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #27AE60;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #27AE60;
+            color: white;
+            width: 100%;
+        }
+        
+        .farm-overview {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .farm-slider {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #D35400, #F39C12);
+            border-radius: 12px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .slider-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .slider-item.active {
+            opacity: 1;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background: white;
+        }
+        
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slider-prev {
+            left: 10px;
+        }
+        
+        .slider-next {
+            right: 10px;
+        }
+        
+        .action-panel {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .action-btn {
+            background: #2ECC71;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .action-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        .progress-bar {
+            background: #E9ECEF;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .progress-fill {
+            background: #27AE60;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .farm-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .farm-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .farm-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .farm-dropdown-btn {
+            background: #27AE60;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .farm-dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            margin-top: 5px;
+        }
+        
+        .farm-dropdown-content a {
+            color: #2C3E50;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #E9ECEF;
+            transition: background 0.3s ease;
+        }
+        
+        .farm-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .farm-dropdown-content a:hover {
+            background: #F8F9FA;
+        }
+        
+        .farm-dropdown:hover .farm-dropdown-content {
+            display: block;
+        }
+        
+        .farm-info {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #27AE60, #229954);
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .farm-info h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .farm-info p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="farm-header">
+            <h3 style="margin: 0; color: #27AE60;">农场管理</h3>
+            <div class="farm-selector">
+                <div class="farm-dropdown">
+                    <button class="farm-dropdown-btn">
+                        我的开心农场 ▼
+                    </button>
+                    <div class="farm-dropdown-content">
+                        <a href="#" onclick="switchFarm('开心农场')">我的开心农场</a>
+                        <a href="#" onclick="switchFarm('有机农场')">有机农场</a>
+                        <a href="#" onclick="switchFarm('生态农场')">生态农场</a>
+                        <a href="#" onclick="switchFarm('家庭农场')">家庭农场</a>
+                        <a href="#" onclick="addNewFarm()">+ 新建农场</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="farm-info">
+            <h3>我的开心农场</h3>
+            <p>种植面积：20㎡ | 养殖数量：30只</p>
+            <p>位置：北京市顺义区 | 创建时间：2024-01-15</p>
+        </div>
+        
+        <div class="farm-slider">
+            <div class="slider-container">
+                <div class="slider-item active" data-index="0">
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">🌱</div>
+                        <div>种植区视图</div>
+                        <div style="font-size: 12px; margin-top: 5px;">5块土地正在种植</div>
+                    </div>
+                </div>
+                <div class="slider-item" data-index="1">
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">🐔</div>
+                        <div>养殖区视图</div>
+                        <div style="font-size: 12px; margin-top: 5px;">30只家禽健康成长</div>
+                    </div>
+                </div>
+                <div class="slider-item" data-index="2">
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">🌳</div>
+                        <div>果园视图</div>
+                        <div style="font-size: 12px; margin-top: 5px;">12棵果树茁壮成长</div>
+                    </div>
+                </div>
+                <div class="slider-item" data-index="3">
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">💧</div>
+                        <div>灌溉系统</div>
+                        <div style="font-size: 12px; margin-top: 5px;">自动灌溉系统运行正常</div>
+                    </div>
+                </div>
+                <div class="slider-item" data-index="4">
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">📊</div>
+                        <div>数据监控</div>
+                        <div style="font-size: 12px; margin-top: 5px;">实时监测农场状态</div>
+                    </div>
+                </div>
+                
+                <button class="slider-btn slider-prev" onclick="prevSlide()">‹</button>
+                <button class="slider-btn slider-next" onclick="nextSlide()">›</button>
+                
+                <div class="slider-nav">
+                    <div class="slider-dot active" data-index="0"></div>
+                    <div class="slider-dot" data-index="1"></div>
+                    <div class="slider-dot" data-index="2"></div>
+                    <div class="slider-dot" data-index="3"></div>
+                    <div class="slider-dot" data-index="4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z"/>
+            </svg>
+            土地管理
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+            <div style="text-align: center; padding: 15px; background: #E8F5E8; border-radius: 8px;">
+                <div style="font-size: 18px; color: #27AE60;">5块</div>
+                <div style="font-size: 12px; color: #666;">已种植</div>
+            </div>
+            <div style="text-align: center; padding: 15px; background: #FFF3CD; border-radius: 8px;">
+                <div style="font-size: 18px; color: #F39C12;">3块</div>
+                <div style="font-size: 12px; color: #666;">空闲中</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.63c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.63C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.63 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+            </svg>
+            操作面板
+        </div>
+        <div class="action-panel">
+            <button class="action-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+                    <path d="M12 7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V8c0-.55-.45-1-1-1z"/>
+                </svg>
+                浇水
+            </button>
+            <button class="action-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+                    <path d="M12 7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V8c0-.55-.45-1-1-1z"/>
+                </svg>
+                施肥
+            </button>
+            <button class="action-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+                    <path d="M12 7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V8c0-.55-.45-1-1-1z"/>
+                </svg>
+                除虫
+            </button>
+            <button class="action-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+                    <path d="M12 7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V8c0-.55-.45-1-1-1z"/>
+                </svg>
+                喂食
+            </button>
+            <button class="action-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+                    <path d="M12 7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V8c0-.55-.45-1-1-1z"/>
+                </svg>
+                清洁
+            </button>
+            <button class="action-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+                    <path d="M12 7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V8c0-.55-.45-1-1-1z"/>
+                </svg>
+                收集
+            </button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+            </svg>
+            生长进度
+        </div>
+        <div style="margin: 10px 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span>西红柿</span>
+                <span>65%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 65%;"></div>
+            </div>
+        </div>
+        <div style="margin: 10px 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span>玉米</span>
+                <span>45%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 45%;"></div>
+            </div>
+        </div>
+        <div style="margin: 10px 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span>小鸡</span>
+                <span>80%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 80%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 5;
+        
+        function showSlide(index) {
+            // 隐藏所有幻灯片
+            document.querySelectorAll('.slider-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // 更新所有导航点
+            document.querySelectorAll('.slider-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // 显示当前幻灯片
+            document.querySelector(`.slider-item[data-index="${index}"]`).classList.add('active');
+            document.querySelector(`.slider-dot[data-index="${index}"]`).classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            let next = currentSlide + 1;
+            if (next >= totalSlides) {
+                next = 0;
+            }
+            showSlide(next);
+        }
+        
+        function prevSlide() {
+            let prev = currentSlide - 1;
+            if (prev < 0) {
+                prev = totalSlides - 1;
+            }
+            showSlide(prev);
+        }
+        
+        // 自动轮播
+        setInterval(nextSlide, 5000);
+        
+        // 点击导航点切换
+        document.querySelectorAll('.slider-dot').forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                showSlide(index);
+            });
+        });
+        
+        // 多农场切换功能
+        function switchFarm(farmName) {
+            const farmInfo = document.querySelector('.farm-info');
+            const dropdownBtn = document.querySelector('.farm-dropdown-btn');
+            
+            // 更新农场信息
+            farmInfo.innerHTML = `
+                <h3>${farmName}</h3>
+                <p>种植面积：${getRandomArea()}㎡ | 养殖数量：${getRandomAnimals()}只</p>
+                <p>位置：${getRandomLocation()} | 创建时间：${getRandomDate()}</p>
+            `;
+            
+            // 更新下拉按钮文本
+            dropdownBtn.innerHTML = `${farmName} ▼`;
+            
+            // 更新slider内容（模拟不同农场的视图）
+            updateSliderContent(farmName);
+        }
+        
+        function addNewFarm() {
+            const farmName = prompt('请输入新农场的名称：');
+            if (farmName) {
+                // 这里可以添加创建新农场的逻辑
+                alert(`新农场 "${farmName}" 创建成功！`);
+                switchFarm(farmName);
+            }
+        }
+        
+        function getRandomArea() {
+            return Math.floor(Math.random() * 50) + 10; // 10-60㎡
+        }
+        
+        function getRandomAnimals() {
+            return Math.floor(Math.random() * 50) + 10; // 10-60只
+        }
+        
+        function getRandomLocation() {
+            const locations = ['北京市顺义区', '上海市崇明区', '广州市从化区', '成都市郫都区', '杭州市西湖区'];
+            return locations[Math.floor(Math.random() * locations.length)];
+        }
+        
+        function getRandomDate() {
+            const year = 2023 + Math.floor(Math.random() * 2); // 2023-2024
+            const month = Math.floor(Math.random() * 12) + 1;
+            const day = Math.floor(Math.random() * 28) + 1;
+            return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        }
+        
+        function updateSliderContent(farmName) {
+            // 根据农场名称更新slider内容
+            const sliderItems = document.querySelectorAll('.slider-item');
+            const contents = {
+                '我的开心农场': [
+                    { icon: '🌱', title: '种植区视图', desc: '5块土地正在种植' },
+                    { icon: '🐔', title: '养殖区视图', desc: '30只家禽健康成长' },
+                    { icon: '🌳', title: '果园视图', desc: '12棵果树茁壮成长' },
+                    { icon: '💧', title: '灌溉系统', desc: '自动灌溉系统运行正常' },
+                    { icon: '📊', title: '数据监控', desc: '实时监测农场状态' }
+                ],
+                '有机农场': [
+                    { icon: '🌿', title: '有机种植区', desc: '8块有机土地' },
+                    { icon: '🐄', title: '有机养殖区', desc: '15头有机奶牛' },
+                    { icon: '🍎', title: '有机果园', desc: '20棵有机果树' },
+                    { icon: '💧', title: '有机灌溉', desc: '纯净水灌溉系统' },
+                    { icon: '📊', title: '有机认证', desc: '实时监测有机指标' }
+                ],
+                '生态农场': [
+                    { icon: '🌳', title: '生态种植区', desc: '10块生态土地' },
+                    { icon: '🐓', title: '生态养殖区', desc: '25只生态家禽' },
+                    { icon: '🌲', title: '生态林区', desc: '15亩生态林地' },
+                    { icon: '💧', title: '生态灌溉', desc: '雨水收集系统' },
+                    { icon: '📊', title: '生态监测', desc: '生态平衡监测' }
+                ],
+                '家庭农场': [
+                    { icon: '🏡', title: '家庭种植区', desc: '3块家庭菜园' },
+                    { icon: '🐇', title: '家庭养殖区', desc: '8只家庭宠物' },
+                    { icon: '🌻', title: '家庭花园', desc: '观赏花卉种植' },
+                    { icon: '💧', title: '家庭灌溉', desc: '手动灌溉系统' },
+                    { icon: '📊', title: '家庭管理', desc: '家庭农场管理' }
+                ]
+            };
+            
+            const farmContents = contents[farmName] || contents['我的开心农场'];
+            
+            sliderItems.forEach((item, index) => {
+                if (farmContents[index]) {
+                    const content = farmContents[index];
+                    item.innerHTML = `
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">${content.icon}</div>
+                            <div>${content.title}</div>
+                            <div style="font-size: 12px; margin-top: 5px;">${content.desc}</div>
+                        </div>
+                    `;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

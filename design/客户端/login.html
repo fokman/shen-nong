@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录 - 神农开心农场</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #2C3E50;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #27AE60, #229954);
+            color: white;
+            padding: 15px;
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .back-btn:hover {
+            opacity: 0.8;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 20px auto;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            flex: 1;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #27AE60;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #F8F9FA;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 25px;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #27AE60;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2C3E50;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #E9ECEF;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #27AE60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #F8F9FA;
+            border-radius: 8px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+        
+        .radio-option input[type="radio"] {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+            accent-color: #27AE60;
+        }
+        
+        .radio-option.active {
+            color: #27AE60;
+            font-weight: 500;
+        }
+        
+        .code-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .code-input {
+            flex: 1;
+        }
+        
+        .code-btn {
+            padding: 12px 20px;
+            background: #27AE60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: background 0.3s ease;
+        }
+        
+        .code-btn:disabled {
+            background: #BDC3C7;
+            cursor: not-allowed;
+        }
+        
+        .password-group {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+        }
+        
+        .remember input {
+            margin: 0;
+        }
+        
+        .forgot-password {
+            color: #27AE60;
+            text-decoration: none;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #27AE60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: #229954;
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .register-link a {
+            color: #27AE60;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .social-title {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .social-title::before,
+        .social-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: #E9ECEF;
+        }
+        
+        .social-title::before {
+            left: 0;
+        }
+        
+        .social-title::after {
+            right: 0;
+        }
+        
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .social-btn {
+            padding: 10px 20px;
+            border: 1px solid #E9ECEF;
+            border-radius: 8px;
+            background: white;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            border-color: #27AE60;
+            color: #27AE60;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="back-btn" onclick="history.back()">
+            <span><</span> 返回
+        </button>
+        <h1>用户登录</h1>
+    </div>
+    
+    <div class="login-container">
+        <div class="logo">
+            <h1>神农开心农场</h1>
+            <p>欢迎回到您的农场</p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="phone">手机登录</div>
+            <div class="tab" data-tab="email">邮箱登录</div>
+        </div>
+        
+        <!-- 手机登录表单 -->
+        <div class="tab-content active" id="phone-tab">
+            <form id="phone-form">
+                <div class="form-group">
+                    <label class="form-label">手机号码</label>
+                    <input type="tel" class="form-input" placeholder="请输入您的手机号码" required>
+                </div>
+                
+                <div class="radio-group">
+                    <label class="radio-option active">
+                        <input type="radio" name="login-method" value="sms" checked>
+                        短信验证码登录
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="login-method" value="password">
+                        密码登录
+                    </label>
+                </div>
+                
+                <!-- 短信验证码登录 -->
+                <div class="method-content active" id="phone-sms">
+                    <div class="form-group">
+                        <label class="form-label">验证码</label>
+                        <div class="code-group">
+                            <input type="text" class="form-input code-input" placeholder="请输入验证码" required>
+                            <button type="button" class="code-btn" onclick="sendSMSCode()">获取验证码</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 密码登录 -->
+                <div class="method-content" id="phone-password">
+                    <div class="form-group">
+                        <label class="form-label">密码</label>
+                        <div class="password-group">
+                            <input type="password" class="form-input" placeholder="请输入密码" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword(this)">👁️</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="remember-forgot">
+                    <label class="remember">
+                        <input type="checkbox"> 记住登录状态
+                    </label>
+                    <a href="#" class="forgot-password">忘记密码？</a>
+                </div>
+                
+                <button type="submit" class="submit-btn">登录</button>
+            </form>
+        </div>
+        
+        <!-- 邮箱登录表单 -->
+        <div class="tab-content" id="email-tab">
+            <form id="email-form">
+                <div class="form-group">
+                    <label class="form-label">邮箱地址</label>
+                    <input type="email" class="form-input" placeholder="请输入您的邮箱地址" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <div class="password-group">
+                        <input type="password" class="form-input" placeholder="请输入密码" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword(this)">👁️</button>
+                    </div>
+                </div>
+                
+                <div class="remember-forgot">
+                    <label class="remember">
+                        <input type="checkbox"> 记住登录状态
+                    </label>
+                    <a href="#" class="forgot-password">忘记密码？</a>
+                </div>
+                
+                <button type="submit" class="submit-btn">登录</button>
+            </form>
+        </div>
+        
+        <div class="register-link">
+            还没有账户？<a href="register.html">立即注册</a>
+        </div>
+        
+        <div class="social-login">
+            <div class="social-title">其他登录方式</div>
+            <div class="social-buttons">
+                <button type="button" class="social-btn">微信登录</button>
+                <button type="button" class="social-btn">QQ登录</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab切换功能
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有active类
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // 添加当前active类
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab') + '-tab';
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 单选按钮切换功能
+        const radioOptions = document.querySelectorAll('.radio-option');
+        const radioInputs = document.querySelectorAll('input[name="login-method"]');
+        const methodContents = document.querySelectorAll('.method-content');
+        
+        radioInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                if (input.checked) {
+                    // 更新选项样式
+                    radioOptions.forEach(option => option.classList.remove('active'));
+                    input.closest('.radio-option').classList.add('active');
+                    
+                    // 切换内容显示
+                    methodContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`phone-${input.value}`).classList.add('active');
+                }
+            });
+        });
+        
+        // 发送短信验证码
+        function sendSMSCode() {
+            const btn = event.target;
+            let countdown = 60;
+            
+            btn.disabled = true;
+            btn.textContent = `${countdown}秒后重发`;
+            
+            const timer = setInterval(() => {
+                countdown--;
+                btn.textContent = `${countdown}秒后重发`;
+                
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    btn.disabled = false;
+                    btn.textContent = '获取验证码';
+                }
+            }, 1000);
+            
+            // 模拟发送验证码
+            alert('验证码已发送到您的手机');
+        }
+        
+        // 切换密码显示
+        function togglePassword(btn) {
+            const input = btn.previousElementSibling;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
+        
+        // 表单提交
+        document.getElementById('phone-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('登录成功！');
+            window.location.href = 'home.html';
+        });
+        
+        document.getElementById('email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('登录成功！');
+            window.location.href = 'home.html';
+        });
+    </script>
+</body>
+</html>

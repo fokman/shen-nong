@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 神农开心农场</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #2C3E50;
+            line-height: 1.6;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #58D68D, #27AE60);
+            color: white;
+            padding: 15px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .register-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.5px;
+        }
+        
+        .register-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .register-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        .content {
+            padding: 15px;
+            flex: 1;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #27AE60;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #27AE60;
+            color: white;
+            width: 100%;
+        }
+        
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            margin: 15px 0;
+            height: 180px;
+        }
+        
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        .carousel-slide.active {
+            display: block;
+        }
+        
+        .slide-image {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            border-radius: 12px;
+        }
+        
+        .slide-content {
+            text-align: center;
+            padding: 20px;
+            z-index: 2;
+        }
+        
+        .slide-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .slide-content p {
+            font-size: 14px;
+            opacity: 0.9;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+        
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        .carousel-prev,
+        .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 3;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-prev:hover,
+        .carousel-next:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .carousel-prev {
+            left: 15px;
+        }
+        
+        .carousel-next {
+            right: 15px;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .action-item {
+            text-align: center;
+            text-decoration: none;
+            color: #2C3E50;
+        }
+        
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            color: white;
+        }
+        
+        .action-icon.farm {
+            background: linear-gradient(135deg, #27AE60, #2ECC71); /* 绿色 - 农场 */
+        }
+        
+        .action-icon.guide {
+            background: linear-gradient(135deg, #F39C12, #E67E22); /* 橙色 - 种植指南 */
+        }
+        
+        .action-icon.skill {
+            background: linear-gradient(135deg, #3498DB, #2980B9); /* 蓝色 - 养殖技巧 */
+        }
+        
+        .action-icon.ranking {
+            background: linear-gradient(135deg, #9B59B6, #8E44AD); /* 紫色 - 排行榜 */
+        }
+        
+        .action-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+        
+        .action-text {
+            font-size: 12px;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 15px 0;
+        }
+        
+        .data-category {
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .data-category.weather {
+            background: linear-gradient(135deg, #64B5F6, #42A5F5);
+            color: white;
+        }
+        
+        .data-category.soil {
+            background: linear-gradient(135deg, #FFB74D, #FFA726);
+            color: white;
+        }
+        
+        .data-category.crop {
+            background: linear-gradient(135deg, #81C784, #66BB6A);
+            color: white;
+        }
+        
+        .category-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+        
+        .data-item {
+            margin: 8px 0;
+        }
+        
+        .data-value {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .data-label {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        
+        .data-icon {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .data-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 120px;
+            background: linear-gradient(135deg, #27AE60, #2ECC71);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .product-info {
+            padding: 10px;
+        }
+        
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <!-- 用户注册入口 -->
+        <div class="card" style="margin-bottom: 15px;">
+        <div style="text-align: center; padding: 20px;">
+            <h3 style="color: #27AE60; margin-bottom: 10px;">欢迎来到神农开心农场</h3>
+            <p style="color: #666; margin-bottom: 15px;">立即注册，开启您的远程种养体验</p>
+            <button class="btn btn-primary" onclick="showRegisterPage()">立即注册</button>
+            <div style="margin-top: 10px; font-size: 12px; color: #999;">
+                已有账号？<a href="#" style="color: #27AE60; text-decoration: none;" onclick="showLoginPage()">立即登录</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 轮播图 -->
+    <div class="carousel">
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <div class="slide-image" style="background: linear-gradient(135deg, #27AE60, #2ECC71);">
+                    <div class="slide-content">
+                        <h3>新用户注册送100积分</h3>
+                        <p>立即注册，开启您的农场之旅</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="slide-image" style="background: linear-gradient(135deg, #F39C12, #E67E22);">
+                    <div class="slide-content">
+                        <h3>春季种植季</h3>
+                        <p>精选种子限时8折优惠</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="slide-image" style="background: linear-gradient(135deg, #3498DB, #2980B9);">
+                    <div class="slide-content">
+                        <h3>智能养殖设备</h3>
+                        <p>购买设备享3期免息</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="slide-image" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
+                    <div class="slide-content">
+                        <h3>丰收季大促</h3>
+                        <p>农产品满200减50</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="slide-image" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">
+                    <div class="slide-content">
+                        <h3>邀请好友得奖励</h3>
+                        <p>每邀请1位好友得50积分</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+            <span class="indicator" data-slide="3"></span>
+            <span class="indicator" data-slide="4"></span>
+        </div>
+        <button class="carousel-prev">‹</button>
+        <button class="carousel-next">›</button>
+    </div>
+
+    <!-- 快捷入口 -->
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            快捷入口
+        </div>
+        <div class="quick-actions">
+            <a href="#" class="action-item" onclick="parent.showPage('farm-page')">
+                <div class="action-icon farm">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z"/>
+                    </svg>
+                </div>
+                <div class="action-text">我的农场</div>
+            </a>
+            <a href="#" class="action-item">
+                <div class="action-icon guide">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+                    </svg>
+                </div>
+                <div class="action-text">种植指南</div>
+            </a>
+            <a href="#" class="action-item">
+                <div class="action-icon skill">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                </div>
+                <div class="action-text">养殖技巧</div>
+            </a>
+            <a href="#" class="action-item">
+                <div class="action-icon ranking">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                        <path d="M14.17 11.5l-1.58 1.91L10.5 11l-3.09 4.5L5.5 13 4 15h16l-5.83-8.5z"/>
+                    </svg>
+                </div>
+                <div class="action-text">排行榜</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- 农场监测数据 -->
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+            </svg>
+            农场监测数据
+        </div>
+        <div class="data-grid">
+            <!-- 气象数据 -->
+            <div class="data-category weather">
+                <div class="data-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/>
+                    </svg>
+                </div>
+                <div class="category-title">气象数据</div>
+                <div class="data-item">
+                    <div class="data-value">25.3°C</div>
+                    <div class="data-label">温度</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">65%</div>
+                    <div class="data-label">湿度</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">1200 lux</div>
+                    <div class="data-label">光照</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">3.2 m/s</div>
+                    <div class="data-label">风速</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">东南</div>
+                    <div class="data-label">风向</div>
+                </div>
+            </div>
+
+            <!-- 土壤数据 -->
+            <div class="data-category soil">
+                <div class="data-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3C6.95 3 3.15 4.85 0 7.23L12 22 24 7.25C20.85 4.87 17.05 3 12 3zM2.92 7.65C5.8 5.85 8.74 5 12 5c3.25 0 6.2.85 9.08 2.67L12 18.83 2.92 7.65z"/>
+                    </svg>
+                </div>
+                <div class="category-title">土壤数据</div>
+                <div class="data-item">
+                    <div class="data-value">28.5%</div>
+                    <div class="data-label">含水量</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">22.1°C</div>
+                    <div class="data-label">土壤温度</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">6.8</div>
+                    <div class="data-label">pH值</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">1.2 mS/cm</div>
+                    <div class="data-label">EC值</div>
+                </div>
+            </div>
+
+            <!-- 作物数据 -->
+            <div class="data-category crop">
+                <div class="data-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                </div>
+                <div class="category-title">作物数据</div>
+                <div class="data-item">
+                    <div class="data-value">45.2 cm</div>
+                    <div class="data-label">株高</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">78%</div>
+                    <div class="data-label">叶面湿度</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">32.5 cm</div>
+                    <div class="data-label">生长高度</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">正常</div>
+                    <div class="data-label">病虫害</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-value">42.6 SPAD</div>
+                    <div class="data-label">叶绿素含量</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 推荐农场 -->
+    <div class="card">
+        <div class="card-title">
+            <svg viewBox="0 0 24 24">
+                <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+            </svg>
+            推荐农场
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">有机蔬菜园</div>
+                <div class="product-info">
+                    <div class="product-name">阳光农场</div>
+                    <div style="color: #666; font-size: 12px;">种植面积：50㎡</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">生态养殖场</div>
+                <div class="product-info">
+                    <div class="product-name">青山牧场</div>
+                    <div style="color: #666; font-size: 12px;">养殖规模：100只</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+        // 轮播图功能
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const totalSlides = slides.length;
+        let slideInterval;
+
+        // 初始化轮播
+        function initCarousel() {
+            // 设置自动轮播
+            startAutoSlide();
+            
+            // 添加事件监听器
+            document.querySelector('.carousel-prev').addEventListener('click', prevSlide);
+            document.querySelector('.carousel-next').addEventListener('click', nextSlide);
+            
+            // 添加指示器点击事件
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+            });
+            
+            // 添加鼠标悬停暂停
+            const carousel = document.querySelector('.carousel');
+            carousel.addEventListener('mouseenter', pauseSlide);
+            carousel.addEventListener('mouseleave', startAutoSlide);
+        }
+
+        // 显示指定幻灯片
+        function showSlide(index) {
+            // 隐藏所有幻灯片
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // 显示当前幻灯片
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+
+        // 下一张幻灯片
+        function nextSlide() {
+            const next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        // 上一张幻灯片
+        function prevSlide() {
+            const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prev);
+        }
+
+        // 跳转到指定幻灯片
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        // 开始自动轮播
+        function startAutoSlide() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 4000); // 4秒切换一次
+        }
+
+        // 暂停自动轮播
+        function pauseSlide() {
+            clearInterval(slideInterval);
+        }
+
+        // 页面加载完成后初始化轮播
+        document.addEventListener('DOMContentLoaded', initCarousel);
+
+        // 显示注册页面
+        function showRegisterPage() {
+            window.location.href = 'register.html';
+        }
+
+        // 显示登录页面
+        function showLoginPage() {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
