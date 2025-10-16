@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户管理 - 神农开心农场管理系统</title>
+    <title>用户管理 - 神农开心农场</title>
     <link rel="stylesheet" href="https://unpkg.com/antd@5.0.0/dist/reset.css">
     <style>
         * {
@@ -16,101 +16,15 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background-color: #f8f9fa;
             color: #2c3e50;
-        }
-        
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        .sidebar {
-            width: 240px;
-            background: #001529;
-            color: white;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid #303030;
-            margin-bottom: 20px;
-        }
-        
-        .logo h1 {
-            color: #27ae60;
-            font-size: 20px;
-            font-weight: 600;
-        }
-        
-        .accordion {
-            list-style: none;
-        }
-        
-        .accordion-item {
-            border-bottom: 1px solid #303030;
-        }
-        
-        .accordion-header {
-            padding: 12px 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s;
-        }
-        
-        .accordion-header:hover {
-            background-color: #1890ff;
-        }
-        
-        .accordion-header.active {
-            background-color: #1890ff;
-        }
-        
-        .accordion-header i {
-            margin-right: 8px;
-        }
-        
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background-color: #001a33;
-        }
-        
-        .accordion-content.open {
-            max-height: 200px;
-        }
-        
-        .submenu-item {
-            padding: 10px 20px 10px 40px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-left: 3px solid transparent;
-        }
-        
-        .submenu-item:hover, .submenu-item.active {
-            background-color: #1890ff;
-            border-left-color: #52c41a;
-        }
-        
-        .accordion-arrow {
-            transition: transform 0.3s;
-        }
-        
-        .accordion-arrow.open {
-            transform: rotate(180deg);
-        }
-        
-        .main-content {
-            flex: 1;
             padding: 20px;
         }
         
+        .user-management-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
         .header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
             margin-bottom: 24px;
         }
         
@@ -120,10 +34,14 @@
             color: #2c3e50;
         }
         
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .header {
+            margin-bottom: 24px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
         }
         
         .toolbar {
@@ -253,153 +171,15 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 手风琴菜单交互
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-            
-            accordionHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const content = this.nextElementSibling;
-                    const arrow = this.querySelector('.accordion-arrow');
-                    
-                    // 切换当前项
-                    const isOpen = content.classList.contains('open');
-                    
-                    // 关闭所有其他项
-                    document.querySelectorAll('.accordion-content').forEach(item => {
-                        item.classList.remove('open');
-                    });
-                    document.querySelectorAll('.accordion-arrow').forEach(item => {
-                        item.classList.remove('open');
-                    });
-                    document.querySelectorAll('.accordion-header').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    
-                    // 打开当前项（如果之前是关闭的）
-                    if (!isOpen) {
-                        content.classList.add('open');
-                        arrow.classList.add('open');
-                        this.classList.add('active');
-                    }
-                });
-            });
-            
-            // 子菜单项点击事件
-            const submenuItems = document.querySelectorAll('.submenu-item');
-            submenuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // 移除所有active状态
-                    submenuItems.forEach(subItem => {
-                        subItem.classList.remove('active');
-                    });
-                    // 添加当前active状态
-                    this.classList.add('active');
-                });
-            });
+            // 用户管理功能交互逻辑
+            console.log('用户管理页面加载完成');
         });
     </script>
 <body>
-    <div class="layout">
-        <!-- 侧边栏 -->
-        <div class="sidebar">
-            <div class="logo">
-                <h1>神农开心农场</h1>
-            </div>
-            <ul class="accordion">
-                <li class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i>📊</i>数据监控</span>
-                        <span class="accordion-arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="submenu-item">仪表盘</div>
-                        <div class="submenu-item">实时监控</div>
-                        <div class="submenu-item">预警中心</div>
-                    </div>
-                </li>
-                <li class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i>🏠</i>农场管理</span>
-                        <span class="accordion-arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="submenu-item">农场列表</div>
-                        <div class="submenu-item">地图视图</div>
-                        <div class="submenu-item">设备管理</div>
-                        <div class="submenu-item">种植记录</div>
-                    </div>
-                </li>
-                <li class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i>📦</i>业务管理</span>
-                        <span class="accordion-arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="submenu-item">订单管理</div>
-                        <div class="submenu-item">商品管理</div>
-                        <div class="submenu-item">库存管理</div>
-                        <div class="submenu-item">物流跟踪</div>
-                    </div>
-                </li>
-                <li class="accordion-item">
-                    <div class="accordion-header active">
-                        <span><i>👥</i>用户管理</span>
-                        <span class="accordion-arrow open">▼</span>
-                    </div>
-                    <div class="accordion-content open">
-                        <div class="submenu-item active">用户列表</div>
-                        <div class="submenu-item">权限管理</div>
-                        <div class="submenu-item">角色配置</div>
-                        <div class="submenu-item">操作日志</div>
-                    </div>
-                </li>
-                <li class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i>📊</i>数据分析</span>
-                        <span class="accordion-arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="submenu-item">数据报表</div>
-                        <div class="submenu-item">趋势分析</div>
-                        <div class="submenu-item">业务洞察</div>
-                        <div class="submenu-item">导出管理</div>
-                    </div>
-                </li>
-                <li class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i>⚙️</i>系统设置</span>
-                        <span class="accordion-arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="submenu-item">基本设置</div>
-                        <div class="submenu-item">通知配置</div>
-                        <div class="submenu-item">安全管理</div>
-                        <div class="submenu-item">备份恢复</div>
-                    </div>
-                </li>
-                <li class="accordion-item">
-                    <div class="accordion-header">
-                        <span><i>🔔</i>消息中心</span>
-                        <span class="accordion-arrow">▼</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="submenu-item">系统通知</div>
-                        <div class="submenu-item">用户消息</div>
-                        <div class="submenu-item">公告管理</div>
-                    </div>
-                </li>
-            </ul>
+    <div class="user-management-container">
+        <div class="header">
+            <h1 class="page-title">用户管理</h1>
         </div>
-        
-        <!-- 主内容区 -->
-        <div class="main-content">
-            <div class="header">
-                <h1 class="page-title">用户管理</h1>
-                <div class="user-info">
-                    <span>管理员</span>
-                    <div class="avatar">👤</div>
-                </div>
-            </div>
             
             <!-- 工具栏 -->
             <div class="toolbar">

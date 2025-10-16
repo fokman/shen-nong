@@ -6,8 +6,14 @@ enum Route {
     #[layout(Navbar)]
     #[route("/")]
     Home {},
-    #[route("/blog/:id")]
-    Blog { id: i32 },
+    #[route("/farm")]
+    Farm {},
+    #[route("/market")]
+    Market {},
+    #[route("/profile")]
+    Profile {},
+    #[route("/dashboard")]
+    Dashboard {},
 }
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
@@ -33,13 +39,29 @@ pub fn Hero() -> Element {
         div {
             id: "hero",
             img { src: HEADER_SVG, id: "header" }
+            h1 { "神农开心农场 - Shennong Happy Farm" }
+            p { "基于物联网技术的远程种养体验平台" }
             div { id: "links",
-                a { href: "https://dioxuslabs.com/learn/0.6/", "📚 Learn Dioxus" }
-                a { href: "https://dioxuslabs.com/awesome", "🚀 Awesome Dioxus" }
-                a { href: "https://github.com/dioxus-community/", "📡 Community Libraries" }
-                a { href: "https://github.com/DioxusLabs/sdk", "⚙️ Dioxus Development Kit" }
-                a { href: "https://marketplace.visualstudio.com/items?itemName=DioxusLabs.dioxus", "💫 VSCode Extension" }
-                a { href: "https://discord.gg/XgGxMSkvUM", "👋 Community Discord" }
+                Link {
+                    to: Route::Farm {},
+                    class: "nav-link",
+                    "🌱 我的农场"
+                }
+                Link {
+                    to: Route::Market {},
+                    class: "nav-link", 
+                    "🛒 农贸市场"
+                }
+                Link {
+                    to: Route::Profile {},
+                    class: "nav-link",
+                    "👤 个人中心"
+                }
+                Link {
+                    to: Route::Dashboard {},
+                    class: "nav-link",
+                    "📊 数据中心"
+                }
             }
         }
     }
@@ -50,31 +72,53 @@ pub fn Hero() -> Element {
 fn Home() -> Element {
     rsx! {
         Hero {}
-        Echo {}
     }
 }
 
-/// Blog page
+/// Farm page
 #[component]
-pub fn Blog(id: i32) -> Element {
+fn Farm() -> Element {
     rsx! {
-        div {
-            id: "blog",
+        h2 { "我的农场" }
+        div { 
+            id: "farm-view",
+            "欢迎来到您的虚拟农场！在这里您可以远程种植和养殖。"
+        }
+    }
+}
 
-            // Content
-            h1 { "This is blog #{id}!" }
-            p { "In blog #{id}, we show how the Dioxus router works and how URL parameters can be passed as props to our route components." }
+/// Market page
+#[component]
+fn Market() -> Element {
+    rsx! {
+        h2 { "农贸市场" }
+        div { 
+            id: "market-view",
+            "购买或销售农产品、禽蛋等商品。"
+        }
+    }
+}
 
-            // Navigation links
-            Link {
-                to: Route::Blog { id: id - 1 },
-                "Previous"
-            }
-            span { " <---> " }
-            Link {
-                to: Route::Blog { id: id + 1 },
-                "Next"
-            }
+/// Profile page
+#[component]
+fn Profile() -> Element {
+    rsx! {
+        h2 { "个人中心" }
+        div { 
+            id: "profile-view",
+            "管理您的个人信息和农场设置。"
+        }
+    }
+}
+
+/// Dashboard page
+#[component]
+fn Dashboard() -> Element {
+    rsx! {
+        h2 { "数据中心" }
+        div { 
+            id: "dashboard-view",
+            "实时监控环境数据、作物生长状态等信息。"
         }
     }
 }
@@ -87,47 +131,26 @@ fn Navbar() -> Element {
             id: "navbar",
             Link {
                 to: Route::Home {},
-                "Home"
+                class: "nav-item",
+                "🏠 首页"
             }
             Link {
-                to: Route::Blog { id: 1 },
-                "Blog"
+                to: Route::Farm {},
+                class: "nav-item",
+                "🌱 农场"
+            }
+            Link {
+                to: Route::Market {},
+                class: "nav-item",
+                "🛒 市场"
+            }
+            Link {
+                to: Route::Profile {},
+                class: "nav-item",
+                "👤 我"
             }
         }
 
         Outlet::<Route> {}
     }
-}
-
-/// Echo component that demonstrates fullstack server functions.
-#[component]
-fn Echo() -> Element {
-    let mut response = use_signal(|| String::new());
-
-    rsx! {
-        div {
-            id: "echo",
-            h4 { "ServerFn Echo" }
-            input {
-                placeholder: "Type here to echo...",
-                oninput:  move |event| async move {
-                    let data = echo_server(event.value()).await.unwrap();
-                    response.set(data);
-                },
-            }
-
-            if !response().is_empty() {
-                p {
-                    "Server echoed: "
-                    i { "{response}" }
-                }
-            }
-        }
-    }
-}
-
-/// Echo the user input on the server.
-#[server(EchoServer)]
-async fn echo_server(input: String) -> Result<String, ServerFnError> {
-    Ok(input)
 }

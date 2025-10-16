@@ -3,677 +3,817 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>神农开心农场 - 后台管理系统</title>
-    <link rel="stylesheet" href="https://unpkg.com/antd@5.0.0/dist/reset.css">
+    <title>仪表盘 - 神农开心农场管理系统</title>
+    <!-- 引入 layui.css -->
+    <link href="//unpkg.com/layui@2.12.1/dist/css/layui.css" rel="stylesheet">
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
+            background-color: #f2f2f2;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        
+        .dashboard-container {
+            padding: 0;
+            min-height: 100vh;
+            width: 100%;
             box-sizing: border-box;
         }
         
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #2c3e50;
-        }
-        
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        .sidebar {
-            width: 240px;
-            background: #001529;
-            color: white;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid #303030;
-            margin-bottom: 20px;
-        }
-        
-        .logo h1 {
-            color: #27ae60;
-            font-size: 20px;
-            font-weight: 600;
-        }
-        
-        .accordion {
-            list-style: none;
-        }
-        
-        .accordion-item {
-            border-bottom: 1px solid #303030;
-        }
-        
-        .accordion-header {
-            padding: 12px 20px;
-            cursor: pointer;
+        .dashboard-header {
+            margin-bottom: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.3s;
+            padding: 20px 20px 0 20px;
         }
         
-        .accordion-header:hover {
-            background-color: #1890ff;
-        }
-        
-        .accordion-header.active {
-            background-color: #1890ff;
-        }
-        
-        .accordion-header i {
-            margin-right: 8px;
-        }
-        
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background-color: #001a33;
-        }
-        
-        .accordion-content.open {
-            max-height: 200px;
-        }
-        
-        .submenu-item {
-            padding: 10px 20px 10px 40px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-left: 3px solid transparent;
-        }
-        
-        .submenu-item:hover, .submenu-item.active {
-            background-color: #1890ff;
-            border-left-color: #52c41a;
-        }
-        
-        .accordion-arrow {
-            transition: transform 0.3s;
-        }
-        
-        .accordion-arrow.open {
-            transform: rotate(180deg);
-        }
-        
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .iframe-container {
-            flex: 1;
-            position: relative;
-        }
-        
-        .iframe-content {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .iframe-header {
-            background: white;
-            border-bottom: 1px solid #f0f0f0;
-            padding: 0 20px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .iframe-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        
-        .page-title {
+        .header-title {
             font-size: 24px;
             font-weight: 600;
-            color: #2c3e50;
+            color: #333;
         }
         
-        .user-info {
+        .header-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .header-controls {
             display: flex;
+            gap: 10px;
             align-items: center;
-            gap: 12px;
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
+        /* 统计卡片样式 */
+        .stats-row {
+            margin-bottom: 0;
+            padding: 20px 20px 0 20px;
         }
         
         .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .stat-value {
-            font-size: 28px;
-            font-weight: 600;
-            color: #27ae60;
-            margin: 8px 0;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .charts-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        
-        .chart-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .chart-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        
-        .monitor-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-        
-        .monitor-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .monitor-placeholder {
-            height: 200px;
-            background: #f0f2f5;
+            background: #fff;
             border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-        }
-        
-        .alert-list {
-            margin-top: 16px;
-        }
-        
-        .alert-item {
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .alert-item:last-child {
-            border-bottom: none;
-        }
-        
-        .alert-critical {
-            color: #ff4d4f;
-        }
-        
-        .alert-warning {
-            color: #faad14;
-        }
-        
-        .alert-info {
-            color: #1890ff;
-        }
-        
-        /* 实时监控页面样式 */
-        .monitor-controls {
-            background: white;
             padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .control-panel h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        
-        .control-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .control-group label {
-            font-weight: 600;
-            color: #666;
-        }
-        
-        .direction-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .horizontal-controls {
-            display: flex;
-            gap: 5px;
-        }
-        
-        .control-btn {
-            padding: 8px 12px;
-            border: 1px solid #d9d9d9;
-            background: white;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .control-btn:hover {
-            background: #f5f5f5;
-            border-color: #1890ff;
-        }
-        
-        .zoom-controls, .preset-controls {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        
-        .camera-section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .camera-container {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e6e6e6;
+            height: 120px;
             position: relative;
-        }
-        
-        .camera-feed {
-            position: relative;
-            background: #000;
-            border-radius: 4px;
             overflow: hidden;
         }
         
-        .camera-placeholder {
-            height: 300px;
-            background: linear-gradient(45deg, #1a1a1a 25%, #2a2a2a 25%, #2a2a2a 50%, #1a1a1a 50%, #1a1a1a 75%, #2a2a2a 75%);
-            background-size: 20px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            position: relative;
-        }
-        
-        .camera-status {
-            font-size: 18px;
-            z-index: 2;
-        }
-        
-        .camera-overlay {
+        .stat-card::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
-        }
-        
-        .grid-overlay {
-            width: 100%;
+            width: 4px;
             height: 100%;
-            background: 
-                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
         }
         
-        .camera-info {
+        .stat-card.farms::before {
+            background-color: #1E9FFF;
+        }
+        
+        .stat-card.income::before {
+            background-color: #5FB878;
+        }
+        
+        .stat-card.users::before {
+            background-color: #FFB800;
+        }
+        
+        .stat-card.orders::before {
+            background-color: #FF5722;
+        }
+        
+        .stat-content {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            background: rgba(0,0,0,0.8);
+            align-items: center;
+            height: 100%;
+        }
+        
+        .stat-info {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .stat-trend {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .trend-up {
+            color: #5FB878;
+        }
+        
+        .trend-down {
+            color: #FF5722;
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
             color: white;
         }
         
-        .status-indicator {
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 12px;
+        .stat-icon.farms {
+            background: #1E9FFF;
         }
         
-        .status-indicator.online {
-            background: #52c41a;
+        .stat-icon.income {
+            background: #5FB878;
         }
         
-        .sensor-section {
-            background: white;
+        .stat-icon.users {
+            background: #FFB800;
+        }
+        
+        .stat-icon.orders {
+            background: #FF5722;
+        }
+        
+        /* 图表区域 */
+        .chart-section {
+            margin-bottom: 0;
+            padding: 0 20px;
+        }
+        
+        .chart-card {
+            background: #fff;
+            border-radius: 4px;
             padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e6e6e6;
+            min-height: 400px;
+            height: 100%;
+            box-sizing: border-box;
         }
         
-        .sensor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-        
-        .sensor-card {
-            border: 1px solid #f0f0f0;
-            border-radius: 6px;
-            padding: 15px;
-            transition: all 0.3s;
-        }
-        
-        .sensor-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .sensor-header {
+        .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e6e6e6;
         }
         
-        .sensor-name {
-            font-weight: 600;
-            color: #666;
-        }
-        
-        .sensor-value {
+        .chart-title {
             font-size: 18px;
             font-weight: 600;
-            color: #1890ff;
+            color: #333;
         }
         
-        .sensor-chart {
-            height: 80px;
-            margin: 10px 0;
+        .chart-actions {
+            display: flex;
+            gap: 5px;
         }
         
-        .sensor-status {
-            padding: 4px 8px;
+        .chart-content {
+            height: 320px;
+            background: #f8f8f8;
             border-radius: 4px;
-            font-size: 12px;
-            text-align: center;
-        }
-        
-        .sensor-status.normal {
-            background: #f6ffed;
-            color: #52c41a;
-            border: 1px solid #b7eb8f;
-        }
-        
-        .sensor-status.warning {
-            background: #fff7e6;
-            color: #fa8c16;
-            border: 1px solid #ffd591;
-        }
-        
-        .sensor-status.critical {
-            background: #fff2f0;
-            color: #ff4d4f;
-            border: 1px solid #ffccc7;
-        }
-        
-        .alert-panel {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .alert-item {
             display: flex;
             align-items: center;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 4px;
-            gap: 10px;
-        }
-        
-        .alert-item.critical {
-            background: #fff2f0;
-            border-left: 4px solid #ff4d4f;
-        }
-        
-        .alert-item.warning {
-            background: #fff7e6;
-            border-left: 4px solid #fa8c16;
-        }
-        
-        .alert-item.info {
-            background: #f6ffed;
-            border-left: 4px solid #52c41a;
-        }
-        
-        .alert-icon {
+            justify-content: center;
+            color: #999;
             font-size: 16px;
+            border: 1px dashed #ddd;
         }
         
-        .alert-message {
+        /* 活动列表 */
+        .activity-section {
+            margin-bottom: 0;
+            padding: 0 20px;
+        }
+        
+        .activity-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e6e6e6;
+            max-height: 400px;
+            overflow-y: auto;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        
+        .activity-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .activity-badge {
+            background: #1E9FFF;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 4px;
+            background: #f8f8f8;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .activity-item:hover {
+            background: #e6f7ff;
+            transform: translateX(5px);
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .activity-icon.success {
+            background: #5FB878;
+        }
+        
+        .activity-icon.warning {
+            background: #FFB800;
+        }
+        
+        .activity-icon.info {
+            background: #1E9FFF;
+        }
+        
+        .activity-content {
             flex: 1;
-            font-weight: 500;
         }
         
-        .alert-time {
+        .activity-message {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .activity-time {
             color: #999;
             font-size: 12px;
         }
-    </style>
-    <script>
-        // 页面映射配置
-        const pageMappings = {
-            '仪表盘': 'dashboard.html',
-            '实时监控': 'real-time-monitor.html',
-            '预警中心': 'data-analysis.html',
-            '农场列表': 'farm-management.html',
-            '地图视图': 'farm-management.html',
-            '设备管理': 'farm-management.html',
-            '种植记录': 'farm-management.html',
-            '订单管理': 'order-management.html',
-            '商品管理': 'order-management.html',
-            '库存管理': 'order-management.html',
-            '物流跟踪': 'order-management.html',
-            '用户列表': 'user-management.html',
-            '权限管理': 'user-management.html',
-            '角色配置': 'user-management.html',
-            '操作日志': 'user-management.html',
-            '数据报表': 'data-analysis.html',
-            '趋势分析': 'data-analysis.html',
-            '业务洞察': 'data-analysis.html',
-            '导出管理': 'data-analysis.html',
-            '基本设置': 'system-settings.html',
-            '通知配置': 'system-settings.html',
-            '安全管理': 'system-settings.html',
-            '备份恢复': 'system-settings.html',
-            '系统通知': 'message-center.html',
-            '用户消息': 'message-center.html',
-            '公告管理': 'message-center.html'
-        };
-
-        // 页面标题映射
-        const pageTitles = {
-            '仪表盘': '仪表盘 - 神农开心农场',
-            '实时监控': '实时监控系统',
-            '预警中心': '预警中心管理',
-            '农场列表': '农场管理',
-            '地图视图': '农场地图视图',
-            '设备管理': '设备管理',
-            '种植记录': '种植记录管理',
-            '订单管理': '订单管理',
-            '商品管理': '商品管理',
-            '库存管理': '库存管理',
-            '物流跟踪': '物流跟踪',
-            '用户列表': '用户管理',
-            '权限管理': '权限管理',
-            '角色配置': '角色配置',
-            '操作日志': '操作日志',
-            '数据报表': '数据报表',
-            '趋势分析': '趋势分析',
-            '业务洞察': '业务洞察',
-            '导出管理': '导出管理',
-            '基本设置': '系统设置',
-            '通知配置': '通知配置',
-            '安全管理': '安全管理',
-            '备份恢复': '备份恢复',
-            '系统通知': '消息中心',
-            '用户消息': '用户消息',
-            '公告管理': '公告管理'
-        };
-
-        class IframeManager {
-            constructor() {
-                this.currentPage = '仪表盘';
-                this.init();
+        
+        /* 系统状态 */
+        .system-section {
+            margin-bottom: 0;
+            padding: 0 20px;
+        }
+        
+        .system-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e6e6e6;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        
+        .system-header {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        
+        .system-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .system-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .system-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .system-item:hover {
+            background: #e6f7ff;
+            transform: translateY(-2px);
+        }
+        
+        .system-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: white;
+            background: #5FB878;
+            flex-shrink: 0;
+        }
+        
+        .system-icon.warning {
+            background: #FFB800;
+        }
+        
+        .system-info {
+            flex: 1;
+        }
+        
+        .system-label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .system-status {
+            font-size: 12px;
+            color: #5FB878;
+            font-weight: 500;
+        }
+        
+        .system-status.warning {
+            color: #FFB800;
+        }
+        
+        .system-status.error {
+            color: #FF5722;
+        }
+        
+        /* 快捷操作 */
+        .quick-section {
+            margin-bottom: 0;
+            padding: 0 20px 20px 20px;
+        }
+        
+        .quick-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e6e6e6;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        
+        .quick-header {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        
+        .quick-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .action-item {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .action-item:hover {
+            background: #e6f7ff;
+            border-color: #1E9FFF;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .action-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .action-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .action-desc {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.3;
+        }
+        
+        /* 列高度设置 */
+        .layui-col-md3, .layui-col-md4, .layui-col-md6, .layui-col-md8 {
+            height: 100%;
+        }
+        
+        .layui-row {
+            min-height: 400px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .quick-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            init() {
-                this.bindEvents();
-                // 加载默认页面
-                this.loadPage('仪表盘');
-            }
-            
-            bindEvents() {
-                // 手风琴菜单交互
-                const accordionHeaders = document.querySelectorAll('.accordion-header');
-                accordionHeaders.forEach(header => {
-                    header.addEventListener('click', function() {
-                        const content = this.nextElementSibling;
-                        const arrow = this.querySelector('.accordion-arrow');
-                        
-                        const isOpen = content.classList.contains('open');
-                        
-                        // 关闭所有其他项
-                        document.querySelectorAll('.accordion-content').forEach(item => {
-                            item.classList.remove('open');
-                        });
-                        document.querySelectorAll('.accordion-arrow').forEach(item => {
-                            item.classList.remove('open');
-                        });
-                        document.querySelectorAll('.accordion-header').forEach(item => {
-                            item.classList.remove('active');
-                        });
-                        
-                        if (!isOpen) {
-                            content.classList.add('open');
-                            arrow.classList.add('open');
-                            this.classList.add('active');
-                        }
-                    });
-                });
-                
-                // 子菜单项点击事件
-                const submenuItems = document.querySelectorAll('.submenu-item');
-                submenuItems.forEach(item => {
-                    item.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        
-                        // 移除所有active状态
-                        submenuItems.forEach(subItem => {
-                            subItem.classList.remove('active');
-                        });
-                        // 添加当前active状态
-                        item.classList.add('active');
-                        
-                        const pageType = item.textContent.trim();
-                        this.loadPage(pageType);
-                    });
-                });
-            }
-            
-            loadPage(pageType) {
-                const iframe = document.getElementById('main-iframe');
-                const titleElement = document.getElementById('iframe-title');
-                
-                if (pageMappings[pageType]) {
-                    iframe.src = pageMappings[pageType];
-                    titleElement.textContent = pageTitles[pageType] || pageType;
-                    this.currentPage = pageType;
-                } else {
-                    // 默认加载仪表盘
-                    iframe.src = 'dashboard.html';
-                    titleElement.textContent = '仪表盘 - 神农开心农场';
-                    this.currentPage = '仪表盘';
-                }
+            .system-grid {
+                grid-template-columns: 1fr;
             }
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            window.iframeManager = new IframeManager();
-        });
-    </script>
-    </script>
+        
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 10px;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .header-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-value {
+                font-size: 28px;
+            }
+            
+            .stat-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
 <body>
-    <div class="layout">
-        <!-- 侧边栏 -->
-        <div class="sidebar">
-            <div class="logo">
-                <h1>神农开心农场</h1>
+    <div class="dashboard-container">
+        <!-- 头部区域 -->
+        <div class="dashboard-header">
+            <div>
+                <div class="header-title">仪表盘</div>
+                <div class="header-subtitle">实时监控农场运营数据，掌握业务动态</div>
+            </div>
+            <div class="header-controls">
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-primary layui-btn-xs">今日</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-xs">本周</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-xs">本月</button>
+                    <button class="layui-btn layui-btn-primary layui-btn-xs">本季度</button>
+                </div>
+                <button class="layui-btn layui-btn-normal layui-btn-sm">
+                    <i class="layui-icon">&#xe669;</i> 刷新数据
+                </button>
             </div>
         </div>
         
-        <!-- 主内容区 -->
-        <div class="main-content">
-            <!-- iframe头部 -->
-            <div class="iframe-header">
-                <div class="iframe-title" id="iframe-title">仪表盘 - 神农开心农场</div>
-                <div class="user-info">
-                    <span>管理员</span>
-                    <div class="avatar">👤</div>
+        <!-- 统计卡片区域 -->
+        <div class="stats-row">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md3">
+                    <div class="stat-card farms">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-value">1,248</div>
+                                <div class="stat-label">活跃农场数量</div>
+                                <div class="stat-trend trend-up">
+                                    <i class="layui-icon">&#xe619;</i> 12.5%
+                                </div>
+                            </div>
+                            <div class="stat-icon farms">
+                                <i class="layui-icon">&#xe66c;</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="stat-card income">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-value">856,420</div>
+                                <div class="stat-label">本月总收入(元)</div>
+                                <div class="stat-trend trend-up">
+                                    <i class="layui-icon">&#xe619;</i> 8.3%
+                                </div>
+                            </div>
+                            <div class="stat-icon income">
+                                <i class="layui-icon">&#xe65e;</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="stat-card users">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-value">15,892</div>
+                                <div class="stat-label">注册用户数</div>
+                                <div class="stat-trend trend-up">
+                                    <i class="layui-icon">&#xe619;</i> 5.7%
+                                </div>
+                            </div>
+                            <div class="stat-icon users">
+                                <i class="layui-icon">&#xe770;</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="stat-card orders">
+                        <div class="stat-content">
+                            <div class="stat-info">
+                                <div class="stat-value">3,456</div>
+                                <div class="stat-label">今日订单数</div>
+                                <div class="stat-trend trend-down">
+                                    <i class="layui-icon">&#xe61a;</i> 2.1%
+                                </div>
+                            </div>
+                            <div class="stat-icon orders">
+                                <i class="layui-icon">&#xe657;</i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- iframe内容区 -->
-            <div class="iframe-container">
-                <iframe id="main-iframe" class="iframe-content" src="data-analysis.html"></iframe>
+        </div>
+        
+        <!-- 图表和活动区域 -->
+        <div class="layui-row layui-col-space15" style="margin: 0; padding: 0 20px;">
+            <div class="layui-col-md8">
+                <!-- 图表区域 -->
+                <div class="chart-section">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div class="chart-title">收入趋势分析</div>
+                            <div class="chart-actions">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary">本月</button>
+                                <button class="layui-btn layui-btn-xs">本季度</button>
+                                <button class="layui-btn layui-btn-xs">本年度</button>
+                            </div>
+                        </div>
+                        <div class="chart-content">
+                            <i class="layui-icon">&#xe62a;</i> 收入趋势图表区域
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <!-- 活动区域 -->
+                <div class="activity-section">
+                    <div class="activity-card">
+                        <div class="activity-header">
+                            <div class="activity-title">最近活动</div>
+                            <div class="activity-badge">5条新消息</div>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon success">
+                                    <i class="layui-icon">&#xe605;</i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-message">新农场 "阳光农场" 注册成功并完成首次种植</div>
+                                    <div class="activity-time">2分钟前</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon warning">
+                                    <i class="layui-icon">&#xe756;</i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-message">设备 #A123 温度异常，请及时检查</div>
+                                    <div class="activity-time">15分钟前</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon info">
+                                    <i class="layui-icon">&#xe60b;</i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-message">用户 "张三" 完成大额订单，金额 ¥12,800</div>
+                                    <div class="activity-time">1小时前</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 系统状态和快捷操作 -->
+        <div class="layui-row layui-col-space15" style="margin: 0; padding: 0 20px;">
+            <div class="layui-col-md6">
+                <!-- 系统状态 -->
+                <div class="system-section">
+                    <div class="system-card">
+                        <div class="system-header">
+                            <div class="system-title">系统状态监控</div>
+                        </div>
+                        <div class="system-grid">
+                            <div class="system-item">
+                                <div class="system-icon">
+                                    <i class="layui-icon">&#xe605;</i>
+                                </div>
+                                <div class="system-info">
+                                    <div class="system-label">API服务</div>
+                                    <div class="system-status">运行正常</div>
+                                </div>
+                            </div>
+                            <div class="system-item">
+                                <div class="system-icon">
+                                    <i class="layui-icon">&#xe629;</i>
+                                </div>
+                                <div class="system-info">
+                                    <div class="system-label">数据库</div>
+                                    <div class="system-status">连接稳定</div>
+                                </div>
+                            </div>
+                            <div class="system-item">
+                                <div class="system-icon warning">
+                                    <i class="layui-icon">&#xe756;</i>
+                                </div>
+                                <div class="system-info">
+                                    <div class="system-label">缓存服务</div>
+                                    <div class="system-status warning">负载较高</div>
+                                </div>
+                            </div>
+                            <div class="system-item">
+                                <div class="system-icon">
+                                    <i class="layui-icon">&#xe62a;</i>
+                                </div>
+                                <div class="system-info">
+                                    <div class="system-label">文件存储</div>
+                                    <div class="system-status">空间充足</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <!-- 快捷操作 -->
+                <div class="quick-section">
+                    <div class="quick-card">
+                        <div class="quick-header">
+                            <div class="quick-title">快捷操作</div>
+                        </div>
+                        <div class="quick-grid">
+                            <div class="action-item">
+                                <div class="action-icon">
+                                    <i class="layui-icon">&#xe62a;</i>
+                                </div>
+                                <div class="action-title">数据报表</div>
+                                <div class="action-desc">查看详细数据分析报告</div>
+                            </div>
+                            <div class="action-item">
+                                <div class="action-icon">
+                                    <i class="layui-icon">&#xe645;</i>
+                                </div>
+                                <div class="action-title">消息中心</div>
+                                <div class="action-desc">处理系统通知信息</div>
+                            </div>
+                            <div class="action-item">
+                                <div class="action-icon">
+                                    <i class="layui-icon">&#xe614;</i>
+                                </div>
+                                <div class="action-title">系统设置</div>
+                                <div class="action-desc">配置系统参数选项</div>
+                            </div>
+                            <div class="action-item">
+                                <div class="action-icon">
+                                    <i class="layui-icon">&#xe770;</i>
+                                </div>
+                                <div class="action-title">用户管理</div>
+                                <div class="action-desc">管理用户权限分配</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+    <script src="//unpkg.com/layui@2.12.1/dist/layui.js"></script>
+    <script>
+        layui.use(function(){
+            var $ = layui.$;
+            var layer = layui.layer;
+            
+            // 时间筛选功能
+            $('.header-controls .layui-btn-group .layui-btn').on('click', function(){
+                $(this).siblings().removeClass('layui-btn-primary');
+                $(this).addClass('layui-btn-primary');
+                layer.msg('切换到: ' + $(this).text());
+            });
+            
+            // 刷新功能
+            $('.header-controls .layui-btn-normal').on('click', function(){
+                var btn = $(this);
+                btn.prop('disabled', true);
+                btn.find('i').addClass('layui-anim layui-anim-rotate layui-anim-loop');
+                
+                // 模拟数据更新
+                setTimeout(function(){
+                    btn.prop('disabled', false);
+                    btn.find('i').removeClass('layui-anim layui-anim-rotate layui-anim-loop');
+                    layer.msg('数据已刷新', {icon: 1});
+                }, 1000);
+            });
+            
+            // 图表切换
+            $('.chart-actions .layui-btn').on('click', function(){
+                $(this).siblings().removeClass('layui-btn-primary');
+                $(this).addClass('layui-btn-primary');
+                layer.msg('切换到: ' + $(this).text() + '视图');
+            });
+            
+            // 快捷操作点击
+            $('.action-item').on('click', function(){
+                var title = $(this).find('.action-title').text();
+                layer.msg('即将跳转到: ' + title, {time: 1500});
+            });
+            
+            // 活动项点击
+            $('.activity-item').on('click', function(){
+                var message = $(this).find('.activity-message').text();
+                layer.msg('查看活动详情: ' + message, {time: 2000});
+            });
+        });
+    </script>
 </body>
 </html>
