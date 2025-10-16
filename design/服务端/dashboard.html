@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神农开心农场 - 后台管理系统</title>
+    <link rel="stylesheet" href="https://unpkg.com/antd@5.0.0/dist/reset.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+        }
+        
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 240px;
+            background: #001529;
+            color: white;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #303030;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            color: #27ae60;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .accordion {
+            list-style: none;
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid #303030;
+        }
+        
+        .accordion-header {
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background-color: #1890ff;
+        }
+        
+        .accordion-header.active {
+            background-color: #1890ff;
+        }
+        
+        .accordion-header i {
+            margin-right: 8px;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #001a33;
+        }
+        
+        .accordion-content.open {
+            max-height: 200px;
+        }
+        
+        .submenu-item {
+            padding: 10px 20px 10px 40px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-left: 3px solid transparent;
+        }
+        
+        .submenu-item:hover, .submenu-item.active {
+            background-color: #1890ff;
+            border-left-color: #52c41a;
+        }
+        
+        .accordion-arrow {
+            transition: transform 0.3s;
+        }
+        
+        .accordion-arrow.open {
+            transform: rotate(180deg);
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .iframe-container {
+            flex: 1;
+            position: relative;
+        }
+        
+        .iframe-content {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .iframe-header {
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+            padding: 0 20px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .iframe-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: #27ae60;
+            margin: 8px 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        
+        .monitor-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .monitor-placeholder {
+            height: 200px;
+            background: #f0f2f5;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .alert-list {
+            margin-top: 16px;
+        }
+        
+        .alert-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .alert-item:last-child {
+            border-bottom: none;
+        }
+        
+        .alert-critical {
+            color: #ff4d4f;
+        }
+        
+        .alert-warning {
+            color: #faad14;
+        }
+        
+        .alert-info {
+            color: #1890ff;
+        }
+        
+        /* 实时监控页面样式 */
+        .monitor-controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .control-panel h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .control-group label {
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .direction-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .horizontal-controls {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .control-btn {
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background: #f5f5f5;
+            border-color: #1890ff;
+        }
+        
+        .zoom-controls, .preset-controls {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .camera-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .camera-container {
+            position: relative;
+        }
+        
+        .camera-feed {
+            position: relative;
+            background: #000;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .camera-placeholder {
+            height: 300px;
+            background: linear-gradient(45deg, #1a1a1a 25%, #2a2a2a 25%, #2a2a2a 50%, #1a1a1a 50%, #1a1a1a 75%, #2a2a2a 75%);
+            background-size: 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+        }
+        
+        .camera-status {
+            font-size: 18px;
+            z-index: 2;
+        }
+        
+        .camera-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        .grid-overlay {
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .camera-info {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+        }
+        
+        .status-indicator {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .status-indicator.online {
+            background: #52c41a;
+        }
+        
+        .sensor-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .sensor-card {
+            border: 1px solid #f0f0f0;
+            border-radius: 6px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+        
+        .sensor-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .sensor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .sensor-name {
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .sensor-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1890ff;
+        }
+        
+        .sensor-chart {
+            height: 80px;
+            margin: 10px 0;
+        }
+        
+        .sensor-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .sensor-status.normal {
+            background: #f6ffed;
+            color: #52c41a;
+            border: 1px solid #b7eb8f;
+        }
+        
+        .sensor-status.warning {
+            background: #fff7e6;
+            color: #fa8c16;
+            border: 1px solid #ffd591;
+        }
+        
+        .sensor-status.critical {
+            background: #fff2f0;
+            color: #ff4d4f;
+            border: 1px solid #ffccc7;
+        }
+        
+        .alert-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .alert-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            gap: 10px;
+        }
+        
+        .alert-item.critical {
+            background: #fff2f0;
+            border-left: 4px solid #ff4d4f;
+        }
+        
+        .alert-item.warning {
+            background: #fff7e6;
+            border-left: 4px solid #fa8c16;
+        }
+        
+        .alert-item.info {
+            background: #f6ffed;
+            border-left: 4px solid #52c41a;
+        }
+        
+        .alert-icon {
+            font-size: 16px;
+        }
+        
+        .alert-message {
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .alert-time {
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+    <script>
+        // 页面映射配置
+        const pageMappings = {
+            '仪表盘': 'dashboard.html',
+            '实时监控': 'real-time-monitor.html',
+            '预警中心': 'data-analysis.html',
+            '农场列表': 'farm-management.html',
+            '地图视图': 'farm-management.html',
+            '设备管理': 'farm-management.html',
+            '种植记录': 'farm-management.html',
+            '订单管理': 'order-management.html',
+            '商品管理': 'order-management.html',
+            '库存管理': 'order-management.html',
+            '物流跟踪': 'order-management.html',
+            '用户列表': 'user-management.html',
+            '权限管理': 'user-management.html',
+            '角色配置': 'user-management.html',
+            '操作日志': 'user-management.html',
+            '数据报表': 'data-analysis.html',
+            '趋势分析': 'data-analysis.html',
+            '业务洞察': 'data-analysis.html',
+            '导出管理': 'data-analysis.html',
+            '基本设置': 'system-settings.html',
+            '通知配置': 'system-settings.html',
+            '安全管理': 'system-settings.html',
+            '备份恢复': 'system-settings.html',
+            '系统通知': 'message-center.html',
+            '用户消息': 'message-center.html',
+            '公告管理': 'message-center.html'
+        };
+
+        // 页面标题映射
+        const pageTitles = {
+            '仪表盘': '仪表盘 - 神农开心农场',
+            '实时监控': '实时监控系统',
+            '预警中心': '预警中心管理',
+            '农场列表': '农场管理',
+            '地图视图': '农场地图视图',
+            '设备管理': '设备管理',
+            '种植记录': '种植记录管理',
+            '订单管理': '订单管理',
+            '商品管理': '商品管理',
+            '库存管理': '库存管理',
+            '物流跟踪': '物流跟踪',
+            '用户列表': '用户管理',
+            '权限管理': '权限管理',
+            '角色配置': '角色配置',
+            '操作日志': '操作日志',
+            '数据报表': '数据报表',
+            '趋势分析': '趋势分析',
+            '业务洞察': '业务洞察',
+            '导出管理': '导出管理',
+            '基本设置': '系统设置',
+            '通知配置': '通知配置',
+            '安全管理': '安全管理',
+            '备份恢复': '备份恢复',
+            '系统通知': '消息中心',
+            '用户消息': '用户消息',
+            '公告管理': '公告管理'
+        };
+
+        class IframeManager {
+            constructor() {
+                this.currentPage = '仪表盘';
+                this.init();
+            }
+            
+            init() {
+                this.bindEvents();
+                // 加载默认页面
+                this.loadPage('仪表盘');
+            }
+            
+            bindEvents() {
+                // 手风琴菜单交互
+                const accordionHeaders = document.querySelectorAll('.accordion-header');
+                accordionHeaders.forEach(header => {
+                    header.addEventListener('click', function() {
+                        const content = this.nextElementSibling;
+                        const arrow = this.querySelector('.accordion-arrow');
+                        
+                        const isOpen = content.classList.contains('open');
+                        
+                        // 关闭所有其他项
+                        document.querySelectorAll('.accordion-content').forEach(item => {
+                            item.classList.remove('open');
+                        });
+                        document.querySelectorAll('.accordion-arrow').forEach(item => {
+                            item.classList.remove('open');
+                        });
+                        document.querySelectorAll('.accordion-header').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        
+                        if (!isOpen) {
+                            content.classList.add('open');
+                            arrow.classList.add('open');
+                            this.classList.add('active');
+                        }
+                    });
+                });
+                
+                // 子菜单项点击事件
+                const submenuItems = document.querySelectorAll('.submenu-item');
+                submenuItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        
+                        // 移除所有active状态
+                        submenuItems.forEach(subItem => {
+                            subItem.classList.remove('active');
+                        });
+                        // 添加当前active状态
+                        item.classList.add('active');
+                        
+                        const pageType = item.textContent.trim();
+                        this.loadPage(pageType);
+                    });
+                });
+            }
+            
+            loadPage(pageType) {
+                const iframe = document.getElementById('main-iframe');
+                const titleElement = document.getElementById('iframe-title');
+                
+                if (pageMappings[pageType]) {
+                    iframe.src = pageMappings[pageType];
+                    titleElement.textContent = pageTitles[pageType] || pageType;
+                    this.currentPage = pageType;
+                } else {
+                    // 默认加载仪表盘
+                    iframe.src = 'dashboard.html';
+                    titleElement.textContent = '仪表盘 - 神农开心农场';
+                    this.currentPage = '仪表盘';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            window.iframeManager = new IframeManager();
+        });
+    </script>
+    </script>
+<body>
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1>神农开心农场</h1>
+            </div>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- iframe头部 -->
+            <div class="iframe-header">
+                <div class="iframe-title" id="iframe-title">仪表盘 - 神农开心农场</div>
+                <div class="user-info">
+                    <span>管理员</span>
+                    <div class="avatar">👤</div>
+                </div>
+            </div>
+            
+            <!-- iframe内容区 -->
+            <div class="iframe-container">
+                <iframe id="main-iframe" class="iframe-content" src="data-analysis.html"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

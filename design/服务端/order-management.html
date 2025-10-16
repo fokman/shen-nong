@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单管理 - 神农开心农场管理系统</title>
+    <link rel="stylesheet" href="https://unpkg.com/antd@5.0.0/dist/reset.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+        }
+        
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 240px;
+            background: #001529;
+            color: white;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #303030;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            color: #27ae60;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .accordion {
+            list-style: none;
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid #303030;
+        }
+        
+        .accordion-header {
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background-color: #1890ff;
+        }
+        
+        .accordion-header.active {
+            background-color: #1890ff;
+        }
+        
+        .accordion-header i {
+            margin-right: 8px;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #001a33;
+        }
+        
+        .accordion-content.open {
+            max-height: 200px;
+        }
+        
+        .submenu-item {
+            padding: 10px 20px 10px 40px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-left: 3px solid transparent;
+        }
+        
+        .submenu-item:hover, .submenu-item.active {
+            background-color: #1890ff;
+            border-left-color: #52c41a;
+        }
+        
+        .accordion-arrow {
+            transition: transform 0.3s;
+        }
+        
+        .accordion-arrow.open {
+            transform: rotate(180deg);
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .filter-bar {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .filter-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        select, input {
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            min-width: 120px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            background: #1890ff;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        th {
+            background: #fafafa;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            color: #faad14;
+            background: #fffbe6;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .status-paid {
+            color: #1890ff;
+            background: #e6f7ff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .status-shipped {
+            color: #722ed1;
+            background: #f9f0ff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .status-completed {
+            color: #27ae60;
+            background: #f6ffed;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .status-cancelled {
+            color: #ff4d4f;
+            background: #fff2f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #fafafa;
+        }
+        
+        .batch-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .order-type {
+            display: inline-block;
+            padding: 2px 6px;
+            background: #f0f2f5;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+
+<body>
+    <div class="layout">
+        <!-- 主内容区 -->
+        <div class="main-content" style="margin-left: 0; width: 100%;">
+            <div class="header">
+                <h1 class="page-title">订单管理</h1>
+                <div class="user-info">
+                    <span>管理员</span>
+                    <div class="avatar">👤</div>
+                </div>
+            </div>
+            
+            <!-- 筛选栏 -->
+            <div class="filter-bar">
+                <div class="filter-row">
+                    <div class="filter-item">
+                        <div class="filter-label">订单状态</div>
+                        <select>
+                            <option value="">全部状态</option>
+                            <option value="pending">待支付</option>
+                            <option value="paid">已支付</option>
+                            <option value="shipped">已发货</option>
+                            <option value="completed">已完成</option>
+                            <option value="cancelled">已取消</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <div class="filter-label">订单类型</div>
+                        <select>
+                            <option value="">全部类型</option>
+                            <option value="rental">农场租赁</option>
+                            <option value="product">商品购买</option>
+                            <option value="service">服务订购</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <div class="filter-label">下单时间</div>
+                        <input type="date" placeholder="开始日期">
+                    </div>
+                    <div class="filter-item">
+                        <div class="filter-label">至</div>
+                        <input type="date" placeholder="结束日期">
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-item">
+                        <div class="filter-label">订单号/用户</div>
+                        <input type="text" placeholder="搜索订单号、用户名..." style="width: 300px;">
+                    </div>
+                    <button class="btn btn-primary">搜索</button>
+                    <button class="btn">重置</button>
+                </div>
+            </div>
+            
+            <!-- 数据表格 -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>订单号</th>
+                            <th>订单类型</th>
+                            <th>用户</th>
+                            <th>金额</th>
+                            <th>状态</th>
+                            <th>下单时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>O202410150001</td>
+                            <td><span class="order-type">农场租赁</span></td>
+                            <td>张三 (138****0001)</td>
+                            <td>¥2,880.00</td>
+                            <td><span class="status-completed">已完成</span></td>
+                            <td>2024-10-15 14:30</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary btn-sm">详情</button>
+                                <button class="btn btn-sm">物流</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>O202410150002</td>
+                            <td><span class="order-type">商品购买</span></td>
+                            <td>李四 (139****0002)</td>
+                            <td>¥568.00</td>
+                            <td><span class="status-shipped">已发货</span></td>
+                            <td>2024-10-15 13:15</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary btn-sm">详情</button>
+                                <button class="btn btn-sm">物流</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>O202410150003</td>
+                            <td><span class="order-type">服务订购</span></td>
+                            <td>王五 (136****0003)</td>
+                            <td>¥1,200.00</td>
+                            <td><span class="status-paid">已支付</span></td>
+                            <td>2024-10-15 11:45</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary btn-sm">详情</button>
+                                <button class="btn btn-sm">确认</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>O202410150004</td>
+                            <td><span class="order-type">农场租赁</span></td>
+                            <td>赵六 (135****0004)</td>
+                            <td>¥3,600.00</td>
+                            <td><span class="status-pending">待支付</span></td>
+                            <td>2024-10-15 10:20</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary btn-sm">详情</button>
+                                <button class="btn btn-sm">提醒</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>O202410140005</td>
+                            <td><span class="order-type">商品购买</span></td>
+                            <td>钱七 (137****0005)</td>
+                            <td>¥890.00</td>
+                            <td><span class="status-cancelled">已取消</span></td>
+                            <td>2024-10-14 16:40</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary btn-sm">详情</button>
+                                <button class="btn btn-sm">分析</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- 分页和批量操作 -->
+                <div class="pagination">
+                    <div class="batch-actions">
+                        <button class="btn btn-sm">批量发货</button>
+                        <button class="btn btn-sm">批量打印</button>
+                        <button class="btn btn-sm" style="color: #ff4d4f;">批量删除</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm">上一页</button>
+                        <span style="margin: 0 16px;">第 1 页，共 8 页</span>
+                        <button class="btn btn-sm">下一页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
