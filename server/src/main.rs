@@ -1,9 +1,13 @@
+mod components;
+
 use dioxus::prelude::*;
+use admin_menu::Header;
+
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
 enum Route {
-    #[layout(Navbar)]
+    #[layout(Header)]
     #[route("/")]
     Home {},
     #[route("/farm")]
@@ -16,7 +20,7 @@ enum Route {
     Dashboard {},
 }
 
-const MAIN_CSS: Asset = asset!("/assets/main.css");
+const MAIN_CSS: Asset = asset!("/assets/layui.css");
 
 fn main() {
     dioxus::launch(App);
@@ -29,6 +33,9 @@ fn App() -> Element {
         Router::<Route> {}
     }
 }
+
+
+
 
 #[component]
 pub fn Hero() -> Element {
@@ -45,7 +52,7 @@ pub fn Hero() -> Element {
                 }
                 Link {
                     to: Route::Market {},
-                    class: "nav-link", 
+                    class: "nav-link",
                     "🛒 农贸市场"
                 }
                 Link {
@@ -76,7 +83,7 @@ fn Home() -> Element {
 fn Farm() -> Element {
     rsx! {
         h2 { "我的农场" }
-        div { 
+        div {
             id: "farm-view",
             "欢迎来到您的虚拟农场！在这里您可以远程种植和养殖。"
         }
@@ -88,7 +95,7 @@ fn Farm() -> Element {
 fn Market() -> Element {
     rsx! {
         h2 { "农贸市场" }
-        div { 
+        div {
             id: "market-view",
             "购买或销售农产品、禽蛋等商品。"
         }
@@ -100,7 +107,7 @@ fn Market() -> Element {
 fn Profile() -> Element {
     rsx! {
         h2 { "个人中心" }
-        div { 
+        div {
             id: "profile-view",
             "管理您的个人信息和农场设置。"
         }
@@ -112,41 +119,9 @@ fn Profile() -> Element {
 fn Dashboard() -> Element {
     rsx! {
         h2 { "数据中心" }
-        div { 
+        div {
             id: "dashboard-view",
             "查看农场数据统计和分析报告。"
         }
-    }
-}
-
-/// Shared navbar component.
-#[component]
-fn Navbar() -> Element {
-    rsx! {
-        div {
-            id: "navbar",
-            Link {
-                to: Route::Home {},
-                class: "nav-item",
-                "🏠 首页"
-            }
-            Link {
-                to: Route::Farm {},
-                class: "nav-item",
-                "🌱 农场"
-            }
-            Link {
-                to: Route::Market {},
-                class: "nav-item",
-                "🛒 市场"
-            }
-            Link {
-                to: Route::Profile {},
-                class: "nav-item",
-                "👤 我"
-            }
-        }
-
-        Outlet::<Route> {}
     }
 }
