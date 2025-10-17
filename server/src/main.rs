@@ -1,11 +1,12 @@
 mod components;
 
+use components::admin_menu;
 use dioxus::prelude::*;
-use admin_menu::Header;
 
+const LAY_UI_CSS: Asset = asset!("/assets/layui.css");
+const MAIN_CSS: Asset = asset!("/assets/main.css");
 
 #[derive(Debug, Clone, Routable, PartialEq)]
-#[rustfmt::skip]
 enum Route {
     #[layout(Header)]
     #[route("/")]
@@ -20,8 +21,6 @@ enum Route {
     Dashboard {},
 }
 
-const MAIN_CSS: Asset = asset!("/assets/layui.css");
-
 fn main() {
     dioxus::launch(App);
 }
@@ -30,12 +29,58 @@ fn main() {
 fn App() -> Element {
     rsx! {
         document::Link { rel: "stylesheet", href: MAIN_CSS }
-        Router::<Route> {}
+        document::Link { rel: "stylesheet", href: LAY_UI_CSS }
+        div{
+            Router::<Route> {}
+            }
     }
 }
 
+#[component]
+pub fn Header() -> Element {
+    let mut current_page = use_signal(|| "dashboard.html".to_string());
 
+    rsx! {
+        div {
+            class: "header-container",
+            div {
+                class: "logo-area",
+                div {
+                    class: "logo",
+                    "神农开心农场"
+                }
+            }
 
+            admin_menu {
+                on_menu_click: move |page| {
+                    current_page.write().clone_from(&page);
+                }
+            }
+
+            div {
+                class: "user-area",
+                div {
+                    class: "user-info",
+                    div {
+                        class: "user-avatar",
+                        "管"
+                    }
+                    div {
+                        class: "user-details",
+                        div {
+                            class: "user-name",
+                            "管理员"
+                        }
+                        div {
+                            class: "user-role",
+                            "系统管理员"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 #[component]
 pub fn Hero() -> Element {
