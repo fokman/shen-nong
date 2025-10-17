@@ -2,12 +2,14 @@ use dioxus::prelude::*;
 
 use super::Header;
 
+const DASH_BOARD_CSS: Asset = asset!("/assets/dash_board.css");
+
 /// Dashboard page
 #[component]
 pub fn Dashboard() -> Element {
     rsx! {
-        Header {}
-        DashboardContainer {}
+        document::Link { rel: "stylesheet", href: DASH_BOARD_CSS }
+        Header {}, DashboardContainer {}
     }
 }
 
@@ -66,9 +68,8 @@ fn DashboardHeader() -> Element {
                     class: "layui-btn layui-btn-normal layui-btn-sm",
                     i {
                         class: "layui-icon",
-                        "&#xe669;"
                     }
-                    " 刷新数据"
+                    "刷新数据"
                 }
             }
         }
@@ -96,8 +97,7 @@ fn StatsRow() -> Element {
                 StatCard {
 
                 }
-                StatCard {
-                }
+              
             }
         }
     }
@@ -260,7 +260,7 @@ fn ActivityItem(
     icon_type: &'static str,
     icon: &'static str,
     message: &'static str,
-    time: &'static str,
+    time: &'static str
 ) -> Element {
     rsx! {
         div {

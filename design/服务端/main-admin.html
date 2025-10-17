@@ -7,7 +7,7 @@
     <title>神农开心农场管理系统</title>
     <!-- 引入 layui.css -->
     <link href="//unpkg.com/layui@2.12.1/dist/css/layui.css" rel="stylesheet">
-    <link href="assets/main.css" rel="stylesheet"/>
+    <link href="assets/main.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -77,8 +77,20 @@
                 </div>
             </div>
         </div>
-        
 
+        <div class="layui-tabs layui-hide-v" id="demoTabs1" lay-options="{closable: true, headerMode:'scroll'}">
+            <ul class="layui-tabs-header">
+                <li lay-id="aaa" lay-closable="false">Tab1</li>
+                <li lay-id="bbb">Tab2</li>
+
+            </ul>
+            <div class="layui-tabs-body">
+                <div class="layui-tabs-item" style="height: calc(100vh - 120px); overflow: auto;">
+                    <iframe src="dashboard.html" style="width: 100%; height: 100%; border: none;"></iframe>
+                </div>
+                <div class="layui-tabs-item">Tab Content-2</div>
+            </div>
+        </div>
     </div>
 
 

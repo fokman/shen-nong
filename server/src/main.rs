@@ -8,15 +8,10 @@ const MAIN_CSS: Asset = asset!("/assets/main.css");
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 enum Route {
-    #[layout(components::Dashboard)]
-    #[route("/")]
-    DashboardPage {},
-    #[route("/farm")]
-    Farm {},
-    #[route("/market")]
-    Market {},
-    #[route("/profile")]
-    Profile {},
+    #[layout(components::Dashboard)] #[route("/")] DashboardPage {},
+    #[route("/farm")] Farm {},
+    #[route("/market")] Market {},
+    #[route("/profile")] Profile {},
 }
 
 fn main() {
@@ -33,8 +28,6 @@ fn App() -> Element {
             }
     }
 }
-
-
 
 #[component]
 pub fn Hero() -> Element {
@@ -90,10 +83,3 @@ fn Profile() -> Element {
         }
     }
 }
-
-
-
-
-
-
-
