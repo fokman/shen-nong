@@ -16,9 +16,7 @@ enum Route {
     Dashboard {},
 }
 
-const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
-const HEADER_SVG: Asset = asset!("/assets/header.svg");
 
 fn main() {
     dioxus::launch(App);
@@ -27,7 +25,6 @@ fn main() {
 #[component]
 fn App() -> Element {
     rsx! {
-        document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "stylesheet", href: MAIN_CSS }
         Router::<Route> {}
     }
@@ -38,7 +35,6 @@ pub fn Hero() -> Element {
     rsx! {
         div {
             id: "hero",
-            img { src: HEADER_SVG, id: "header" }
             h1 { "神农开心农场 - Shennong Happy Farm" }
             p { "基于物联网技术的远程种养体验平台" }
             div { id: "links",
@@ -118,7 +114,7 @@ fn Dashboard() -> Element {
         h2 { "数据中心" }
         div { 
             id: "dashboard-view",
-            "实时监控环境数据、作物生长状态等信息。"
+            "查看农场数据统计和分析报告。"
         }
     }
 }
