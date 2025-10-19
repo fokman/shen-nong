@@ -2,7 +2,6 @@ mod components;
 
 use dioxus::prelude::*;
 
-const LAY_UI_CSS: Asset = asset!("/assets/layui.css");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 
 // src/routes.rs 或直接在 main.rs 中
@@ -24,11 +23,11 @@ pub enum Route {
         #[route("/farm/list")]
         FarmList,
 
-        // #[route("/farm/devices")]
-        // DeviceManagement,
+        #[route("/farm/devices")]
+        DeviceManagement,
 
-        // #[route("/farm/crops")]
-        // CropManagement,
+        #[route("/farm/crops")]
+        CropManagement,
 
         // #[route("/business/orders")]
         // OrderManagement,
@@ -62,7 +61,7 @@ pub enum Route {
 pub fn MainLayout() -> Element {
     let current_route = use_route::<Route>();
     let mut sidebar_open = use_signal(|| "data-monitor");
-    
+
     rsx! {
         div { class: "admin-layout",
             // 顶部栏
@@ -72,13 +71,13 @@ pub fn MainLayout() -> Element {
                     span { "管理员" }
                 }
             }
-            
+
             div { class: "admin-body",
                 // 侧边栏
                 aside { class: "admin-sidebar",
                     nav {
                         div { class: "menu-group",
-                            div { 
+                            div {
                                 class: "menu-title",
                                 onclick: move |_| sidebar_open.set("data-monitor"),
                                 "📊 数据监控"
@@ -91,26 +90,24 @@ pub fn MainLayout() -> Element {
                                 }
                             }
                         }
-                        
+
                         div { class: "menu-group",
-                            div { 
+                            div {
                                 class: "menu-title",
                                 onclick: move |_| sidebar_open.set("farm"),
                                 "🏠 农场管理"
                             }
                             if sidebar_open() == "farm" {
                                 div { class: "menu-items",
-                                    Link { 
-                                        to: Route::FarmList {},
-                                        class: if current_route == Route::FarmList { "active" } else { "" },
-                                        "农场列表" 
-                                    }
+                                    Link { to: Route::FarmList {},"农场列表"}
+                                    Link { to: Route::DeviceManagement {}, "设备管理" }
+                                    Link { to: Route::CropManagement {}, "作物管理" }
                                 }
                             }
                         }
                     }
                 }
-                
+
                 // 主内容
                 main { class: "admin-main",
                     Outlet::<Route> {}
@@ -127,7 +124,6 @@ fn main() {
 fn App() -> Element {
     rsx! {
         document::Link { rel: "stylesheet", href: MAIN_CSS }
-        document::Link { rel: "stylesheet", href: LAY_UI_CSS }
         div{
             Router::<Route> {}
             }
@@ -174,7 +170,22 @@ fn FarmList() -> Element {
     }
 }
 
+#[component]
+fn DeviceManagement() -> Element {
+    rsx! {
+        div { class: "page-content",
+            h2 { "⏱️ 设备管理" }
+            p { "此处显示农场传感器实时数据..." }
+        }
+    }
+}
 
-
-
-// 其他页面类似...
+#[component]
+fn CropManagement() -> Element {
+    rsx! {
+        div { class: "page-content",
+            h2 { "⏱️ 作物管理" }
+            p { "此处显示农场传感器实时数据..." }
+        }
+    }
+}
