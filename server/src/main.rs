@@ -4,8 +4,7 @@ use dioxus::prelude::*;
 
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 
-// src/routes.rs 或直接在 main.rs 中
-use serde::{Deserialize, Serialize};
+use serde::{ Deserialize, Serialize };
 
 #[derive(Routable, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[rustfmt::skip]
@@ -59,7 +58,6 @@ pub enum Route {
 
 #[component]
 pub fn MainLayout() -> Element {
-    let current_route = use_route::<Route>();
     let mut sidebar_open = use_signal(|| "data-monitor");
 
     rsx! {
@@ -90,7 +88,7 @@ pub fn MainLayout() -> Element {
                                 }
                             }
                         }
-
+                        //农场管理
                         div { class: "menu-group",
                             div {
                                 class: "menu-title",
@@ -99,7 +97,7 @@ pub fn MainLayout() -> Element {
                             }
                             if sidebar_open() == "farm" {
                                 div { class: "menu-items",
-                                    Link { to: Route::FarmList {},"农场列表"}
+                                    Link { to: Route::FarmList {}, "农场列表" }
                                     Link { to: Route::DeviceManagement {}, "设备管理" }
                                     Link { to: Route::CropManagement {}, "作物管理" }
                                 }
@@ -109,9 +107,7 @@ pub fn MainLayout() -> Element {
                 }
 
                 // 主内容
-                main { class: "admin-main",
-                    Outlet::<Route> {}
-                }
+                main { class: "admin-main", Outlet::<Route> {} }
             }
         }
     }
@@ -124,9 +120,7 @@ fn main() {
 fn App() -> Element {
     rsx! {
         document::Link { rel: "stylesheet", href: MAIN_CSS }
-        div{
-            Router::<Route> {}
-            }
+        div { Router::<Route> {} }
     }
 }
 
