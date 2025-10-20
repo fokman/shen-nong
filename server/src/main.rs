@@ -1,10 +1,11 @@
 mod components;
 
-
-use crate::components::{Dashboard, DataAnalysis, RealTimeMonitor,UserList,RoleManagement,PermissionManagement};
+use crate::components::{Dashboard, DataAnalysis, RealTimeMonitor,UserList,
+    RoleManagement,PermissionManagement,FarmList,DeviceManagement,CropManagement,
+    OrderManagement,ProductManagement,InventoryManagement,
+    BasicSettings,SecuritySettings,LogManagement};
 
 use dioxus::prelude::*;
-
 use serde::{Deserialize, Serialize};
 
 const MAIN_CSS: Asset = asset!("/assets/main.css");
@@ -179,94 +180,3 @@ fn App() -> Element {
     }
 }
 
-#[component]
-fn FarmList() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "⏱️ 农场列表" }
-            p { "此处显示农场传感器实时数据..." }
-        }
-    }
-}
-
-#[component]
-fn DeviceManagement() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "⏱️ 设备管理" }
-            p { "此处显示农场传感器实时数据..." }
-        }
-    }
-}
-
-#[component]
-fn CropManagement() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "⏱️ 作物管理" }
-            p { "此处显示农场传感器实时数据..." }
-        }
-    }
-}
-
-#[component]
-fn OrderManagement() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "📦 订单管理" }
-            p { "此处显示订单管理相关内容..." }
-        }
-    }
-}
-
-#[component]
-fn ProductManagement() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "📦 商品管理" }
-            p { "此处显示商品管理相关内容..." }
-        }
-    }
-}
-
-#[component]
-fn InventoryManagement() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "📦 库存管理" }
-            p { "此处显示库存管理相关内容..." }
-        }
-    }
-}
-
-
-
-#[component]
-fn BasicSettings() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "⚙️ 基本设置" }
-            p { "此处显示基本设置相关内容..." }
-        }
-    }
-}
-
-#[component]
-fn SecuritySettings() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "⚙️ 安全设置" }
-            p { "此处显示安全设置相关内容..." }
-        }
-    }
-}
-
-#[component]
-fn LogManagement() -> Element {
-    rsx! {
-        div { class: "page-content",
-            h2 { "⚙️ 日志管理" }
-            p { "此处显示日志管理相关内容..." }
-        }
-    }
-}
