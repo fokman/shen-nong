@@ -1,12 +1,25 @@
 mod components;
 
-use crate::components::{Dashboard, DataAnalysis, RealTimeMonitor,UserList,
-    RoleManagement,PermissionManagement,FarmList,DeviceManagement,CropManagement,
-    OrderManagement,ProductManagement,InventoryManagement,
-    BasicSettings,SecuritySettings,LogManagement};
+use crate::components::{
+    Dashboard,
+    DataAnalysis,
+    RealTimeMonitor,
+    UserList,
+    RoleManagement,
+    PermissionManagement,
+    FarmList,
+    DeviceManagement,
+    CropManagement,
+    OrderManagement,
+    ProductManagement,
+    InventoryManagement,
+    BasicSettings,
+    SecuritySettings,
+    LogManagement,
+};
 
 use dioxus::prelude::*;
-use serde::{Deserialize, Serialize};
+use serde::{ Deserialize, Serialize };
 
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 
@@ -179,4 +192,3 @@ fn App() -> Element {
         div { Router::<Route> {} }
     }
 }
-
