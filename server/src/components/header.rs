@@ -1,11 +1,15 @@
 use dioxus::prelude::*;
 
-use super::admin_menu;
+use crate::Route;
+
+
+#[derive(Props, PartialEq, Clone)]
+pub struct HeaderProps {
+    pub on_menu_click: EventHandler<String>,
+}
 
 #[component]
 pub fn Header() -> Element {
-    let mut current_page = use_signal(|| "dashboard.html".to_string());
-
     rsx! {
         div {
             class: "header-container",
@@ -17,11 +21,7 @@ pub fn Header() -> Element {
                 }
             }
 
-            admin_menu {
-                on_menu_click: move |page| {
-                    current_page.write().clone_from(&page);
-                }
-            }
+           Outlet::<Route> {}
 
             div {
                 class: "user-area",
