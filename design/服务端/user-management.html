@@ -5,235 +5,190 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户管理 - 神农开心农场</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.8.18/dist/css/layui.min.css">
-    <style>
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #1E9FFF;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-    </style>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="assets/user.css">
+    
+</head>
 
 <body>
     <div class="user-management-container">
         <!-- 页面标题 -->
-        <div class="layui-card">
-            <div class="layui-card-header">用户管理</div>
-            <div class="layui-card-body">
-                <!-- 工具栏 -->
-                <div class="layui-form">
-                    <div class="layui-row layui-col-space10">
-                        <div class="layui-col-xs3">
-
-                            <div class="layui-input-group">
-                                <div class="layui-input-split layui-input-prefix">
-                                    用户名
-                                </div>
-                                <input type="text" placeholder="带任意前置内容" class="layui-input">
+        <div class="card">
+            <div class="card-header">用户管理</div>
+            <div class="card-body">
+                <!-- 搜索表单 -->
+                <form class="search-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-label">用户名</div>
+                                <input type="text" class="input-field" placeholder="请输入用户名">
                             </div>
                         </div>
-                        <div class="layui-col-xs3">
-                            <div class="layui-input-group">
-                                <div class="layui-input-split layui-input-prefix">
-                                    手机号
-                                </div>
-                                <input type="text" placeholder="请输入手机号" class="layui-input">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-label">手机号</div>
+                                <input type="text" class="input-field" placeholder="请输入手机号">
                             </div>
                         </div>
-                        <div class="layui-col-xs3">
-                            <div class="layui-input-group">
-                                <div class="layui-input-split layui-input-prefix">
-                                    邮箱
-                                </div>
-                                <input type="text" placeholder="请输入邮箱" class="layui-input">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-label">邮箱</div>
+                                <input type="text" class="input-field" placeholder="请输入邮箱">
                             </div>
                         </div>
-                        <div class="layui-col-xs3">
-                            <div class="layui-input-group">
-                                <button type="button" class="layui-btn layui-bg-blue">查询</button>
-                            </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" style="width: 100%;">
+                                <span class="btn-icon">🔍</span>
+                                <span>查询</span>
+                            </button>
                         </div>
-
-                        
                     </div>
-                </div>
+                </form>
             </div>
-            <!-- 各段 -->
-            <div class="layui-form-item">
-       
 
+            <!-- 工具栏 -->
+            <div class="toolbar">
+                <button type="button" class="btn btn-info">
+                    <span class="btn-icon">📤</span>
+                    <span>导出数据</span>
+                </button>
+                <button type="button" class="btn btn-warning">
+                    <span class="btn-icon">➕</span>
+                    <span>添加用户</span>
+                </button>
+            </div>
 
-                <div class="layui-inline" style="float: right;">
-                    <button type="button" class="layui-btn layui-btn-normal">
-                        <i class="layui-icon layui-icon-export"></i> 导出数据
-                    </button>
-                    <button type="button" class="layui-btn layui-btn-warm">
-                        <i class="layui-icon layui-icon-add-1"></i> 添加用户
-                    </button>
-                </div>
+            <!-- 数据表格 -->
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">用户ID</th>
+                            <th style="width: 200px;">用户信息</th>
+                            <th style="width: 120px;">手机号</th>
+                            <th style="width: 200px;">邮箱</th>
+                            <th style="width: 100px;">角色</th>
+                            <th style="width: 100px;">状态</th>
+                            <th style="width: 120px;">注册时间</th>
+                            <th style="width: 140px;">最后登录</th>
+                            <th style="width: 200px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>U10001</td>
+                            <td>
+                                <div class="user-name">张三</div>
+                            </td>
+                            <td>138****0001</td>
+                            <td>zhangsan@example.com</td>
+                            <td>普通用户</td>
+                            <td>正常</td>
+                            <td>2024-01-15</td>
+                            <td>2024-10-15 14:30</td>
+                            <td class="action-buttons">
+                                <button type="button" class="btn btn-info btn-sm">
+                                    <span>编辑</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <span>重置密码</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>U10002</td>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-details">
+                                        <div class="user-name">李四</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>139****0002</td>
+                            <td>lisi@example.com</td>
+                            <td>农场主</td>
+                            <td>正常</td>
+                            <td>2024-02-20</td>
+                            <td>2024-10-15 13:15</td>
+                            <td class="action-buttons">
+                                <button type="button" class="btn btn-info btn-sm">
+                                    <span>编辑</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <span>重置密码</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>U10003</td>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-details">
+                                        <div class="user-name">王五</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>136****0003</td>
+                            <td>wangwu@example.com</td>
+                            <td>VIP用户</td>
+                            <td>冻结</td>
+                            <td>2024-03-10</td>
+                            <td>2024-10-14 16:40</td>
+                            <td class="action-buttons">
+                                <button type="button" class="btn btn-info btn-sm">
+                                    <span>编辑</span>
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm">
+                                    <span>解冻</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>U10004</td>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-details">
+                                        <div class="user-name">赵六</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>135****0004</td>
+                            <td>zhaoliu@example.com</td>
+                            <td>管理员</td>
+                            <td>正常</td>
+                            <td>2024-04-05</td>
+                            <td>2024-10-15 11:45</td>
+                            <td class="action-buttons">
+                                <button type="button" class="btn btn-info btn-sm">
+                                    <span>编辑</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    <span>权限</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination" id="pagination">
+                <span class="pagination-info">共 <strong>120</strong> 条记录</span>
+                <button class="pagination-btn" id="prevBtn">上一页</button>
+                <div id="pageNumbers"></div>
+                <button class="pagination-btn" id="nextBtn">下一页</button>
+                <span class="pagination-info">每页显示</span>
+                <select class="pagination-select" id="pageSizeSelect">
+                    <option value="10">10条</option>
+                    <option value="20">20条</option>
+                    <option value="50">50条</option>
+                    <option value="100">100条</option>
+                </select>
             </div>
         </div>
-
-        <!-- 数据表格 -->
-        <table class="layui-table" lay-skin="line">
-            <colgroup>
-                <col width="80">
-                <col width="180">
-                <col width="120">
-                <col width="180">
-                <col width="100">
-                <col width="80">
-                <col width="120">
-                <col width="140">
-                <col width="180">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>用户ID</th>
-                    <th>用户信息</th>
-                    <th>手机号</th>
-                    <th>邮箱</th>
-                    <th>角色</th>
-                    <th>状态</th>
-                    <th>注册时间</th>
-                    <th>最后登录</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>U10001</td>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">张</div>
-                            <div>
-                                <div style="font-weight: 500;">张三</div>
-                                <div style="font-size: 12px; color: #999;">普通用户</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>138****0001</td>
-                    <td>zhangsan@example.com</td>
-                    <td><span class="role-user">普通用户</span></td>
-                    <td><span class="status-active">正常</span></td>
-                    <td>2024-01-15</td>
-                    <td>2024-10-15 14:30</td>
-                    <td class="action-buttons">
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-xs">重置密码</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>U10002</td>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">李</div>
-                            <div>
-                                <div style="font-weight: 500;">李四</div>
-                                <div style="font-size: 12px; color: #999;">农场主</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>139****0002</td>
-                    <td>lisi@example.com</td>
-                    <td><span class="role-admin">农场主</span></td>
-                    <td><span class="status-active">正常</span></td>
-                    <td>2024-02-20</td>
-                    <td>2024-10-15 13:15</td>
-                    <td class="action-buttons">
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-xs">重置密码</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>U10003</td>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">王</div>
-                            <div>
-                                <div style="font-weight: 500;">王五</div>
-                                <div style="font-size: 12px; color: #999;">VIP用户</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>136****0003</td>
-                    <td>wangwu@example.com</td>
-                    <td><span class="role-user">VIP用户</span></td>
-                    <td><span class="status-inactive">冻结</span></td>
-                    <td>2024-03-10</td>
-                    <td>2024-10-14 16:40</td>
-                    <td class="action-buttons">
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-warm">解冻</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>U10004</td>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">赵</div>
-                            <div>
-                                <div style="font-weight: 500;">赵六</div>
-                                <div style="font-size: 12px; color: #999;">管理员</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>135****0004</td>
-                    <td>zhaoliu@example.com</td>
-                    <td><span class="role-admin">管理员</span></td>
-                    <td><span class="status-active">正常</span></td>
-                    <td>2024-04-05</td>
-                    <td>2024-10-15 11:45</td>
-                    <td class="action-buttons">
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger">权限</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- 分页 -->
-        <div id="userPage" style="text-align: center; margin-top: 20px;"></div>
-    </div>
-    </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/layui@2.8.18/dist/layui.min.js"></script>
-    <script>
-        layui.use(['laypage', 'form'], function () {
-            var laypage = layui.laypage;
-            var form = layui.form;
-
-            // 分页
-            laypage.render({
-                elem: 'userPage',
-                count: 120,
-                curr: 1,
-                layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-                jump: function (obj, first) {
-                    if (!first) {
-                        // 分页跳转逻辑
-                        console.log('跳转到第' + obj.curr + '页');
-                    }
-                }
-            });
-
-            // 表单初始化
-            form.render();
-        });
-    </script>
 </body>
 
 </html>
