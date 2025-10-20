@@ -1,7 +1,6 @@
-mod dash_board;
-mod header;
-mod user;
+mod dashboard;
+mod users;
 
-pub use dash_board::*;
-pub use header::*;
-pub use user::*;
+pub use dashboard::*;
+pub use users::*;
+
