@@ -21,7 +21,7 @@ use crate::components::{
 use dioxus::prelude::*;
 use serde::{ Deserialize, Serialize };
 
-const MAIN_CSS: Asset = asset!("/assets/main.css");
+const MAIN_CSS: Asset = asset!("/assets/bulma.css");
 
 #[derive(Routable, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[rustfmt::skip]
@@ -74,110 +74,128 @@ pub enum Route {
 }
 
 #[component]
-fn Sidebar() -> Element {
-    let mut sidebar_open = use_signal(|| "data-monitor");
-
-    rsx! {
-        aside { class: "admin-sidebar",
-            nav {
-                div { class: "menu-group",
-                    div {
-                        class: "menu-title",
-                        onclick: move |_| sidebar_open.set("data-monitor"),
-                        "📊 数据监控"
-                    }
-                    if sidebar_open() == "data-monitor" {
-                        div { class: "menu-items",
-                            Link { to: Route::Dashboard {}, "仪表盘" }
-                            Link { to: Route::RealTimeMonitor {}, "实时监控" }
-                            Link { to: Route::DataAnalysis {}, "数据分析" }
-                        }
-                    }
-                }
-                //农场管理
-                div { class: "menu-group",
-                    div {
-                        class: "menu-title",
-                        onclick: move |_| sidebar_open.set("farm"),
-                        "🏠 农场管理"
-                    }
-                    if sidebar_open() == "farm" {
-                        div { class: "menu-items",
-                            Link { to: Route::FarmList {}, "农场列表" }
-                            Link { to: Route::DeviceManagement {}, "设备管理" }
-                            Link { to: Route::CropManagement {}, "作物管理" }
-                        }
-                    }
-                }
-                //业务管理
-                div { class: "menu-group",
-                    div {
-                        class: "menu-title",
-                        onclick: move |_| sidebar_open.set("business"),
-                        "📦 业务管理"
-                    }
-                    if sidebar_open() == "business" {
-                        div { class: "menu-items",
-                            Link { to: Route::OrderManagement {}, "订单管理" }
-                            Link { to: Route::ProductManagement {}, "商品管理" }
-                            Link { to: Route::InventoryManagement {}, "库存管理" }
-                        }
-                    }
-                }
-                // 用户管理
-                div { class: "menu-group",
-                    div {
-                        class: "menu-title",
-                        onclick: move |_| sidebar_open.set("users"),
-                        "👥 用户管理"
-                    }
-                    if sidebar_open() == "users" {
-                        div { class: "menu-items",
-                            Link { to: Route::UserList {}, "用户列表" }
-                            Link { to: Route::PermissionManagement {}, "权限管理" }
-                            Link { to: Route::RoleManagement {}, "角色管理" }
-                        }
-                    }
-                }
-
-                //系统设置
-                div { class: "menu-group",
-                    div {
-                        class: "menu-title",
-                        onclick: move |_| sidebar_open.set("settings"),
-                        "⚙️ 系统设置"
-                    }
-                    if sidebar_open() == "settings" {
-                        div { class: "menu-items",
-                            Link { to: Route::BasicSettings {}, "基本设置" }
-                            Link { to: Route::SecuritySettings {}, "安全设置" }
-                            Link { to: Route::LogManagement {}, "日志管理" }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-#[component]
 pub fn MainLayout() -> Element {
     rsx! {
-        div { class: "admin-layout",
-            // 顶部栏
-            header { class: "admin-header",
-                div { class: "logo", "神农开心农场" }
-                div { class: "user-info",
-                    span { "管理员" }
+        div { class: "container is-fullhd",
+            nav {
+                class: "navbar",
+                role: "navigation",
+                "aria-label": "main navigation",
+                div { class: "navbar-brand",
+                    a { class: "navbar-item", "开心农场" }
+                }
+                div { class: "navbar-menu",
+                    div { class: "navbar-start",
+                        // 仪表盘
+                        div { class: "navbar-item has-dropdown is-hoverable",
+                            a { class: "navbar-link", "仪表盘" }
+                            div { class: "navbar-dropdown",
+                                Link {
+                                    to: Route::RealTimeMonitor {},
+                                    class: "navbar-item",
+                                    "实时监控"
+                                }
+                                Link {
+                                    to: Route::DataAnalysis {},
+                                    class: "navbar-item",
+                                    "数据分析"
+                                }
+                                Link {
+                                    to: Route::Dashboard {},
+                                    class: "navbar-item",
+                                    "统计"
+                                }
+                            }
+                        }
+                        // 农场管理
+                        div { class: "navbar-item has-dropdown is-hoverable",
+                            a { class: "navbar-link", "农场管理" }
+                            div { class: "navbar-dropdown",
+                                Link {
+                                    to: Route::FarmList {},
+                                    class: "navbar-item",
+                                    "农场列表"
+                                }
+                                Link {
+                                    to: Route::DeviceManagement {},
+                                    class: "navbar-item",
+                                    "设备管理"
+                                }
+                                Link {
+                                    to: Route::CropManagement {},
+                                    class: "navbar-item",
+                                    "作物管理"
+                                }
+                            }
+                        }
+                        // 业务管理
+                        div { class: "navbar-item has-dropdown is-hoverable",
+                            a { class: "navbar-link", "业务管理" }
+                            div { class: "navbar-dropdown",
+                                Link {
+                                    to: Route::ProductManagement {},
+                                    class: "navbar-item",
+                                    "产品管理"
+                                }
+                                Link {
+                                    to: Route::OrderManagement {},
+                                    class: "navbar-item",
+                                    "订单管理"
+                                }
+                                Link {
+                                    to: Route::InventoryManagement {},
+                                    class: "navbar-item",
+                                    "库存管理"
+                                }
+                            }
+                        }
+                        // 用户管理
+                        div { class: "navbar-item has-dropdown is-hoverable",
+                            a { class: "navbar-link", "用户管理" }
+                            div { class: "navbar-dropdown",
+                                Link {
+                                    to: Route::UserList {},
+                                    class: "navbar-item",
+                                    "用户管理"
+                                }
+                                Link {
+                                    to: Route::PermissionManagement {},
+                                    class: "navbar-item",
+                                    "权限配置"
+                                }
+                                Link {
+                                    to: Route::RoleManagement {},
+                                    class: "navbar-item",
+                                    "角色管理"
+                                }
+                            }
+                        }
+                        // 系统维护
+                        div { class: "navbar-item has-dropdown is-hoverable",
+                            a { class: "navbar-link", "系统维护" }
+                            div { class: "navbar-dropdown",
+                                Link {
+                                    to: Route::BasicSettings {},
+                                    class: "navbar-item",
+                                    "基础信息"
+                                }
+                                Link {
+                                    to: Route::LogManagement {},
+                                    class: "navbar-item",
+                                    "日志管理"
+                                }
+                                Link {
+                                    to: Route::SecuritySettings {},
+                                    class: "navbar-item",
+                                    "安全管理"
+                                }
+                            }
+                        }
+                    }
                 }
             }
-
-            div { class: "admin-body",
-                // 侧边栏
-                Sidebar {}
-                // 主内容
-                main { class: "admin-main", Outlet::<Route> {} }
-            }
+            hr { class: "navbar-divider" }
+            section { Outlet::<Route> {} }
         }
     }
 }
