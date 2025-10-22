@@ -1,254 +1,259 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>仪表盘 - 神农开心农场管理系统</title>
-    <!-- 引入 layui.css -->
-    <link href="//unpkg.com/layui@2.12.1/dist/css/layui.css" rel="stylesheet">
-    <link href="assets/dash_board.css" rel="stylesheet">
+    <!-- 引入 Bulma.css -->
+    <link href="assets/bulma.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="dashboard-container">
         <!-- 头部区域 -->
         <div class="dashboard-header">
-            <div>
-                <div class="header-title">仪表盘</div>
-                <div class="header-subtitle">实时监控农场运营数据，掌握业务动态</div>
-            </div>
-            <div class="header-controls">
-                <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-primary layui-btn-xs">今日</button>
-                    <button class="layui-btn layui-btn-primary layui-btn-xs">本周</button>
-                    <button class="layui-btn layui-btn-primary layui-btn-xs">本月</button>
-                    <button class="layui-btn layui-btn-primary layui-btn-xs">本季度</button>
+            <div class="columns">
+                <div class="column is-narrow">
+                    <div class="buttons">
+                        <button class="button is-primary is-small">今日</button>
+                        <button class="button is-primary is-small">本周</button>
+                        <button class="button is-primary is-small">本月</button>
+                        <button class="button is-primary is-small">本季度</button>
+                        <button class="button is-link is-small"> 刷新数据 </button>
+                    </div>
                 </div>
-                <button class="layui-btn layui-btn-normal layui-btn-xs">
-                    刷新数据
-                </button>
             </div>
         </div>
-        
+
         <!-- 统计卡片区域 -->
         <div class="stats-row">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md3">
-                    <div class="stat-card farms">
-                        <div class="stat-content">
-                            <div class="stat-info">
-                                <div class="stat-value">1,248</div>
-                                <div class="stat-label">活跃农场数量</div>
-                                <div class="stat-trend trend-up">
-                                    <i class="layui-icon">&#xe619;</i> 12.5%
-                                </div>
+            <div class="columns is-multiline">
+                <div class="column is-one-quarter">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <p class="title is-4">1,248</p>
+                                <p class="subtitle">活跃农场数量</p>
+                                <p class="has-text-success">↑ 12.5%</p>
                             </div>
-                            <div class="stat-icon farms">
-                                <i class="layui-icon">&#xe66c;</i>
-                            </div>
+                            <footer class="card-footer">
+                                <span class="card-footer-item">
+                                    <i class="fas fa-farm"></i>
+                                </span>
+                            </footer>
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-md3">
-                    <div class="stat-card income">
-                        <div class="stat-content">
-                            <div class="stat-info">
-                                <div class="stat-value">856,420</div>
-                                <div class="stat-label">本月总收入(元)</div>
-                                <div class="stat-trend trend-up">
-                                    <i class="layui-icon">&#xe619;</i> 8.3%
-                                </div>
+                <div class="column is-one-quarter">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <p class="title is-4">856,420</p>
+                                <p class="subtitle">本月总收入(元)</p>
+                                <p class="has-text-success">↑ 8.3%</p>
                             </div>
-                            <div class="stat-icon income">
-                                <i class="layui-icon">&#xe65e;</i>
-                            </div>
+                            <footer class="card-footer">
+                                <span class="card-footer-item">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </span>
+                            </footer>
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-md3">
-                    <div class="stat-card users">
-                        <div class="stat-content">
-                            <div class="stat-info">
-                                <div class="stat-value">15,892</div>
-                                <div class="stat-label">注册用户数</div>
-                                <div class="stat-trend trend-up">
-                                    <i class="layui-icon">&#xe619;</i> 5.7%
-                                </div>
+                <div class="column is-one-quarter">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <p class="title is-4">15,892</p>
+                                <p class="subtitle">注册用户数</p>
+                                <p class="has-text-success">↑ 5.7%</p>
                             </div>
-                            <div class="stat-icon users">
-                                <i class="layui-icon">&#xe770;</i>
-                            </div>
+                            <footer class="card-footer">
+                                <span class="card-footer-item">
+                                    <i class="fas fa-users"></i>
+                                </span>
+                            </footer>
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-md3">
-                    <div class="stat-card orders">
-                        <div class="stat-content">
-                            <div class="stat-info">
-                                <div class="stat-value">3,456</div>
-                                <div class="stat-label">今日订单数</div>
-                                <div class="stat-trend trend-down">
-                                    <i class="layui-icon">&#xe61a;</i> 2.1%
-                                </div>
+                <div class="column is-one-quarter">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <p class="title is-4">3,456</p>
+                                <p class="subtitle">今日订单数</p>
+                                <p class="has-text-danger">↓ 2.1%</p>
                             </div>
-                            <div class="stat-icon orders">
-                                <i class="layui-icon">&#xe657;</i>
-                            </div>
+                            <footer class="card-footer">
+                                <span class="card-footer-item">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </span>
+                            </footer>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- 图表和活动区域 -->
         <div class="stats-row">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md8">
+            <div class="columns">
+                <div class="column is-three-quarters">
                     <!-- 图表区域 -->
-                    <div class="chart-section">
-                        <div class="chart-card">
-                            <div class="chart-header">
-                                <div class="chart-title">收入趋势分析</div>
-                                <div class="chart-actions">
-                                    <button class="layui-btn layui-btn-xs layui-btn-primary">本月</button>
-                                    <button class="layui-btn layui-btn-xs">本季度</button>
-                                    <button class="layui-btn layui-btn-xs">本年度</button>
-                                </div>
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                收入趋势分析
+                            </p>
+                            <div class="card-header-icons">
+                                <button class="button is-small is-primary">本月</button>
+                                <button class="button is-small">本季度</button>
+                                <button class="button is-small">本年度</button>
                             </div>
-                            <div class="chart-content">
-                                <i class="layui-icon">&#xe62a;</i> 收入趋势图表区域
-                            </div>
+                        </header>
+                        <div class="card-content">
+                            <p>收入趋势图表区域</p>
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-md4">
+                <div class="column">
                     <!-- 活动区域 -->
-                    <div class="activity-section">
-                        <div class="activity-card">
-                            <div class="activity-header">
-                                <div class="activity-title">最近活动</div>
-                                <div class="activity-badge">5条新消息</div>
-                            </div>
-                            <div class="activity-list">
-                                <div class="activity-item">
-                                    <div class="activity-icon success">
-                                        <i class="layui-icon">&#xe605;</i>
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                最近活动
+                            </p>
+                            <span class="tag is-warning">5条新消息</span>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <article class="media">
+                                    <figure class="media-left">
+                                        <span class="icon has-text-success">
+                                            <i class="fas fa-check-circle"></i>
+                                        </span>
+                                    </figure>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <strong>新农场 &quot;阳光农场&quot; 注册成功并完成首次种植</strong>
+                                                <small>2分钟前</small>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="activity-content">
-                                        <div class="activity-message">新农场 "阳光农场" 注册成功并完成首次种植</div>
-                                        <div class="activity-time">2分钟前</div>
+                                </article>
+                                <article class="media">
+                                    <figure class="media-left">
+                                        <span class="icon has-text-warning">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </span>
+                                    </figure>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <strong>设备 #A123 温度异常，请及时检查</strong>
+                                                <small>15分钟前</small>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="activity-icon warning">
-                                        <i class="layui-icon">&#xe756;</i>
+                                </article>
+                                <article class="media">
+                                    <figure class="media-left">
+                                        <span class="icon has-text-info">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+                                    </figure>
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <p>
+                                                <strong>用户 &quot;张三&quot; 完成大额订单，金额 ¥12,800</strong>
+                                                <small>1小时前</small>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="activity-content">
-                                        <div class="activity-message">设备 #A123 温度异常，请及时检查</div>
-                                        <div class="activity-time">15分钟前</div>
-                                    </div>
-                                </div>
-                                <div class="activity-item">
-                                    <div class="activity-icon info">
-                                        <i class="layui-icon">&#xe60b;</i>
-                                    </div>
-                                    <div class="activity-content">
-                                        <div class="activity-message">用户 "张三" 完成大额订单，金额 ¥12,800</div>
-                                        <div class="activity-time">1小时前</div>
-                                    </div>
-                                </div>
+                                </article>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- 系统状态和快捷操作 -->
         <div class="stats-row">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md6">
+            <div class="columns">
+                <div class="column">
                     <!-- 系统状态 -->
-                    <div class="system-section">
-                        <div class="system-card">
-                            <div class="system-header">
-                                <div class="system-title">系统状态监控</div>
-                            </div>
-                            <div class="system-grid">
-                                <div class="system-item">
-                                    <div class="system-icon">
-                                        <i class="layui-icon">&#xe605;</i>
-                                    </div>
-                                    <div class="system-info">
-                                        <div class="system-label">API服务</div>
-                                        <div class="system-status">运行正常</div>
-                                    </div>
-                                </div>
-                                <div class="system-item">
-                                    <div class="system-icon">
-                                        <i class="layui-icon">&#xe629;</i>
-                                    </div>
-                                    <div class="system-info">
-                                        <div class="system-label">数据库</div>
-                                        <div class="system-status">连接稳定</div>
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                系统状态监控
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="content">
+                                        <p class="title is-6">API服务</p>
+                                        <p class="subtitle is-6">运行正常</p>
                                     </div>
                                 </div>
-                                <div class="system-item">
-                                    <div class="system-icon warning">
-                                        <i class="layui-icon">&#xe756;</i>
-                                    </div>
-                                    <div class="system-info">
-                                        <div class="system-label">缓存服务</div>
-                                        <div class="system-status warning">负载较高</div>
+                                <div class="column">
+                                    <div class="content">
+                                        <p class="title is-6">数据库</p>
+                                        <p class="subtitle is-6">连接稳定</p>
                                     </div>
                                 </div>
-                                <div class="system-item">
-                                    <div class="system-icon">
-                                        <i class="layui-icon">&#xe62a;</i>
+                                <div class="column">
+                                    <div class="content">
+                                        <p class="title is-6">缓存服务</p>
+                                        <p class="subtitle is-6 has-text-warning">负载较高</p>
                                     </div>
-                                    <div class="system-info">
-                                        <div class="system-label">文件存储</div>
-                                        <div class="system-status">空间充足</div>
+                                </div>
+                                <div class="column">
+                                    <div class="content">
+                                        <p class="title is-6">文件存储</p>
+                                        <p class="subtitle is-6">空间充足</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-md6">
+                <div class="column">
                     <!-- 快捷操作 -->
-                    <div class="quick-section">
-                        <div class="quick-card">
-                            <div class="quick-header">
-                                <div class="quick-title">快捷操作</div>
-                            </div>
-                            <div class="quick-grid">
-                                <div class="action-item">
-                                    <div class="action-icon">
-                                        <i class="layui-icon">&#xe62a;</i>
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                快捷操作
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="content">
+                                        <p class="title is-6">数据报表</p>
+                                        <p class="subtitle is-6">查看详细数据分析报告</p>
                                     </div>
-                                    <div class="action-title">数据报表</div>
-                                    <div class="action-desc">查看详细数据分析报告</div>
                                 </div>
-                                <div class="action-item">
-                                    <div class="action-icon">
-                                        <i class="layui-icon">&#xe645;</i>
+                                <div class="column">
+                                    <div class="content">
+                                        <p class="title is-6">消息中心</p>
+                                        <p class="subtitle is-6">处理系统通知信息</p>
                                     </div>
-                                    <div class="action-title">消息中心</div>
-                                    <div class="action-desc">处理系统通知信息</div>
                                 </div>
-                                <div class="action-item">
-                                    <div class="action-icon">
-                                        <i class="layui-icon">&#xe614;</i>
+                                <div class="column">
+                                    <div class="content">
+                                        <p class="title is-6">系统设置</p>
+                                        <p class="subtitle is-6">配置系统参数选项</p>
                                     </div>
-                                    <div class="action-title">系统设置</div>
-                                    <div class="action-desc">配置系统参数选项</div>
                                 </div>
-                                <div class="action-item">
-                                    <div class="action-icon">
-                                        <i class="layui-icon">&#xe770;</i>
+                                <div class="column">
+                                    <div class="content">
+                                        <p class="title is-6">用户管理</p>
+                                        <p class="subtitle is-6">管理用户权限分配</p>
                                     </div>
-                                    <div class="action-title">用户管理</div>
-                                    <div class="action-desc">管理用户权限分配</div>
                                 </div>
                             </div>
                         </div>
@@ -257,9 +262,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
-    <script src="//unpkg.com/layui@2.12.1/dist/layui.js"></script>
-   
 </body>
+
 </html>
