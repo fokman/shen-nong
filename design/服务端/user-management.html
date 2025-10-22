@@ -4,191 +4,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户管理 - 神农开心农场</title>
-    <!-- 引入样式 -->
-    <link rel="stylesheet" href="assets/user.css">
-    
+    <title>RBAC权限管理 - 神农开心农场管理系统</title>
+    <link rel="stylesheet" href="assets/bulma.css">
 </head>
 
 <body>
-    <div class="user-management-container">
-        <!-- 页面标题 -->
-        <div class="card">
-            <div class="card-header">用户管理</div>
-            <div class="card-body">
-                <!-- 搜索表单 -->
-                <form class="search-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-label">用户名</div>
-                                <input type="text" class="input-field" placeholder="请输入用户名">
+    <div class="rbac-container">
+
+        <div class="tab-content">
+            <!-- 用户管理 -->
+            <div class="tab-content" id="users-tab">
+                <section>
+                    <h1 class="title">Section</h1>
+                    <nav class="breadcrumb" aria-label="breadcrumbs">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span>Bulma</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-book" aria-hidden="true"></i>
+                                    </span>
+                                    <span>Documentation</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-puzzle-piece" aria-hidden="true"></i>
+                                    </span>
+                                    <span>Components</span>
+                                </a>
+                            </li>
+                            <li class="is-active">
+                                <a href="#">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+                                    </span>
+                                    <span>Breadcrumb</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </section>
+                <div class="card">
+                    <div class="card-content">
+                        <!-- 搜索栏 -->
+                        <div class="columns">
+                            <div class="column is-2">
+                                <input class="input is-small" type="text" placeholder="搜索用户名或真实姓名...">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-label">手机号</div>
-                                <input type="text" class="input-field" placeholder="请输入手机号">
+                            <div class="column is-2">
+                                <input class="input is-small" type="text" placeholder="手机号">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-label">邮箱</div>
-                                <input type="text" class="input-field" placeholder="请输入邮箱">
+                            <div class="column is-2">
+                                <input class="input is-small" type="text" placeholder="邮箱">
                             </div>
+
                         </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary" style="width: 100%;">
-                                <span class="btn-icon">🔍</span>
-                                <span>查询</span>
-                            </button>
+
+                        <!-- 用户列表表格 -->
+                        <div class="table-container">
+                            <div class="buttons are-small is-pulled-right">
+                                <button class="button is-primary">
+                                    <span class="icon is-small">🔍</span>
+                                    <span class="is-hidden-mobile">搜索</span>
+                                </button>
+                                <button class="button is-success">
+                                    <span class="icon is-small">➕</span>
+                                    <span class="is-hidden-mobile">新增用户</span>
+                                </button>
+                                <button class="button is-danger">
+                                    <span class="icon is-small">🗑️</span>
+                                    <span class="is-hidden-mobile">批量删除</span>
+                                </button>
+                            </div>
+                            <table class="table is-fullwidth is-striped is-hoverable">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th>用户ID</th>
+                                        <th>用户名</th>
+                                        <th class="hide-mobile">真实姓名</th>
+                                        <th>手机号</th>
+                                        <th>邮箱</th>
+                                        <th>角色</th>
+                                        <th>状态</th>
+                                        <th class="hide-mobile">创建时间</th>
+                                        <th class="hide-mobile">注册时间</th>
+                                        <th class="hide-mobile">最后登录时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>1001</td>
+                                        <td>
+                                            <div class="media">
+                                                <div class="media-content">
+                                                    <p class="has-text-weight-bold">admin</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="hide-mobile">王小明</td>
+                                        <td>13800138000</td>
+                                        <td>admin@example.com</td>
+                                        <td><span class="tag is-info">超级管理员</span></td>
+                                        <td><span class="tag is-success">正常</span></td>
+                                        <td class="hide-mobile">2023-12-01</td>
+                                        <td class="hide-mobile">2023-12-01</td>
+                                        <td class="hide-mobile">2023-12-02</td>
+                                        <td>
+                                            <div class="buttons are-small">
+                                                <button class="button is-link" title="编辑">✏️</button>
+                                                <button class="button is-danger" title="删除">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>1002</td>
+                                        <td>
+                                            <div class="media">
+                                                <div class="media-content">
+                                                    <p class="has-text-weight-bold">zhangsan</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="hide-mobile">张三</td>
+                                        <td>13800138001</td>
+                                        <td>zhangsan@example.com</td>
+                                        <td><span class="tag is-warning">农场管理员</span></td>
+                                        <td><span class="tag is-success">正常</span></td>
+                                        <td class="hide-mobile">2023-12-02</td>
+                                        <td class="hide-mobile">2023-12-02</td>
+                                        <td class="hide-mobile">2023-12-03</td>
+                                        <td>
+                                            <div class="buttons are-small">
+                                                <button class="button is-link" title="编辑">✏️</button>
+                                                <button class="button is-danger" title="删除">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+
+                        <nav class="pagination is-small" role="navigation" aria-label="pagination">
+                            <a href="#" class="pagination-previous">Previous</a>
+                            <a href="#" class="pagination-next">Next page</a>
+                            <ul class="pagination-list">
+                                <li><a href="#" class="pagination-link" aria-label="Goto page 1">1</a></li>
+                                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                                <li><a href="#" class="pagination-link" aria-label="Goto page 45">45</a></li>
+                                <li>
+                                    <a class="pagination-link is-current" aria-label="Page 46"
+                                        aria-current="page">46</a>
+                                </li>
+                                <li><a href="#" class="pagination-link" aria-label="Goto page 47">47</a></li>
+                                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                                <li><a href="#" class="pagination-link" aria-label="Goto page 86">86</a></li>
+                            </ul>
+                        </nav>
                     </div>
-                </form>
+
+                </div>
             </div>
 
-            <!-- 工具栏 -->
-            <div class="toolbar">
-                <button type="button" class="btn btn-info">
-                    <span class="btn-icon">📤</span>
-                    <span>导出数据</span>
-                </button>
-                <button type="button" class="btn btn-warning">
-                    <span class="btn-icon">➕</span>
-                    <span>添加用户</span>
-                </button>
-            </div>
-
-            <!-- 数据表格 -->
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th style="width: 80px;">用户ID</th>
-                            <th style="width: 200px;">用户信息</th>
-                            <th style="width: 120px;">手机号</th>
-                            <th style="width: 200px;">邮箱</th>
-                            <th style="width: 100px;">角色</th>
-                            <th style="width: 100px;">状态</th>
-                            <th style="width: 120px;">注册时间</th>
-                            <th style="width: 140px;">最后登录</th>
-                            <th style="width: 200px;">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>U10001</td>
-                            <td>
-                                <div class="user-name">张三</div>
-                            </td>
-                            <td>138****0001</td>
-                            <td>zhangsan@example.com</td>
-                            <td>普通用户</td>
-                            <td>正常</td>
-                            <td>2024-01-15</td>
-                            <td>2024-10-15 14:30</td>
-                            <td class="action-buttons">
-                                <button type="button" class="btn btn-info btn-sm">
-                                    <span>编辑</span>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm">
-                                    <span>重置密码</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>U10002</td>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-details">
-                                        <div class="user-name">李四</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>139****0002</td>
-                            <td>lisi@example.com</td>
-                            <td>农场主</td>
-                            <td>正常</td>
-                            <td>2024-02-20</td>
-                            <td>2024-10-15 13:15</td>
-                            <td class="action-buttons">
-                                <button type="button" class="btn btn-info btn-sm">
-                                    <span>编辑</span>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm">
-                                    <span>重置密码</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>U10003</td>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-details">
-                                        <div class="user-name">王五</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>136****0003</td>
-                            <td>wangwu@example.com</td>
-                            <td>VIP用户</td>
-                            <td>冻结</td>
-                            <td>2024-03-10</td>
-                            <td>2024-10-14 16:40</td>
-                            <td class="action-buttons">
-                                <button type="button" class="btn btn-info btn-sm">
-                                    <span>编辑</span>
-                                </button>
-                                <button type="button" class="btn btn-warning btn-sm">
-                                    <span>解冻</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>U10004</td>
-                            <td>
-                                <div class="user-info">
-                                    <div class="user-details">
-                                        <div class="user-name">赵六</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>135****0004</td>
-                            <td>zhaoliu@example.com</td>
-                            <td>管理员</td>
-                            <td>正常</td>
-                            <td>2024-04-05</td>
-                            <td>2024-10-15 11:45</td>
-                            <td class="action-buttons">
-                                <button type="button" class="btn btn-info btn-sm">
-                                    <span>编辑</span>
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm">
-                                    <span>权限</span>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- 分页 -->
-            <div class="pagination" id="pagination">
-                <span class="pagination-info">共 <strong>120</strong> 条记录</span>
-                <button class="pagination-btn" id="prevBtn">上一页</button>
-                <div id="pageNumbers"></div>
-                <button class="pagination-btn" id="nextBtn">下一页</button>
-                <span class="pagination-info">每页显示</span>
-                <select class="pagination-select" id="pageSizeSelect">
-                    <option value="10">10条</option>
-                    <option value="20">20条</option>
-                    <option value="50">50条</option>
-                    <option value="100">100条</option>
-                </select>
-            </div>
         </div>
     </div>
-
 </body>
 
 </html>
