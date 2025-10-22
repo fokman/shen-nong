@@ -76,7 +76,7 @@ pub enum Route {
 #[component]
 pub fn MainLayout() -> Element {
     rsx! {
-        div { class: "container is-fullhd",
+        div { class: "container is-fluid",
             nav {
                 class: "navbar",
                 role: "navigation",
