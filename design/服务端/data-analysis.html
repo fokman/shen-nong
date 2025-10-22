@@ -5,474 +5,248 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数据分析 - 神农开心农场管理系统</title>
-    <link rel="stylesheet" href="https://unpkg.com/antd@5.0.0/dist/reset.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #2c3e50;
-        }
-
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            width: 240px;
-            background: #001529;
-            color: white;
-            padding: 20px 0;
-        }
-
-        .logo {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid #303030;
-            margin-bottom: 20px;
-        }
-
-        .logo h1 {
-            color: #27ae60;
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .accordion {
-            list-style: none;
-        }
-
-        .accordion-item {
-            border-bottom: 1px solid #303030;
-        }
-
-        .accordion-header {
-            padding: 12px 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s;
-        }
-
-        .accordion-header:hover {
-            background-color: #1890ff;
-        }
-
-        .accordion-header.active {
-            background-color: #1890ff;
-        }
-
-        .accordion-header i {
-            margin-right: 8px;
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background-color: #001a33;
-        }
-
-        .accordion-content.open {
-            max-height: 200px;
-        }
-
-        .submenu-item {
-            padding: 10px 20px 10px 40px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-left: 3px solid transparent;
-        }
-
-        .submenu-item:hover,
-        .submenu-item.active {
-            background-color: #1890ff;
-            border-left-color: #52c41a;
-        }
-
-        .accordion-arrow {
-            transition: transform 0.3s;
-        }
-
-        .accordion-arrow.open {
-            transform: rotate(180deg);
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .page-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .filter-bar {
-            background: white;
-            padding: 16px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 16px;
-        }
-
-        .filter-row {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .filter-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .filter-label {
-            font-size: 12px;
-            color: #666;
-        }
-
-        select,
-        input {
-            padding: 8px 12px;
-            border: 1px solid #d9d9d9;
-            border-radius: 4px;
-            min-width: 120px;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .btn-primary {
-            background: #1890ff;
-            color: white;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .chart-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .chart-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: #2c3e50;
-        }
-
-        .chart-placeholder {
-            height: 300px;
-            background: #f0f2f5;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-        }
-
-        .stats-cards {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: 600;
-            color: #27ae60;
-            margin: 8px 0;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .trend-up {
-            color: #27ae60;
-        }
-
-        .trend-down {
-            color: #ff4d4f;
-        }
-
-        .report-section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 16px;
-        }
-
-        .report-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .data-table th {
-            background: #fafafa;
-            font-weight: 600;
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // 手风琴菜单交互
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-
-            accordionHeaders.forEach(header => {
-                header.addEventListener('click', function () {
-                    const content = this.nextElementSibling;
-                    const arrow = this.querySelector('.accordion-arrow');
-
-                    // 切换当前项
-                    const isOpen = content.classList.contains('open');
-
-                    // 关闭所有其他项
-                    document.querySelectorAll('.accordion-content').forEach(item => {
-                        item.classList.remove('open');
-                    });
-                    document.querySelectorAll('.accordion-arrow').forEach(item => {
-                        item.classList.remove('open');
-                    });
-                    document.querySelectorAll('.accordion-header').forEach(item => {
-                        item.classList.remove('active');
-                    });
-
-                    // 打开当前项（如果之前是关闭的）
-                    if (!isOpen) {
-                        content.classList.add('open');
-                        arrow.classList.add('open');
-                        this.classList.add('active');
-                    }
-                });
-            });
-
-            // 子菜单项点击事件
-            const submenuItems = document.querySelectorAll('.submenu-item');
-            submenuItems.forEach(item => {
-                item.addEventListener('click', function () {
-                    // 移除所有active状态
-                    submenuItems.forEach(subItem => {
-                        subItem.classList.remove('active');
-                    });
-                    // 添加当前active状态
-                    this.classList.add('active');
-                });
-            });
-        });
-    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
 
 <body>
-
-
-    <!-- 主内容区 -->
-    <div class="main-content">
-        <div class="header">
-            <h1 class="page-title">数据分析</h1>
-            <div class="user-info">
-                <span>管理员</span>
-                <div class="avatar">👤</div>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">数据分析</h1>
+            <div class="columns">
+                <div class="column is-one-quarter">
+                    <aside class="menu">
+                        <p class="menu-label">
+                            管理菜单
+                        </p>
+                        <ul class="menu-list">
+                            <li><a href="#">首页</a></li>
+                            <li><a href="#">用户管理</a></li>
+                            <li><a href="#">订单管理</a></li>
+                            <li><a href="#">农场管理</a></li>
+                            <li><a href="#">系统设置</a></li>
+                        </ul>
+                    </aside>
+                </div>
+                <div class="column">
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <label class="label">时间范围</label>
+                            <div class="select">
+                                <select>
+                                    <option value="today">今日</option>
+                                    <option value="week" selected>本周</option>
+                                    <option value="month">本月</option>
+                                    <option value="quarter">本季度</option>
+                                    <option value="year">本年</option>
+                                    <option value="custom">自定义</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <label class="label">开始日期</label>
+                            <input class="input" type="date" value="2024-10-08">
+                        </div>
+                        <div class="control">
+                            <label class="label">结束日期</label>
+                            <input class="input" type="date" value="2024-10-15">
+                        </div>
+                        <div class="control">
+                            <label class="label">数据类型</label>
+                            <div class="select">
+                                <select>
+                                    <option value="all">全部数据</option>
+                                    <option value="user">用户数据</option>
+                                    <option value="order">订单数据</option>
+                                    <option value="farm">农场数据</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <button class="button is-primary">生成报告</button>
+                        </div>
+                        <div class="control">
+                            <button class="button">导出数据</button>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="card">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        新增用户
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="title is-4">156</p>
+                                        <p class="subtitle is-6">+12.5% 环比增长</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        订单数量
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="title is-4">89</p>
+                                        <p class="subtitle is-6">+23.6% 环比增长</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        总收入
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="title is-4">¥128,560</p>
+                                        <p class="subtitle is-6">+15.8% 同比增长</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        用户活跃度
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="title is-4">78.5%</p>
+                                        <p class="subtitle is-6">-2.3% 环比下降</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="card">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        用户增长趋势
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="has-text-centered">用户增长趋势图表</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        订单分布分析
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="has-text-centered">订单分布饼图</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        收入趋势分析
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="has-text-centered">收入趋势折线图</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        农场运营效率
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="has-text-centered">农场效率柱状图</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                关键指标数据表
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <table class="table is-fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th>指标名称</th>
+                                        <th>当前值</th>
+                                        <th>环比变化</th>
+                                        <th>同比变化</th>
+                                        <th>行业平均</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>用户注册转化率</td>
+                                        <td>15.8%</td>
+                                        <td class="has-text-success">+2.3%</td>
+                                        <td class="has-text-success">+5.6%</td>
+                                        <td>12.4%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>订单完成率</td>
+                                        <td>92.7%</td>
+                                        <td class="has-text-success">+1.2%</td>
+                                        <td class="has-text-success">+3.8%</td>
+                                        <td>88.5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>用户留存率</td>
+                                        <td>65.3%</td>
+                                        <td class="has-text-danger">-1.5%</td>
+                                        <td class="has-text-success">+2.1%</td>
+                                        <td>58.9%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>平均客单价</td>
+                                        <td>¥1,445</td>
+                                        <td class="has-text-success">+8.7%</td>
+                                        <td class="has-text-success">+15.2%</td>
+                                        <td>¥1,120</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="buttons">
+                                <button class="button is-primary">生成详细报告</button>
+                                <button class="button">导出Excel</button>
+                                <button class="button">打印报告</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- 筛选栏 -->
-        <div class="filter-bar">
-            <div class="filter-row">
-                <div class="filter-item">
-                    <div class="filter-label">时间范围</div>
-                    <select>
-                        <option value="today">今日</option>
-                        <option value="week" selected>本周</option>
-                        <option value="month">本月</option>
-                        <option value="quarter">本季度</option>
-                        <option value="year">本年</option>
-                        <option value="custom">自定义</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <div class="filter-label">开始日期</div>
-                    <input type="date" value="2024-10-08">
-                </div>
-                <div class="filter-item">
-                    <div class="filter-label">结束日期</div>
-                    <input type="date" value="2024-10-15">
-                </div>
-                <div class="filter-item">
-                    <div class="filter-label">数据类型</div>
-                    <select>
-                        <option value="all">全部数据</option>
-                        <option value="user">用户数据</option>
-                        <option value="order">订单数据</option>
-                        <option value="farm">农场数据</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary">生成报告</button>
-                <button class="btn">导出数据</button>
-            </div>
-        </div>
-
-        <!-- 统计卡片 -->
-        <div class="stats-cards">
-            <div class="stat-card">
-                <div class="stat-label">新增用户</div>
-                <div class="stat-value">156</div>
-                <div class="stat-change trend-up">+12.5% 环比增长</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">订单数量</div>
-                <div class="stat-value">89</div>
-                <div class="stat-change trend-up">+23.6% 环比增长</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">总收入</div>
-                <div class="stat-value">¥128,560</div>
-                <div class="stat-change trend-up">+15.8% 同比增长</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">用户活跃度</div>
-                <div class="stat-value">78.5%</div>
-                <div class="stat-change trend-down">-2.3% 环比下降</div>
-            </div>
-        </div>
-
-        <!-- 图表区域 -->
-        <div class="charts-grid">
-            <div class="chart-card">
-                <div class="chart-title">用户增长趋势</div>
-                <div class="chart-placeholder">
-                    用户增长趋势图表
-                </div>
-            </div>
-            <div class="chart-card">
-                <div class="chart-title">订单分布分析</div>
-                <div class="chart-placeholder">
-                    订单分布饼图
-                </div>
-            </div>
-            <div class="chart-card">
-                <div class="chart-title">收入趋势分析</div>
-                <div class="chart-placeholder">
-                    收入趋势折线图
-                </div>
-            </div>
-            <div class="chart-card">
-                <div class="chart-title">农场运营效率</div>
-                <div class="chart-placeholder">
-                    农场效率柱状图
-                </div>
-            </div>
-        </div>
-
-        <!-- 数据报告 -->
-        <div class="report-section">
-            <div class="chart-title">关键指标数据表</div>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>指标名称</th>
-                        <th>当前值</th>
-                        <th>环比变化</th>
-                        <th>同比变化</th>
-                        <th>行业平均</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>用户注册转化率</td>
-                        <td>15.8%</td>
-                        <td class="trend-up">+2.3%</td>
-                        <td class="trend-up">+5.6%</td>
-                        <td>12.4%</td>
-                    </tr>
-                    <tr>
-                        <td>订单完成率</td>
-                        <td>92.7%</td>
-                        <td class="trend-up">+1.2%</td>
-                        <td class="trend-up">+3.8%</td>
-                        <td>88.5%</td>
-                    </tr>
-                    <tr>
-                        <td>用户留存率</td>
-                        <td>65.3%</td>
-                        <td class="trend-down">-1.5%</td>
-                        <td class="trend-up">+2.1%</td>
-                        <td>58.9%</td>
-                    </tr>
-                    <tr>
-                        <td>平均客单价</td>
-                        <td>¥1,445</td>
-                        <td class="trend-up">+8.7%</td>
-                        <td class="trend-up">+15.2%</td>
-                        <td>¥1,120</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="report-actions">
-                <button class="btn btn-primary">生成详细报告</button>
-                <button class="btn">导出Excel</button>
-                <button class="btn">打印报告</button>
-            </div>
-        </div>
-    </div>
+    </section>
 </body>
 
 </html>
