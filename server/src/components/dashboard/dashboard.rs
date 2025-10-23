@@ -1,42 +1,35 @@
 use dioxus::prelude::*;
 
-
 #[component]
 pub fn Dashboard() -> Element {
     rsx! {
         div {
-            class: "dashboard-container",
             // 头部区域
             div {
                 class: "dashboard-header",
                 div {
-                    class: "columns is-reversed",
-                    div {
-                        class: "column is-narrow",
-                        div {
-                            class: "buttons",
-                            button {
-                                class: "button is-primary is-small",
-                                "今日"
-                            }
-                            button {
-                                class: "button is-primary is-small",
-                                "本周"
-                            }
-                            button {
-                                class: "button is-primary is-small",
-                                "本月"
-                            }
-                            button {
-                                class: "button is-primary is-small",
-                                "本季度"
-                            }
-                            button {
-                                class: "button is-link is-small",
-                                "刷新数据"
-                            }
-                        }
+                    class: "field is-grouped is-grouped-right",
+                    button {
+                        class: "button is-primary is-small",
+                        "今日"
                     }
+                    button {
+                        class: "button is-primary is-small",
+                        "本周"
+                    }
+                    button {
+                        class: "button is-primary is-small",
+                        "本月"
+                    }
+                    button {
+                        class: "button is-primary is-small",
+                        "本季度"
+                    }
+                    button {
+                        class: "button is-link is-small",
+                        "刷新数据"
+                    }
+                
                 }
             },
             // 统计卡片区域

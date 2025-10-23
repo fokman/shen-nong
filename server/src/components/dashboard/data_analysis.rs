@@ -1,480 +1,216 @@
 use dioxus::prelude::*;
 
-
 #[component]
-pub fn Dashboard() -> Element {
+pub fn DataAnalysis() -> Element {
     rsx! {
-        div {
-            class: "dashboard-container",
-            // 头部区域
-            div {
-                class: "dashboard-header",
-                div {
-                    class: "columns is-reversed",
-                    div {
-                        class: "column is-narrow",
-                        div {
-                            class: "buttons",
-                            button {
-                                class: "button is-primary is-small",
-                                "今日"
-                            }
-                            button {
-                                class: "button is-primary is-small",
-                                "本周"
-                            }
-                            button {
-                                class: "button is-primary is-small",
-                                "本月"
-                            }
-                            button {
-                                class: "button is-primary is-small",
-                                "本季度"
-                            }
-                            button {
-                                class: "button is-link is-small",
-                                "刷新数据"
-                            }
-                        }
-                    }
-                }
-            },
-            // 统计卡片区域
-            div {
-                class: "stats-row",
-                div {
-                    class: "columns is-multiline",
-                    div {
-                        class: "column is-one-quarter",
-                        div {
-                            class: "card",
-                            div {
-                                class: "card-content",
-                                div {
-                                    class: "content",
-                                    p {
-                                        class: "title is-4",
-                                        "1,248"
-                                    }
-                                    p {
-                                        class: "subtitle",
-                                        "活跃农场数量"
-                                    }
-                                    p {
-                                        class: "has-text-success",
-                                        "↑ 12.5%"
-                                    }
-                                }
-                                footer {
-                                    class: "card-footer",
-                                    span {
-                                        class: "card-footer-item",
-                                        i {
-                                            class: "fas fa-farm",
+        section { class: "section",
+            div { class: "columns",
+                div { class: "column",
+                    div { class: "field is-horizontal",
+                        div { class: "field-body",
+                            div { class: "field",
+                                div { class: "control",
+                                    label { class: "label", "时间范围" }
+                                    div { class: "select is-fullwidth",
+                                        select {
+                                            option { value: "today", "今日" }
+                                            option { value: "week", selected: "selected", "本周" }
+                                            option { value: "month", "本月" }
+                                            option { value: "quarter", "本季度" }
+                                            option { value: "year", "本年" }
+                                            option { value: "custom", "自定义" }
                                         }
                                     }
                                 }
                             }
-                        }
-                    },
-                    div {
-                        class: "column is-one-quarter",
-                        div {
-                            class: "card",
-                            div {
-                                class: "card-content",
-                                div {
-                                    class: "content",
-                                    p {
-                                        class: "title is-4",
-                                        "856,420"
-                                    }
-                                    p {
-                                        class: "subtitle",
-                                        "本月总收入(元)"
-                                    }
-                                    p {
-                                        class: "has-text-success",
-                                        "↑ 8.3%"
-                                    }
-                                }
-                                footer {
-                                    class: "card-footer",
-                                    span {
-                                        class: "card-footer-item",
-                                        i {
-                                            class: "fas fa-money-bill-wave",
-                                        }
-                                    }
+                            div { class: "field",
+                                div { class: "control",
+                                    label { class: "label", "开始日期" }
+                                    input { class: "input", r#type: "date", value: "2024-10-08" }
                                 }
                             }
-                        }
-                    },
-                    div {
-                        class: "column is-one-quarter",
-                        div {
-                            class: "card",
-                            div {
-                                class: "card-content",
-                                div {
-                                    class: "content",
-                                    p {
-                                        class: "title is-4",
-                                        "15,892"
-                                    }
-                                    p {
-                                        class: "subtitle",
-                                        "注册用户数"
-                                    }
-                                    p {
-                                        class: "has-text-success",
-                                        "↑ 5.7%"
-                                    }
-                                }
-                                footer {
-                                    class: "card-footer",
-                                    span {
-                                        class: "card-footer-item",
-                                        i {
-                                            class: "fas fa-users",
-                                        }
-                                    }
+                            div { class: "field",
+                                div { class: "control",
+                                    label { class: "label", "结束日期" }
+                                    input { class: "input", r#type: "date", value: "2024-10-15" }
                                 }
                             }
-                        }
-                    },
-                    div {
-                        class: "column is-one-quarter",
-                        div {
-                            class: "card",
-                            div {
-                                class: "card-content",
-                                div {
-                                    class: "content",
-                                    p {
-                                        class: "title is-4",
-                                        "3,456"
-                                    }
-                                    p {
-                                        class: "subtitle",
-                                        "今日订单数"
-                                    }
-                                    p {
-                                        class: "has-text-danger",
-                                        "↓ 2.1%"
-                                    }
-                                }
-                                footer {
-                                    class: "card-footer",
-                                    span {
-                                        class: "card-footer-item",
-                                        i {
-                                            class: "fas fa-shopping-cart",
+                            div { class: "field",
+                                div { class: "control",
+                                    label { class: "label", "数据类型" }
+                                    div { class: "select is-fullwidth",
+                                        select {
+                                            option { value: "all", "全部数据" }
+                                            option { value: "user", "用户数据" }
+                                            option { value: "order", "订单数据" }
+                                            option { value: "farm", "农场数据" }
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                }
-            },
-            // 图表和活动区域
-            div {
-                class: "stats-row",
-                div {
-                    class: "columns",
-                    div {
-                        class: "column is-three-quarters",
-                        // 图表区域
-                        div {
-                            class: "card",
-                            header {
-                                class: "card-header",
-                                p {
-                                    class: "card-header-title",
-                                    "收入趋势分析"
+                    div { class: "field is-grouped is-grouped-right",
+                        div { class: "control",
+                            button { class: "button is-primary", "生成报告" }
+                            button { class: "button", "导出数据" }
+                        }
+                    }
+                    div { class: "columns",
+                        div { class: "column",
+                            div { class: "card",
+                                header { class: "card-header",
+                                    p { class: "card-header-title", "新增用户" }
                                 }
-                                div {
-                                    class: "card-header-icons",
-                                    button {
-                                        class: "button is-small is-primary",
-                                        "本月"
+                                div { class: "card-content",
+                                    div { class: "content",
+                                        p { class: "title is-4", "156" }
+                                        p { class: "subtitle is-6", "+12.5% 环比增长" }
                                     }
-                                    button {
-                                        class: "button is-small",
-                                        "本季度"
-                                    }
-                                    button {
-                                        class: "button is-small",
-                                        "本年度"
-                                    }
-                                }
-                            }
-                            div {
-                                class: "card-content",
-                                p {
-                                    "收入趋势图表区域"
                                 }
                             }
                         }
-                    }
-                    div {
-                        class: "column",
-                        // 活动区域
-                        div {
-                            class: "card",
-                            header {
-                                class: "card-header",
-                                p {
-                                    class: "card-header-title",
-                                    "最近活动"
+                        div { class: "column",
+                            div { class: "card",
+                                header { class: "card-header",
+                                    p { class: "card-header-title", "订单数量" }
                                 }
-                                span {
-                                    class: "tag is-warning",
-                                    "5条新消息"
+                                div { class: "card-content",
+                                    div { class: "content",
+                                        p { class: "title is-4", "89" }
+                                        p { class: "subtitle is-6", "+23.6% 环比增长" }
+                                    }
                                 }
                             }
-                            div {
-                                class: "card-content",
-                                div {
-                                    class: "content",
-                                    article {
-                                        class: "media",
-                                        figure {
-                                            class: "media-left",
-                                            span {
-                                                class: "icon has-text-success",
-                                                i {
-                                                    class: "fas fa-check-circle",
-                                                }
-                                            }
-                                        }
-                                        div {
-                                            class: "media-content",
-                                            div {
-                                                class: "content",
-                                                p {
-                                                    strong {
-                                                        "新农场 \"阳光农场\" 注册成功并完成首次种植"
-                                                    }
-                                                    small {
-                                                        "2分钟前"
-                                                    }
-                                                }
-                                            }
-                                        }
+                        }
+                        div { class: "column",
+                            div { class: "card",
+                                header { class: "card-header",
+                                    p { class: "card-header-title", "总收入" }
+                                }
+                                div { class: "card-content",
+                                    div { class: "content",
+                                        p { class: "title is-4", "¥128,560" }
+                                        p { class: "subtitle is-6", "+15.8% 同比增长" }
                                     }
-                                    article {
-                                        class: "media",
-                                        figure {
-                                            class: "media-left",
-                                            span {
-                                                class: "icon has-text-warning",
-                                                i {
-                                                    class: "fas fa-exclamation-triangle",
-                                                }
-                                            }
-                                        }
-                                        div {
-                                            class: "media-content",
-                                            div {
-                                                class: "content",
-                                                p {
-                                                    strong {
-                                                        "设备 #A123 温度异常，请及时检查"
-                                                    }
-                                                    small {
-                                                        "15分钟前"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    article {
-                                        class: "media",
-                                        figure {
-                                            class: "media-left",
-                                            span {
-                                                class: "icon has-text-info",
-                                                i {
-                                                    class: "fas fa-info-circle",
-                                                }
-                                            }
-                                        }
-                                        div {
-                                            class: "media-content",
-                                            div {
-                                                class: "content",
-                                                p {
-                                                    strong {
-                                                        "用户 \"张三\" 完成大额订单，金额 ¥12,800"
-                                                    }
-                                                    small {
-                                                        "1小时前"
-                                                    }
-                                                }
-                                            }
-                                        }
+                                }
+                            }
+                        }
+                        div { class: "column",
+                            div { class: "card",
+                                header { class: "card-header",
+                                    p { class: "card-header-title", "用户活跃度" }
+                                }
+                                div { class: "card-content",
+                                    div { class: "content",
+                                        p { class: "title is-4", "78.5%" }
+                                        p { class: "subtitle is-6", "-2.3% 环比下降" }
                                     }
                                 }
                             }
                         }
                     }
-                }
-            },
-            // 系统状态和快捷操作
-            div {
-                class: "stats-row",
-                div {
-                    class: "columns",
-                    div {
-                        class: "column",
-                        // 系统状态
-                        div {
-                            class: "card",
-                            header {
-                                class: "card-header",
-                                p {
-                                    class: "card-header-title",
-                                    "系统状态监控"
+                    div { class: "columns",
+                        div { class: "column",
+                            div { class: "card",
+                                header { class: "card-header",
+                                    p { class: "card-header-title", "用户增长趋势" }
+                                }
+                                div { class: "card-content",
+                                    div { class: "content",
+                                        p { class: "has-text-centered", "用户增长趋势图表" }
+                                    }
                                 }
                             }
-                            div {
-                                class: "card-content",
-                                div {
-                                    class: "columns",
-                                    div {
-                                        class: "column",
-                                        div {
-                                            class: "content",
-                                            p {
-                                                class: "title is-6",
-                                                "API服务"
-                                            }
-                                            p {
-                                                class: "subtitle is-6",
-                                                "运行正常"
-                                            }
-                                        }
+                        }
+                        div { class: "column",
+                            div { class: "card",
+                                header { class: "card-header",
+                                    p { class: "card-header-title", "订单分布分析" }
+                                }
+                                div { class: "card-content",
+                                    div { class: "content",
+                                        p { class: "has-text-centered", "订单分布饼图" }
                                     }
-                                    div {
-                                        class: "column",
-                                        div {
-                                            class: "content",
-                                            p {
-                                                class: "title is-6",
-                                                "数据库"
-                                            }
-                                            p {
-                                                class: "subtitle is-6",
-                                                "连接稳定"
-                                            }
-                                        }
+                                }
+                            }
+                        }
+                        div { class: "column",
+                            div { class: "card",
+                                header { class: "card-header",
+                                    p { class: "card-header-title", "收入趋势分析" }
+                                }
+                                div { class: "card-content",
+                                    div { class: "content",
+                                        p { class: "has-text-centered", "收入趋势折线图" }
                                     }
-                                    div {
-                                        class: "column",
-                                        div {
-                                            class: "content",
-                                            p {
-                                                class: "title is-6",
-                                                "缓存服务"
-                                            }
-                                            p {
-                                                class: "subtitle is-6 has-text-warning",
-                                                "负载较高"
-                                            }
-                                        }
-                                    }
-                                    div {
-                                        class: "column",
-                                        div {
-                                            class: "content",
-                                            p {
-                                                class: "title is-6",
-                                                "文件存储"
-                                            }
-                                            p {
-                                                class: "subtitle is-6",
-                                                "空间充足"
-                                            }
-                                        }
+                                }
+                            }
+                        }
+                        div { class: "column",
+                            div { class: "card",
+                                header { class: "card-header",
+                                    p { class: "card-header-title", "农场运营效率" }
+                                }
+                                div { class: "card-content",
+                                    div { class: "content",
+                                        p { class: "has-text-centered", "农场效率柱状图" }
                                     }
                                 }
                             }
                         }
                     }
-                    div {
-                        class: "column",
-                        // 快捷操作
-                        div {
-                            class: "card",
-                            header {
-                                class: "card-header",
-                                p {
-                                    class: "card-header-title",
-                                    "快捷操作"
+                    div { class: "card",
+                        header { class: "card-header",
+                            p { class: "card-header-title", "关键指标数据表" }
+                        }
+                        div { class: "card-content",
+                            table { class: "table is-fullwidth",
+                                thead {
+                                    tr {
+                                        th { "指标名称" }
+                                        th { "当前值" }
+                                        th { "环比变化" }
+                                        th { "同比变化" }
+                                        th { "行业平均" }
+                                    }
+                                }
+                                tbody {
+                                    tr {
+                                        td { "用户注册转化率" }
+                                        td { "15.8%" }
+                                        td { class: "has-text-success", "+2.3%" }
+                                        td { class: "has-text-success", "+5.6%" }
+                                        td { "12.4%" }
+                                    }
+                                    tr {
+                                        td { "订单完成率" }
+                                        td { "92.7%" }
+                                        td { class: "has-text-success", "+1.2%" }
+                                        td { class: "has-text-success", "+3.8%" }
+                                        td { "88.5%" }
+                                    }
+                                    tr {
+                                        td { "用户留存率" }
+                                        td { "65.3%" }
+                                        td { class: "has-text-danger", "-1.5%" }
+                                        td { class: "has-text-success", "+2.1%" }
+                                        td { "58.9%" }
+                                    }
+                                    tr {
+                                        td { "平均客单价" }
+                                        td { "¥1,445" }
+                                        td { class: "has-text-success", "+8.7%" }
+                                        td { class: "has-text-success", "+15.2%" }
+                                        td { "¥1,120" }
+                                    }
                                 }
                             }
-                            div {
-                                class: "card-content",
-                                div {
-                                    class: "columns",
-                                    div {
-                                        class: "column",
-                                        div {
-                                            class: "content",
-                                            p {
-                                                class: "title is-6",
-                                                "数据报表"
-                                            }
-                                            p {
-                                                class: "subtitle is-6",
-                                                "查看详细数据分析报告"
-                                            }
-                                        }
-                                    }
-                                    div {
-                                        class: "column",
-                                        div {
-                                            class: "content",
-                                            p {
-                                                class: "title is-6",
-                                                "消息中心"
-                                            }
-                                            p {
-                                                class: "subtitle is-6",
-                                                "处理系统通知信息"
-                                            }
-                                        }
-                                    }
-                                    div {
-                                        class: "column",
-                                        div {
-                                            class: "content",
-                                            p {
-                                                class: "title is-6",
-                                                "系统设置"
-                                            }
-                                            p {
-                                                class: "subtitle is-6",
-                                                "配置系统参数选项"
-                                            }
-                                        }
-                                    }
-                                    div {
-                                        class: "column",
-                                        div {
-                                            class: "content",
-                                            p {
-                                                class: "title is-6",
-                                                "用户管理"
-                                            }
-                                            p {
-                                                class: "subtitle is-6",
-                                                "管理用户权限分配"
-                                            }
-                                        }
-                                    }
+                            div { class: "field is-grouped is-grouped-right",
+                                div { class: "control",
+                                    button { class: "button is-primary", "生成详细报告" }
+                                    button { class: "button", "导出Excel" }
+                                    button { class: "button", "打印报告" }
                                 }
                             }
                         }
