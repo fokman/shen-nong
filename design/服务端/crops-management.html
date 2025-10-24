@@ -1,362 +1,303 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>作物管理 - 神农开心农场</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="assets/bulma.css">
 </head>
+
 <body>
-    <!-- 主要内容 -->
-    <section class="section" style="margin-top: 80px;">
-        <div>
-            <!-- 页面标题 -->
-            <div class="block">
-                <h1 class="title is-2 has-text-grey-dark">作物管理</h1>
-                <p class="subtitle has-text-grey">监控和管理您的农作物生长状态，及时进行养护操作</p>
-            </div>
 
-            <div class="columns">
-                <!-- 左侧主要内容 -->
-                <div class="column is-three-quarters">
-                    <!-- 作物概览 -->
-                    <div class="box">
-                        <h2 class="title is-4 has-text-grey-dark">
-                            <span class="icon has-text-success mr-2">
-                                <i class="fas fa-seedling"></i>
-                            </span>
-                            作物概览
-                        </h2>
-                        
-                        <div class="columns is-multiline">
-                            <!-- 作物卡片1 -->
-                            <div class="column is-one-quarter">
-                                <div class="card">
-                                    <div class="card-content">
-                                        <div class="has-background-success-light has-text-centered py-5 mb-3">
-                                            <span class="icon is-large has-text-success">
-                                                <i class="fas fa-apple-alt fa-2x"></i>
-                                            </span>
-                                        </div>
-                                        <p class="title is-5 has-text-grey-dark">樱桃番茄</p>
-                                        <div class="content">
-                                            <span class="tag is-success is-light">
-                                                <span class="icon is-small mr-1">
-                                                    <i class="fas fa-circle"></i>
-                                                </span>
-                                                生长良好
-                                            </span>
-                                            
-                                            <div class="mt-3">
-                                                <progress class="progress is-success is-small" value="65" max="100">65%</progress>
-                                                <p class="has-text-right is-size-7 has-text-grey">65% 完成</p>
-                                            </div>
-                                        </div>
-                                    </div>
+    <div class="columns">
+        <!-- 左侧主要内容 -->
+        <div class="column is-three-quarters">
+            <!-- 作物概览 -->
+            <div class="box">
+                <h2 class="title is-4 has-text-grey-dark">
+                    作物概览
+                </h2>
+
+                <div class="columns is-multiline">
+                    <!-- 作物卡片1 -->
+                    <div class="column is-one-quarter">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="has-background-success-light has-text-centered py-5 mb-3">
+                                    <span class="icon is-large has-text-success">
+                                        <i class="fas fa-apple-alt fa-2x"></i>
+                                    </span>
                                 </div>
-                            </div>
-                            
-                            <!-- 作物卡片2 -->
-                            <div class="column is-one-quarter">
-                                <div class="card">
-                                    <div class="card-content">
-                                        <div class="has-background-warning-light has-text-centered py-5 mb-3">
-                                            <span class="icon is-large has-text-warning">
-                                                <i class="fas fa-leaf fa-2x"></i>
-                                            </span>
-                                        </div>
-                                        <p class="title is-5 has-text-grey-dark">小白菜</p>
-                                        <div class="content">
-                                            <span class="tag is-warning is-light">
-                                                <span class="icon is-small mr-1">
-                                                    <i class="fas fa-circle"></i>
-                                                </span>
-                                                需要浇水
-                                            </span>
-                                            
-                                            <div class="mt-3">
-                                                <progress class="progress is-warning is-small" value="40" max="100">40%</progress>
-                                                <p class="has-text-right is-size-7 has-text-grey">40% 完成</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- 作物卡片3 -->
-                            <div class="column is-one-quarter">
-                                <div class="card">
-                                    <div class="card-content">
-                                        <div class="has-background-success-light has-text-centered py-5 mb-3">
-                                            <span class="icon is-large has-text-success">
-                                                <i class="fas fa-corn fa-2x"></i>
-                                            </span>
-                                        </div>
-                                        <p class="title is-5 has-text-grey-dark">甜玉米</p>
-                                        <div class="content">
-                                            <span class="tag is-success is-light">
-                                                <span class="icon is-small mr-1">
-                                                    <i class="fas fa-circle"></i>
-                                                </span>
-                                                生长良好
-                                            </span>
-                                            
-                                            <div class="mt-3">
-                                                <progress class="progress is-success is-small" value="30" max="100">30%</progress>
-                                                <p class="has-text-right is-size-7 has-text-grey">30% 完成</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- 作物卡片4 -->
-                            <div class="column is-one-quarter">
-                                <div class="card">
-                                    <div class="card-content">
-                                        <div class="has-background-danger-light has-text-centered py-5 mb-3">
-                                            <span class="icon is-large has-text-danger">
-                                                <i class="fas fa-carrot fa-2x"></i>
-                                            </span>
-                                        </div>
-                                        <p class="title is-5 has-text-grey-dark">胡萝卜</p>
-                                        <div class="content">
-                                            <span class="tag is-danger is-light">
-                                                <span class="icon is-small mr-1">
-                                                    <i class="fas fa-circle"></i>
-                                                </span>
-                                                需要施肥
-                                            </span>
-                                            
-                                            <div class="mt-3">
-                                                <progress class="progress is-danger is-small" value="20" max="100">20%</progress>
-                                                <p class="has-text-right is-size-7 has-text-grey">20% 完成</p>
-                                            </div>
-                                        </div>
+                                <p class="title is-5 has-text-grey-dark">樱桃番茄</p>
+                                <div class="content">
+                                    <span class="tag is-success is-light">
+                                        生长良好
+                                    </span>
+
+                                    <div class="mt-3">
+                                        <progress class="progress is-success is-small" value="65"
+                                            max="100">65%</progress>
+                                        <p class="has-text-right is-size-7 has-text-grey">65% 完成</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 环境数据 -->
-                    <div class="box">
-                        <h2 class="title is-4 has-text-grey-dark">
-                            <span class="icon has-text-success mr-2">
-                                <i class="fas fa-chart-bar"></i>
-                            </span>
-                            环境数据
-                        </h2>
-                        
-                        <div class="columns is-multiline">
-                            <div class="column is-2">
-                                <div class="box has-background-light has-text-centered">
-                                    <span class="icon is-medium has-text-info mb-2">
-                                        <i class="fas fa-thermometer-half fa-lg"></i>
+                    <!-- 作物卡片2 -->
+                    <div class="column is-one-quarter">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="has-background-warning-light has-text-centered py-5 mb-3">
+                                    <span class="icon is-large has-text-warning">
+                                        <i class="fas fa-leaf fa-2x"></i>
                                     </span>
-                                    <p class="title is-5 has-text-grey-dark">24.5°C</p>
-                                    <p class="subtitle is-7 has-text-grey">温度</p>
                                 </div>
-                            </div>
-                            <div class="column is-2">
-                                <div class="box has-background-light has-text-centered">
-                                    <span class="icon is-medium has-text-info mb-2">
-                                        <i class="fas fa-tint fa-lg"></i>
+                                <p class="title is-5 has-text-grey-dark">小白菜</p>
+                                <div class="content">
+                                    <span class="tag is-warning is-light">
+                                        <span class="icon is-small mr-1">
+                                            <i class="fas fa-circle"></i>
+                                        </span>
+                                        需要浇水
                                     </span>
-                                    <p class="title is-5 has-text-grey-dark">65%</p>
-                                    <p class="subtitle is-7 has-text-grey">湿度</p>
-                                </div>
-                            </div>
-                            <div class="column is-2">
-                                <div class="box has-background-light has-text-centered">
-                                    <span class="icon is-medium has-text-warning mb-2">
-                                        <i class="fas fa-sun fa-lg"></i>
-                                    </span>
-                                    <p class="title is-5 has-text-grey-dark">820 lux</p>
-                                    <p class="subtitle is-7 has-text-grey">光照</p>
-                                </div>
-                            </div>
-                            <div class="column is-2">
-                                <div class="box has-background-light has-text-centered">
-                                    <span class="icon is-medium has-text-success mb-2">
-                                        <i class="fas fa-vial fa-lg"></i>
-                                    </span>
-                                    <p class="title is-5 has-text-grey-dark">6.8 pH</p>
-                                    <p class="subtitle is-7 has-text-grey">土壤酸碱度</p>
-                                </div>
-                            </div>
-                            <div class="column is-2">
-                                <div class="box has-background-light has-text-centered">
-                                    <span class="icon is-medium has-text-info mb-2">
-                                        <i class="fas fa-tint fa-lg"></i>
-                                    </span>
-                                    <p class="title is-5 has-text-grey-dark">42%</p>
-                                    <p class="subtitle is-7 has-text-grey">土壤湿度</p>
-                                </div>
-                            </div>
-                            <div class="column is-2">
-                                <div class="box has-background-light has-text-centered">
-                                    <span class="icon is-medium has-text-grey mb-2">
-                                        <i class="fas fa-wind fa-lg"></i>
-                                    </span>
-                                    <p class="title is-5 has-text-grey-dark">2.3 m/s</p>
-                                    <p class="subtitle is-7 has-text-grey">风速</p>
+
+                                    <div class="mt-3">
+                                        <progress class="progress is-warning is-small" value="40"
+                                            max="100">40%</progress>
+                                        <p class="has-text-right is-size-7 has-text-grey">40% 完成</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 操作面板 -->
-                    <div class="box">
-                        <h2 class="title is-4 has-text-grey-dark">
-                            <span class="icon has-text-success mr-2">
-                                <i class="fas fa-tools"></i>
-                            </span>
-                            操作面板
-                        </h2>
-                        
-                        <div class="columns is-multiline">
-                            <div class="column is-2">
-                                <button class="button is-success is-fullwidth">
-                                    <span class="icon">
-                                        <i class="fas fa-tint"></i>
+                    <!-- 作物卡片3 -->
+                    <div class="column is-one-quarter">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="has-background-success-light has-text-centered py-5 mb-3">
+                                    <span class="icon is-large has-text-success">
+                                        <i class="fas fa-corn fa-2x"></i>
                                     </span>
-                                    <span>浇水</span>
-                                </button>
+                                </div>
+                                <p class="title is-5 has-text-grey-dark">甜玉米</p>
+                                <div class="content">
+                                    <span class="tag is-success is-light">
+                                        <span class="icon is-small mr-1">
+                                            <i class="fas fa-circle"></i>
+                                        </span>
+                                        生长良好
+                                    </span>
+
+                                    <div class="mt-3">
+                                        <progress class="progress is-success is-small" value="30"
+                                            max="100">30%</progress>
+                                        <p class="has-text-right is-size-7 has-text-grey">30% 完成</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="column is-2">
-                                <button class="button is-success is-fullwidth">
-                                    <span class="icon">
-                                        <i class="fas fa-seedling"></i>
+                        </div>
+                    </div>
+
+                    <!-- 作物卡片4 -->
+                    <div class="column is-one-quarter">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="has-background-danger-light has-text-centered py-5 mb-3">
+                                    <span class="icon is-large has-text-danger">
+                                        <i class="fas fa-carrot fa-2x"></i>
                                     </span>
-                                    <span>施肥</span>
-                                </button>
-                            </div>
-                            <div class="column is-2">
-                                <button class="button is-success is-fullwidth">
-                                    <span class="icon">
-                                        <i class="fas fa-leaf"></i>
+                                </div>
+                                <p class="title is-5 has-text-grey-dark">胡萝卜</p>
+                                <div class="content">
+                                    <span class="tag is-danger is-light">
+                                        <span class="icon is-small mr-1">
+                                            <i class="fas fa-circle"></i>
+                                        </span>
+                                        需要施肥
                                     </span>
-                                    <span>除草</span>
-                                </button>
-                            </div>
-                            <div class="column is-2">
-                                <button class="button is-success is-fullwidth">
-                                    <span class="icon">
-                                        <i class="fas fa-bug"></i>
-                                    </span>
-                                    <span>除虫</span>
-                                </button>
-                            </div>
-                            <div class="column is-2">
-                                <button class="button is-success is-fullwidth">
-                                    <span class="icon">
-                                        <i class="fas fa-cut"></i>
-                                    </span>
-                                    <span>修剪</span>
-                                </button>
-                            </div>
-                            <div class="column is-2">
-                                <button class="button is-success is-fullwidth">
-                                    <span class="icon">
-                                        <i class="fas fa-camera"></i>
-                                    </span>
-                                    <span>拍照</span>
-                                </button>
+
+                                    <div class="mt-3">
+                                        <progress class="progress is-danger is-small" value="20"
+                                            max="100">20%</progress>
+                                        <p class="has-text-right is-size-7 has-text-grey">20% 完成</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- 右侧侧边栏 -->
-                <div class="column">
-                    <!-- 天气组件 -->
-                    <div class="box">
-                        <div class="has-text-centered">
-                            <span class="icon is-large has-text-info mb-2">
-                                <i class="fas fa-sun fa-2x"></i>
-                            </span>
-                            <p class="title is-4 has-text-grey-dark">26°C</p>
-                            <p class="subtitle is-6 has-text-grey">晴朗，微风</p>
-                            <p class="is-size-6 has-text-grey">北京农场</p>
+            <!-- 环境数据 -->
+            <div class="box">
+                <h2 class="title is-4 has-text-grey-dark">
+                    环境数据
+                </h2>
+
+                <div class="columns is-multiline">
+                    <div class="column is-2">
+                        <div class="box has-background-light has-text-centered">
+                            <p class="title is-5 has-text-grey-dark">24.5°C</p>
+                            <p class="subtitle is-7 has-text-grey">温度</p>
                         </div>
                     </div>
-
-                    <!-- 今日任务 -->
-                    <div class="box">
-                        <h2 class="title is-4 has-text-grey-dark">
-                            <span class="icon has-text-success mr-2">
-                                <i class="fas fa-tasks"></i>
-                            </span>
-                            今日任务
-                        </h2>
-                        
-                        <div class="content">
-                            <div class="media mb-4">
-                                <div class="media-left">
-                                    <input type="checkbox" class="checkbox">
-                                </div>
-                                <div class="media-content">
-                                    <p class="has-text-grey-dark">给小白菜浇水</p>
-                                    <span class="tag is-light is-small">09:00</span>
-                                </div>
-                            </div>
-                            <div class="media mb-4">
-                                <div class="media-left">
-                                    <input type="checkbox" class="checkbox">
-                                </div>
-                                <div class="media-content">
-                                    <p class="has-text-grey-dark">给胡萝卜施肥</p>
-                                    <span class="tag is-light is-small">10:30</span>
-                                </div>
-                            </div>
-                            <div class="media mb-4">
-                                <div class="media-left">
-                                    <input type="checkbox" class="checkbox">
-                                </div>
-                                <div class="media-content">
-                                    <p class="has-text-grey-dark">检查番茄生长情况</p>
-                                    <span class="tag is-light is-small">14:00</span>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                    <input type="checkbox" class="checkbox">
-                                </div>
-                                <div class="media-content">
-                                    <p class="has-text-grey-dark">记录环境数据</p>
-                                    <span class="tag is-light is-small">16:00</span>
-                                </div>
-                            </div>
+                    <div class="column is-2">
+                        <div class="box has-background-light has-text-centered">
+                            <p class="title is-5 has-text-grey-dark">65%</p>
+                            <p class="subtitle is-7 has-text-grey">湿度</p>
                         </div>
                     </div>
-
-                    <!-- 生长提示 -->
-                    <div class="box">
-                        <h2 class="title is-4 has-text-grey-dark">
-                            <span class="icon has-text-success mr-2">
-                                <i class="fas fa-lightbulb"></i>
-                            </span>
-                            生长提示
-                        </h2>
-                        
-                        <div class="content">
-                            <article class="message is-success">
-                                <div class="message-body">
-                                    樱桃番茄已进入开花期，建议增加磷钾肥，促进果实发育。
-                                </div>
-                            </article>
-                            <article class="message is-info">
-                                <div class="message-body">
-                                    胡萝卜需要疏松土壤，确保根部生长空间。
-                                </div>
-                            </article>
+                    <div class="column is-2">
+                        <div class="box has-background-light has-text-centered">
+                            <p class="title is-5 has-text-grey-dark">820 lux</p>
+                            <p class="subtitle is-7 has-text-grey">光照</p>
                         </div>
+                    </div>
+                    <div class="column is-2">
+                        <div class="box has-background-light has-text-centered">
+                            <p class="title is-5 has-text-grey-dark">6.8 pH</p>
+                            <p class="subtitle is-7 has-text-grey">土壤酸碱度</p>
+                        </div>
+                    </div>
+                    <div class="column is-2">
+                        <div class="box has-background-light has-text-centered">
+                            <p class="title is-5 has-text-grey-dark">42%</p>
+                            <p class="subtitle is-7 has-text-grey">土壤湿度</p>
+                        </div>
+                    </div>
+                    <div class="column is-2">
+                        <div class="box has-background-light has-text-centered">
+                            <p class="title is-5 has-text-grey-dark">2.3 m/s</p>
+                            <p class="subtitle is-7 has-text-grey">风速</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 操作面板 -->
+            <div class="box">
+                <h2 class="title is-4 has-text-grey-dark">
+                    操作面板
+                </h2>
+
+                <div class="columns is-multiline">
+                    <div class="column is-2">
+                        <button class="button is-success is-fullwidth">
+                            浇水
+                        </button>
+                    </div>
+                    <div class="column is-2">
+                        <button class="button is-success is-fullwidth">
+                            <span>施肥</span>
+                        </button>
+                    </div>
+                    <div class="column is-2">
+                        <button class="button is-success is-fullwidth">
+                            除草
+                        </button>
+                    </div>
+                    <div class="column is-2">
+                        <button class="button is-success is-fullwidth">
+                            除虫
+                        </button>
+                    </div>
+                    <div class="column is-2">
+                        <button class="button is-success is-fullwidth">
+                            修剪
+                        </button>
+                    </div>
+                    <div class="column is-2">
+                        <button class="button is-success is-fullwidth">
+                            拍照
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- 右侧侧边栏 -->
+        <div class="column">
+            <!-- 天气组件 -->
+            <div class="box">
+                <div class="has-text-centered">
+                    <p class="title is-4 has-text-grey-dark">26°C</p>
+                    <p class="subtitle is-6 has-text-grey">晴朗，微风</p>
+                    <p class="is-size-6 has-text-grey">北京农场</p>
+                </div>
+            </div>
+
+            <!-- 今日任务 -->
+            <div class="box">
+                <h2 class="title is-4 has-text-grey-dark">
+                    今日任务
+                </h2>
+
+                <div class="content">
+                    <div class="media mb-4">
+                        <div class="media-left">
+                            <input type="checkbox" class="checkbox media-left">
+                        </div>
+                        <div class="media-content">
+                            <p class="has-text-grey-dark">给小白菜浇水</p>
+                            <span class="tag is-light is-small">09:00</span>
+                        </div>
+                    </div>
+                    <div class="media mb-4">
+                        <div class="media-left">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="media-content">
+                            <p class="has-text-grey-dark">给胡萝卜施肥</p>
+                            <span class="tag is-light is-small">10:30</span>
+                        </div>
+                    </div>
+                    <div class="media mb-4">
+                        <div class="media-left">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="media-content">
+                            <p class="has-text-grey-dark">检查番茄生长情况</p>
+                            <span class="tag is-light is-small">14:00</span>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="media-content">
+                            <p class="has-text-grey-dark">记录环境数据</p>
+                            <span class="tag is-light is-small">16:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 生长提示 -->
+            <div class="box">
+                <h2 class="title is-4 has-text-grey-dark">
+                    生长提示
+                </h2>
+
+                <div class="content">
+                    <article class="message is-success">
+                        <div class="message-body">
+                            樱桃番茄已进入开花期，建议增加磷钾肥，促进果实发育。
+                        </div>
+                    </article>
+                    <article class="message is-info">
+                        <div class="message-body">
+                            胡萝卜需要疏松土壤，确保根部生长空间。
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </body>
+
 </html>
