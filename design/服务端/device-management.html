@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>神农开心农场 - 设备管理</title>
+    <link rel="stylesheet" href="assets/bulma.css">
+</head>
+
+<body>
+
+    <div>
+
+        <div class="columns">
+            <div class="column ">
+                <label class="label">所属农场</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select>
+                            <option>全部</option>
+                            <option>阳光生态农场</option>
+                            <option>绿野仙踪农场</option>
+                            <option>南山有机农场</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-2">
+                <label class="label">设备类型</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select>
+                            <option>全部</option>
+                            <option>传感器</option>
+                            <option>控制器</option>
+                            <option>摄像头</option>
+                            <option>喂食机</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-2">
+                <label class="label">状态</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select>
+                            <option>全部</option>
+                            <option>在线</option>
+                            <option>离线</option>
+                            <option>故障</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-2">
+                <label class="label">启用年份</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select>
+                            <option>全部</option>
+                            <option>2023</option>
+                            <option>2024</option>
+                            <option>2025</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-3">
+                <label class="label">搜索设备名称/ID</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="输入关键词">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 设备表格 -->
+        <div class="card">
+            <div class="card-content">
+                <div class="buttons is-pulled-right">
+                    <button class="button is-light ">重置</button>
+                    <button class="button is-primary ">查询</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="table is-fullwidth is-striped is-hoverable is-narrow">
+                        <thead>
+                            <tr>
+                                <th>设备类型</th>
+                                <th>设备名称</th>
+                                <th class="has-text-right">功耗 (W)</th>
+                                <th>状态</th>
+                                <th>安装位置</th>
+                                <th>唯一编号</th>
+                                <th>启用年份</th>
+                                <th>所属农场</th>
+                                <th class="has-text-right">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>土壤传感器</td>
+                                <td>温湿度监测仪 A-01</td>
+                                <td class="has-text-right">2.5</td>
+                                <td><span class="tag status-online">在线</span></td>
+                                <td>A区-1号地块</td>
+                                <td>SNS-20250401-001</td>
+                                <td>2025</td>
+                                <td>阳光生态农场</td>
+                                <td class="has-text-right">
+                                    <button class="button is-light">详情</button>
+                                    <button class="button is-primary">校准</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>灌溉控制器</td>
+                                <td>智能滴灌主机 B-03</td>
+                                <td class="has-text-right">45.0</td>
+                                <td><span class="tag status-online">在线</span></td>
+                                <td>B区-3号地块</td>
+                                <td>IRR-20241105-005</td>
+                                <td>2024</td>
+                                <td>绿野仙踪农场</td>
+                                <td class="has-text-right">
+                                    <button class="button is-light">详情</button>
+                                    <button class="button is-primary">启动</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>高清摄像头</td>
+                                <td>主温室监控 C-12</td>
+                                <td class="has-text-right">12.0</td>
+                                <td><span class="tag status-offline">离线</span></td>
+                                <td>主温室东侧</td>
+                                <td>CAM-20230912-012</td>
+                                <td>2023</td>
+                                <td>南山有机农场</td>
+                                <td class="has-text-right">
+                                    <button class="button is-light">详情</button>
+                                    <button class="button is-light">重启</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>自动喂食机</td>
+                                <td>鸡舍自动投喂机 D-02</td>
+                                <td class="has-text-right">30.5</td>
+                                <td><span class="tag status-fault">故障</span></td>
+                                <td>鸡舍A区</td>
+                                <td>FEED-20250210-003</td>
+                                <td>2025</td>
+                                <td>阳光生态农场</td>
+                                <td class="has-text-right">
+                                    <button class="button is-light">详情</button>
+                                    <button class="button is-light">报修</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

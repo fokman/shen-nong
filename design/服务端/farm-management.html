@@ -1,297 +1,61 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>农场管理 - 神农开心农场管理系统</title>
-    <link rel="stylesheet" href="https://unpkg.com/antd@5.0.0/dist/reset.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #2c3e50;
-        }
-        
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-        
-        .sidebar {
-            width: 240px;
-            background: #001529;
-            color: white;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid #303030;
-            margin-bottom: 20px;
-        }
-        
-        .logo h1 {
-            color: #27ae60;
-            font-size: 20px;
-            font-weight: 600;
-        }
-        
-        .accordion {
-            list-style: none;
-        }
-        
-        .accordion-item {
-            border-bottom: 1px solid #303030;
-        }
-        
-        .accordion-header {
-            padding: 12px 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s;
-        }
-        
-        .accordion-header:hover {
-            background-color: #1890ff;
-        }
-        
-        .accordion-header.active {
-            background-color: #1890ff;
-        }
-        
-        .accordion-header i {
-            margin-right: 8px;
-        }
-        
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background-color: #001a33;
-        }
-        
-        .accordion-content.open {
-            max-height: 200px;
-        }
-        
-        .submenu-item {
-            padding: 10px 20px 10px 40px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-left: 3px solid transparent;
-        }
-        
-        .submenu-item:hover, .submenu-item.active {
-            background-color: #1890ff;
-            border-left-color: #52c41a;
-        }
-        
-        .accordion-arrow {
-            transition: transform 0.3s;
-        }
-        
-        .accordion-arrow.open {
-            transform: rotate(180deg);
-        }
-        
-        .main-content {
-            flex: 1;
-            padding: 20px;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        
-        .page-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            background: white;
-            padding: 16px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .search-box {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .search-input {
-            padding: 8px 12px;
-            border: 1px solid #d9d9d9;
-            border-radius: 4px;
-            width: 300px;
-        }
-        
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .btn-primary {
-            background: #1890ff;
-            color: white;
-        }
-        
-        .btn-success {
-            background: #27ae60;
-            color: white;
-        }
-        
-        .table-container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        th {
-            background: #fafafa;
-            font-weight: 600;
-        }
-        
-        .status-active {
-            color: #27ae60;
-            background: #f6ffed;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-        
-        .status-inactive {
-            color: #faad14;
-            background: #fffbe6;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .btn-sm {
-            padding: 4px 8px;
-            font-size: 12px;
-        }
-        
-        .pagination {
-            display: flex;
-            justify-content: flex-end;
-            padding: 16px;
-            background: #fafafa;
-        }
-        
-        .view-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        
-        .view-tab {
-            padding: 8px 16px;
-            border: 1px solid #d9d9d9;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .view-tab.active {
-            background: #1890ff;
-            color: white;
-            border-color: #1890ff;
-        }
-        
-        .map-view {
-            height: 400px;
-            background: #f0f2f5;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-        }
-    </style>
+    <!-- Bulma CDN -->
+    <link rel="stylesheet" href="assets/bulma.css">
+</head>
 
 <body>
-    <div class="layout">
-        <!-- 主内容区 -->
-        <div class="main-content" style="margin-left: 0; width: 100%;">
-            <div class="header">
-                <h1 class="page-title">农场管理</h1>
-                <div class="user-info">
-                    <span>管理员</span>
-                    <div class="avatar">👤</div>
-                </div>
-            </div>
-            
+    <!-- 整体布局 -->
+    <div class="columns is-gapless">
+
+        <!-- 主内容 -->
+        <main class="column">
+
             <!-- 视图切换 -->
-            <div class="view-tabs">
-                <div class="view-tab active">地图视图</div>
-                <div class="view-tab">列表视图</div>
-                <div class="view-tab">统计视图</div>
+            <div class="tabs is-boxed px-4">
+                <ul>
+                    <li class="is-active"><a>地图视图</a></li>
+                    <li><a>列表视图</a></li>
+                    <li><a>统计视图</a></li>
+                </ul>
             </div>
-            
-            <!-- 地图视图 -->
-            <div class="map-view">
+
+            <!-- 地图占位 -->
+            <div class="box mx-4 has-background-light"
+                style="height:400px;display:flex;align-items:center;justify-content:center;color:#7a7a7a">
                 农场地理位置分布地图
             </div>
-            
+
             <!-- 工具栏 -->
-            <div class="toolbar">
-                <div class="search-box">
-                    <input type="text" class="search-input" placeholder="搜索农场名称、地址...">
-                    <button class="btn btn-primary">搜索</button>
+            <div class="columns is-mobile is-align-items-center mx-4 my-4">
+                <div class="column">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="搜索农场名称、地址...">
+                        </div>
+                        <div class="control">
+                            <button class="button is-info">
+                                <span class="icon"><i class="fas fa-search"></i></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <button class="btn btn-success">+ 新建农场</button>
+                <div class="column is-narrow">
+                    <button class="button is-success">
+                        <span class="icon"><i class="fas fa-plus"></i></span>
+                        <span>新建农场</span>
+                    </button>
                 </div>
             </div>
-            
-            <!-- 数据表格 -->
-            <div class="table-container">
-                <table>
+
+            <!-- 表格 -->
+            <div class="table-container mx-4">
+                <table class="table is-fullwidth is-hoverable">
                     <thead>
                         <tr>
                             <th>农场ID</th>
@@ -301,7 +65,7 @@
                             <th>负责人</th>
                             <th>状态</th>
                             <th>创建时间</th>
-                            <th>操作</th>
+                            <th width="160">操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -311,12 +75,14 @@
                             <td>北京市顺义区</td>
                             <td>综合农场</td>
                             <td>张三</td>
-                            <td><span class="status-active">运营中</span></td>
+                            <td><span class="tag is-success is-light">运营中</span></td>
                             <td>2024-01-15</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-primary btn-sm">查看</button>
-                                <button class="btn btn-sm">编辑</button>
-                                <button class="btn btn-sm" style="color: #ff4d4f;">删除</button>
+                            <td>
+                                <div class="buttons are-small">
+                                    <button class="button is-info">查看</button>
+                                    <button class="button">编辑</button>
+                                    <button class="button is-danger">删除</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -325,12 +91,14 @@
                             <td>上海市崇明区</td>
                             <td>有机农场</td>
                             <td>李四</td>
-                            <td><span class="status-active">运营中</span></td>
+                            <td><span class="tag is-success is-light">运营中</span></td>
                             <td>2024-02-20</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-primary btn-sm">查看</button>
-                                <button class="btn btn-sm">编辑</button>
-                                <button class="btn btn-sm" style="color: #ff4d4f;">删除</button>
+                            <td>
+                                <div class="buttons are-small">
+                                    <button class="button is-info">查看</button>
+                                    <button class="button">编辑</button>
+                                    <button class="button is-danger">删除</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -339,12 +107,14 @@
                             <td>广州市从化区</td>
                             <td>种植基地</td>
                             <td>王五</td>
-                            <td><span class="status-inactive">维护中</span></td>
+                            <td><span class="tag is-warning is-light">维护中</span></td>
                             <td>2024-03-10</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-primary btn-sm">查看</button>
-                                <button class="btn btn-sm">编辑</button>
-                                <button class="btn btn-sm" style="color: #ff4d4f;">删除</button>
+                            <td>
+                                <div class="buttons are-small">
+                                    <button class="button is-info">查看</button>
+                                    <button class="button">编辑</button>
+                                    <button class="button is-danger">删除</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -353,25 +123,30 @@
                             <td>成都市郫都区</td>
                             <td>养殖场</td>
                             <td>赵六</td>
-                            <td><span class="status-active">运营中</span></td>
+                            <td><span class="tag is-success is-light">运营中</span></td>
                             <td>2024-04-05</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-primary btn-sm">查看</button>
-                                <button class="btn btn-sm">编辑</button>
-                                <button class="btn btn-sm" style="color: #ff4d4f;">删除</button>
+                            <td>
+                                <div class="buttons are-small">
+                                    <button class="button is-info">查看</button>
+                                    <button class="button">编辑</button>
+                                    <button class="button is-danger">删除</button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                
-                <!-- 分页 -->
-                <div class="pagination">
-                    <button class="btn btn-sm">上一页</button>
-                    <span style="margin: 0 16px;">第 1 页，共 5 页</span>
-                    <button class="btn btn-sm">下一页</button>
-                </div>
             </div>
-        </div>
+
+            <!-- 分页 -->
+            <nav class="pagination is-small is-right mx-4 mb-4" role="navigation">
+                <button class="pagination-previous" disabled>上一页</button>
+                <button class="pagination-next">下一页</button>
+                <ul class="pagination-list">
+                    <li><span class="pagination-ellipsis">第 1 页，共 5 页</span></li>
+                </ul>
+            </nav>
+        </main>
     </div>
 </body>
+
 </html>
