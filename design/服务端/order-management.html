@@ -5,200 +5,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>订单管理 - 神农开心农场管理系统</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="assets/bulma.css">
 </head>
 
 <body>
-    <section class="section">
-        <div class="container">
-            <div class="hero">
-                <h1 class="title">订单管理</h1>
-                <div class="level">
-                    <div class="level-left">
-                        <div class="level-item">
-                            <span class="tag is-info">管理员</span>
-                        </div>
-                    </div>
-                    <div class="level-right">
-                        <div class="level-item">
-                            <span class="icon">
-                                <i class="fas fa-user"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div>
 
-            <!-- 筛选栏 -->
-            <div class="field is-grouped is-grouped-multiline">
-                <div class="control">
-                    <label class="label">订单状态</label>
-                    <div class="select">
-                        <select>
-                            <option>全部状态</option>
-                            <option>待支付</option>
-                            <option>已支付</option>
-                            <option>已发货</option>
-                            <option>已完成</option>
-                            <option>已取消</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="control">
-                    <label class="label">订单类型</label>
-                    <div class="select">
-                        <select>
-                            <option>全部类型</option>
-                            <option>农场租赁</option>
-                            <option>商品购买</option>
-                            <option>服务订购</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="control">
-                    <label class="label">下单时间</label>
-                    <div class="control">
-                        <input class="input" type="date">
-                    </div>
-                </div>
-                <div class="control">
-                    <label class="label">至</label>
-                    <div class="control">
-                        <input class="input" type="date">
-                    </div>
-                </div>
-                <div class="control">
-                    <label class="label">订单号/用户</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="搜索订单号、用户名...">
-                    </div>
-                </div>
-                <div class="control">
-                    <button class="button is-primary">搜索</button>
-                    <button class="button">重置</button>
-                </div>
-            </div>
+        <div class="tab-content">
 
-            <!-- 数据表格 -->
-            <table class="table is-striped is-hoverable">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox"></th>
-                        <th>订单号</th>
-                        <th>订单类型</th>
-                        <th>用户</th>
-                        <th>金额</th>
-                        <th>状态</th>
-                        <th>下单时间</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>O202410150001</td>
-                        <td><span class="tag is-link">农场租赁</span></td>
-                        <td>张三 (138****0001)</td>
-                        <td>¥2,880.00</td>
-                        <td><span class="tag is-success">已完成</span></td>
-                        <td>2024-10-15 14:30</td>
-                        <td>
-                            <div class="buttons">
-                                <button class="button is-primary is-small">详情</button>
-                                <button class="button is-small">物流</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>O202410150002</td>
-                        <td><span class="tag is-link">商品购买</span></td>
-                        <td>李四 (139****0002)</td>
-                        <td>¥568.00</td>
-                        <td><span class="tag is-info">已发货</span></td>
-                        <td>2024-10-15 13:15</td>
-                        <td>
-                            <div class="buttons">
-                                <button class="button is-primary is-small">详情</button>
-                                <button class="button is-small">物流</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>O202410150003</td>
-                        <td><span class="tag is-link">服务订购</span></td>
-                        <td>王五 (136****0003)</td>
-                        <td>¥1,200.00</td>
-                        <td><span class="tag is-warning">已支付</span></td>
-                        <td>2024-10-15 11:45</td>
-                        <td>
-                            <div class="buttons">
-                                <button class="button is-primary is-small">详情</button>
-                                <button class="button is-small">确认</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>O202410150004</td>
-                        <td><span class="tag is-link">农场租赁</span></td>
-                        <td>赵六 (135****0004)</td>
-                        <td>¥3,600.00</td>
-                        <td><span class="tag is-warning">待支付</span></td>
-                        <td>2024-10-15 10:20</td>
-                        <td>
-                            <div class="buttons">
-                                <button class="button is-primary is-small">详情</button>
-                                <button class="button is-small">提醒</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>O202410140005</td>
-                        <td><span class="tag is-link">商品购买</span></td>
-                        <td>钱七 (137****0005)</td>
-                        <td>¥890.00</td>
-                        <td><span class="tag is-danger">已取消</span></td>
-                        <td>2024-10-14 16:40</td>
-                        <td>
-                            <div class="buttons">
-                                <button class="button is-primary is-small">详情</button>
-                                <button class="button is-small">分析</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
 
-            <!-- 分页和批量操作 -->
-            <div class="level is-mobile">
-                <div class="level-left">
-                    <div class="level-item">
-                        <div class="buttons">
-                            <button class="button is-small">批量发货</button>
-                            <button class="button is-small">批量打印</button>
-                            <button class="button is-danger is-small">批量删除</button>
+            <div class="card">
+                <div class="card-content">
+                    <!-- 搜索栏 -->
+                    <div class="columns">
+                        <div class="column is-2">
+                            <select class="is-small">
+                                <option>已支付</option>
+                                <option>已取消</option>
+                                <option>已完成</option>
+                            </select>
+
                         </div>
+                        <div class="column is-2">
+                            <input class="input is-small" type="text" placeholder="手机号">
+                        </div>
+                        <div class="column is-2">
+                            <input class="input is-small" type="text" placeholder="邮箱">
+                        </div>
+
                     </div>
-                </div>
-                <div class="level-right">
-                    <div class="level-item">
-                        <nav class="pagination" role="navigation" aria-label="pagination">
-                            <a class="pagination-previous">上一页</a>
-                            <a class="pagination-next">下一页</a>
-                            <ul class="pagination-list">
-                                <li><a class="pagination-link is-current">1</a></li>
-                                <li><a class="pagination-link">2</a></li>
-                                <li><a class="pagination-link">3</a></li>
-                            </ul>
-                        </nav>
+
+                    <!-- 用户列表表格 -->
+                    <div class="table-container">
+                        <div class="buttons is-pulled-right">
+                            <button class="button is-primary">
+                                <span class="icon is-small">🔍</span>
+                                <span class="is-hidden-mobile">搜索</span>
+                            </button>
+                            <button class="button is-success">
+                                <span class="icon is-small">➕</span>
+                                <span class="is-hidden-mobile">新增用户</span>
+                            </button>
+                            <button class="button is-danger">
+                                <span class="icon is-small">🗑️</span>
+                                <span class="is-hidden-mobile">批量删除</span>
+                            </button>
+                        </div>
+                        <table class="table is-fullwidth is-striped is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>订单号</th>
+                                    <th>订单类型</th>
+                                    <th>用户</th>
+                                    <th>金额</th>
+                                    <th>状态</th>
+                                    <th>下单时间</th>
+                                    <th class="hide-mobile">创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>1002</td>
+                                    <td>
+                                        <div class="media">
+                                            <div class="media-content">
+                                                <p class="has-text-weight-bold">zhangsan</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="hide-mobile">张三</td>
+                                    <td>13800138001</td>
+                                    <td>zhangsan@example.com</td>
+                                    <td><span class="tag is-warning">农场管理员</span></td>
+                                    <td><span class="tag is-success">正常</span></td>
+                                    <td class="hide-mobile">2023-12-02</td>
+                                    <td class="hide-mobile">2023-12-02</td>
+                                    <td class="hide-mobile">2023-12-03</td>
+                                    <td>
+                                        <div class="buttons are-small">
+                                            <button class="button is-link" title="编辑">详情</button>
+                                            <button class="button is-primary" title="删除">物流</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+
+                    <nav class="pagination is-small" role="navigation" aria-label="pagination">
+                        <a href="#" class="pagination-previous">Previous</a>
+                        <a href="#" class="pagination-next">Next page</a>
+                        <ul class="pagination-list">
+                            <li><a href="#" class="pagination-link" aria-label="Goto page 1">1</a></li>
+                            <li><span class="pagination-ellipsis">&hellip;</span></li>
+                            <li><a href="#" class="pagination-link" aria-label="Goto page 45">45</a></li>
+                            <li>
+                                <a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a>
+                            </li>
+                            <li><a href="#" class="pagination-link" aria-label="Goto page 47">47</a></li>
+                            <li><span class="pagination-ellipsis">&hellip;</span></li>
+                            <li><a href="#" class="pagination-link" aria-label="Goto page 86">86</a></li>
+                        </ul>
+                    </nav>
                 </div>
+
             </div>
         </div>
-    </section>
+
+    </div>
+    </div>
 </body>
 
 </html>
