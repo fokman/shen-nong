@@ -19,9 +19,6 @@ server = ["dep:diesel", "dioxus/server"]
 web = ["dioxus/web"]
 
 [profile]
-[profile.android-dev]
-inherits = "dev"
-
 [profile.server-dev]
 inherits = "dev"
 
