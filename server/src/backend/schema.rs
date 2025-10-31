@@ -4,8 +4,11 @@ diesel::table! {
     data_scopes (id) {
         id -> Integer,
         tenant_id -> Integer,
+        #[max_length = 100]
         name -> Varchar,
+        #[max_length = 50]
         code -> Varchar,
+        #[max_length = 50]
         resource_type -> Varchar,
         scope_rules -> Text,
         description -> Nullable<Text>,
@@ -19,10 +22,14 @@ diesel::table! {
     permissions (id) {
         id -> Integer,
         tenant_id -> Integer,
+        #[max_length = 100]
         name -> Varchar,
+        #[max_length = 100]
         code -> Varchar,
+        #[max_length = 50]
         resource_type -> Varchar,
         resource_id -> Nullable<Integer>,
+        #[max_length = 50]
         action -> Varchar,
         description -> Nullable<Text>,
         status -> Integer,
@@ -44,7 +51,9 @@ diesel::table! {
     roles (id) {
         id -> Integer,
         tenant_id -> Integer,
+        #[max_length = 100]
         name -> Varchar,
+        #[max_length = 50]
         code -> Varchar,
         description -> Nullable<Text>,
         status -> Integer,
@@ -56,7 +65,9 @@ diesel::table! {
 diesel::table! {
     tenants (id) {
         id -> Integer,
+        #[max_length = 100]
         name -> Varchar,
+        #[max_length = 50]
         code -> Varchar,
         status -> Integer,
         created_at -> Timestamp,
@@ -86,8 +97,11 @@ diesel::table! {
     users (id) {
         id -> Integer,
         tenant_id -> Integer,
+        #[max_length = 50]
         username -> Varchar,
+        #[max_length = 100]
         email -> Varchar,
+        #[max_length = 255]
         password_hash -> Varchar,
         status -> Integer,
         created_at -> Timestamp,

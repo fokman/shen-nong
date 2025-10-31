@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+config = "0.15.0"
 diesel = { version = "2.3.3", features = ["mysql", "r2d2"], optional = true }
 diesel_migrations = "2.1.0"
 dioxus = { version = "0.6.0", features = ["fullstack", "router"] }
